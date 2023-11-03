@@ -1,0 +1,55 @@
+/* Default styles */
+.animation-box {
+  width: 200px;
+  height: 100px;
+  background-color: #687eff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  margin-left: 150px;
+}
+
+.number-box {
+  animation: slideIn 1s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .animation-box {
+    /* Adjust styles for smaller screens here */
+    margin-left: 20px;
+  }
+
+  .number-box {
+    /* Adjust styles for smaller screens here */
+  }
+}
+
+/* Media query for even smaller screens */
+@media (max-width: 480px) {
+  .animation-box {
+    /* Adjust styles for even smaller screens here */
+  }
+
+  .number-box {
+    /* Adjust styles for even smaller screens here */
+  }
+}

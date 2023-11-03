@@ -1,0 +1,471 @@
+.first-p {
+  height: 590px;
+  width: 100%;
+  background-color: white; /* Replace with your color value */
+}
+.first-p-text {
+  text-align: center;
+  height: 300px;
+  width: 800px;
+}
+button {
+  transition: all 0.3s ease-in-out;
+  background-color: #687eff; /* Replace with your color value */
+  height: 60px;
+  width: 200px;
+  border-radius: 1%;
+}
+
+button:hover {
+  background-color: #80b3ff; /* Replace with your color value */
+}
+
+#second-p {
+  background-color: #161616; /*  Replace with your color value */
+}
+.second-p-card {
+  width: 500px;
+  text-align: end;
+}
+
+.second-p-con {
+  width: 600px;
+  text-align: end;
+}
+
+#third-part {
+  background-color: white; /* Replace with your color value */
+  height: 700px;
+}
+
+.third-p-heading {
+  text-align: center;
+  padding-bottom: 50px;
+  padding-top: 50px;
+}
+.caros-button {
+  margin-left: 35%;
+}
+
+.cardsa-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.carda img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.carda {
+  background-color: #d2d79f; /* Replace with your color value */
+  width: 500px;
+  margin: 0 0.5em;
+  box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
+  border: none;
+  border-radius: 0;
+}
+
+.carousel-inner {
+  padding: 1em;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  background-color: #483838; /* Replace with your color value */
+  width: 5vh;
+  height: 5vh;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@media (min-width: 768px) {
+  .carda img {
+    height: 11em;
+  }
+}
+
+#footer {
+  text-align: center;
+  background: #161616; /* Replace with your color value */
+  height: 150px;
+}
+
+.footer-link-1 {
+  position: relative;
+  top: 30px;
+  right: 50px;
+  border: none;
+}
+
+.footer-link-1:hover {
+  color: #483838; /* Replace with your color value */
+}
+
+.footer-link-2 {
+  position: relative;
+  top: 30px;
+  border: none;
+}
+
+.footer-link-2:hover {
+  color: #483838; /* Replace with your color value */
+}
+
+.footer-link-3 {
+  position: relative;
+  top: 30px;
+  left: 50px;
+  border: none;
+}
+
+.footer-link-3:hover {
+  color: #483838; /* Replace with your color value */
+}
+
+.our_img {
+  height: 350px;
+  width: 6000px; /* Correct the width if it's intended to be smaller */
+}
+
+.contact_detail {
+  text-align: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.contact-info {
+  background-image: url("#");
+  background-repeat: no-repeat;
+  background-size: 100% 400px;
+  height: 800px;
+}
+
+form .bg_img {
+  background: url("#") no-repeat center bottom/cover;
+  height: 100vh;
+}
+
+.required:after {
+  content: " *";
+  color: red;
+}
+
+/* Font Styles */
+.font-robo {
+  font-family: "Roboto", "Arial", "Helvetica Neue", sans-serif;
+}
+
+.font-poppins {
+  font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
+}
+
+/* Grid Styles */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.row-space {
+  justify-content: space-between;
+}
+
+.col-2 {
+  width: calc((100% - 30px) / 2);
+}
+
+@media (max-width: 767px) {
+  .col-2 {
+    width: 100%;
+  }
+}
+required:after {
+  content: " *";
+  color: red;
+}
+/* ==========================================================================
+     #FONT
+     ========================================================================== */
+.font-robo {
+  font-family: "Roboto", "Arial", "Helvetica Neue", sans-serif;
+}
+
+.font-poppins {
+  font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
+}
+
+/* ==========================================================================
+     #GRID
+     ========================================================================== */
+.row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.row-space {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -moz-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.col-2 {
+  width: -webkit-calc((100% - 30px) / 2);
+  width: -moz-calc((100% - 30px) / 2);
+  width: calc((100% - 30px) / 2);
+}
+
+@media (max-width: 767px) {
+  .col-2 {
+    width: 100%;
+  }
+}
+
+/* ==========================================================================
+     #BOX-SIZING
+     ========================================================================== */
+/**
+   * More sensible default box-sizing:
+   * css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice
+   */
+
+/* ==========================================================================
+     #RESET
+     ========================================================================== */
+/**
+   * A very simple reset that sits on top of Normalize.css.
+   */
+/**
+   * Remove trailing margins from nested lists.
+   */
+li > ol,
+li > ul {
+  margin-bottom: 0;
+}
+
+/**
+   * Remove default table spacing.
+   */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/**
+   * 1. Reset Chrome and Firefox behaviour which sets a `min-width: min-content;`
+   *    on fieldsets.
+   */
+fieldset {
+  min-width: 0;
+  /* [1] */
+  border: 0;
+}
+
+/* ==========================================================================
+     #PAGE WRAPPER
+     ========================================================================== */
+.page-wrapper {
+  min-height: 100vh;
+}
+
+/* ==========================================================================
+     #BACKGROUND
+     ========================================================================== */
+
+/* ==========================================================================
+     #SPACING
+     ========================================================================== */
+.p-t-100 {
+  padding-top: 100px;
+}
+
+.p-t-130 {
+  padding-top: 50px;
+}
+
+.p-t-180 {
+  padding-top: 180px;
+}
+
+.p-t-20 {
+  padding-top: 20px;
+}
+
+.p-t-15 {
+  padding-left: 200px;
+  padding-bottom: 20px;
+}
+
+.p-t-10 {
+  padding-top: 10px;
+}
+
+.p-t-30 {
+  padding-top: 30px;
+}
+
+.p-b-100 {
+  padding-bottom: 10px;
+}
+
+.m-r-45 {
+  margin-right: 45px;
+}
+
+/* ==========================================================================
+     #WRAPPER
+     ========================================================================== */
+.wrapper {
+  margin: 0 auto;
+}
+
+.wrapper--w960 {
+  max-width: 960px;
+}
+
+.wrapper--w780 {
+  max-width: 780px;
+}
+
+.wrapper--w680 {
+  max-width: 680px;
+}
+
+/* ==========================================================================
+     #BUTTON
+     ========================================================================== */
+.btn1 {
+  display: inline-block;
+  line-height: 50px;
+  padding: 0 50px;
+  -webkit-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+  cursor: pointer;
+  font-size: 50px;
+  color: #fff;
+  font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
+}
+
+.btn--radius {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.btn--radius-2 {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.btn--pill {
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+}
+
+.btn--green {
+  background: #57b846;
+}
+
+.btn--green:hover {
+  background: #4dae3c;
+}
+
+.btn--blue {
+  background: #4272d7;
+}
+
+.btn--blue:hover {
+  background: #3868cd;
+}
+
+/* Original styles */
+
+/* .first-p, .second-p, and other styles */
+
+/* Add responsive styles */
+@media (max-width: 767px) {
+  .first-p {
+    height: auto;
+  }
+
+  .first-p-text {
+    width: 100%;
+  }
+
+  .first-p-text h1 {
+    font-size: 3rem;
+  }
+
+  .first-p-text h2 {
+    font-size: 1.5rem;
+  }
+
+  /* Adjust button styles for small screens */
+  button {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  /* .second-p and other styles */
+
+  .second-p-con {
+    width: 100%;
+  }
+
+  .second-p-card {
+    width: 100%;
+  }
+
+  /* .third-part and other styles */
+
+  .third-p-heading {
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    font-size: 3rem;
+  }
+
+  /* .carousel and other styles */
+
+  .caros-button {
+    margin-left: 0;
+  }
+
+  .carda-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .carda img {
+    max-width: 100%;
+    max-height: auto;
+  }
+
+  .carda {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+
+  .carousel-inner {
+    padding: 0.5rem;
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+/* Additional responsive styles can be added as needed for your specific design. */

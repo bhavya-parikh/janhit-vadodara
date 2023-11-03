@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./OTPVerification.css"; // Import the OTPVerification.css file for styling
+import Navbar from "../Navbar/Navbar";
 
 const OTPVerification = () => {
   const navigate = useNavigate();
@@ -18,17 +19,17 @@ const OTPVerification = () => {
       navigate("/login"); // Navigate to the login page after successful OTP verification
     } else {
       // OTP verification failed
-      if (otp ==="") {
-         setVerificationStatus("Please enter OTP");
-      }else{
-         setVerificationStatus("Wrong OTP. Please try again.");
+      if (otp === "") {
+        setVerificationStatus("Please enter OTP");
+      } else {
+        setVerificationStatus("Wrong OTP. Please try again.");
       }
-     
     }
   };
 
   return (
     <div className="register-container">
+      <Navbar />
       <form className="register-form">
         <h1>OTP Verification</h1>
         <input

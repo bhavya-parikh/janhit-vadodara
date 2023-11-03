@@ -3,8 +3,10 @@ import basestyle from "../Base.module.css";
 import registerstyle from "./Register.module.css";
 import axios from "axios";
 import { useNavigate, NavLink } from "react-router-dom";
- import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Navbar from "../Navbar/Navbar";
+
 const Register = () => {
   const navigate = useNavigate();
 
@@ -27,11 +29,11 @@ const Register = () => {
   const validateForm = (values) => {
     const error = {};
     const regex = /^[^\s+@]+@[^\s@]+\.[^\s@]{2,}$/i;
-    
+
     if (!values.addharid) {
       error.addharid = "ID Number is required";
     }
-    
+
     if (!values.username) {
       error.username = "Username is required";
     }
@@ -43,34 +45,35 @@ const Register = () => {
     } else if (values.password.length > 10) {
       error.password = "Password cannot exceed more than 10 characters";
     }
-    
+
     return error;
   };
 
   const signupHandler = (e) => {
-  e.preventDefault();
-  setFormErrors(validateForm(user));
-  setIsSubmit(true);
-  }
-  
+    e.preventDefault();
+    setFormErrors(validateForm(user));
+    setIsSubmit(true);
+  };
 
   useEffect(() => {
-    
-      if (Object.keys(formErrors).length === 0 && isSubmit) {
-        console.log(user);
-        axios.post("http://localhost:5000/api/user/register", user).then((res) => {
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      console.log(user);
+      axios
+        .post("http://localhost:5000/api/user/register", user)
+        .then((res) => {
           navigate("/OTPVerification", { replace: true });
-        }).catch((error) => {
-          toast(error.response.data.message);  
+        })
+        .catch((error) => {
+          toast(error.response.data.message);
         });
-      }
-    }, [formErrors]);
+    }
+  }, [formErrors]);
 
   return (
     <>
-    <ToastContainer />
+      <Navbar />
+      <ToastContainer />
       <div className={registerstyle.register}>
-        
         <form>
           <h1>Create your account</h1>
           <input
@@ -100,10 +103,9 @@ const Register = () => {
             value={user.password}
           />
           <p className={basestyle.error}>{formErrors.password}</p>
-          <button className={basestyle.button_common} onClick={signupHandler} >
+          <button className={basestyle.button_common} onClick={signupHandler}>
             Register
           </button>
-
         </form>
         <NavLink to="/login">Already registered? Login</NavLink>
       </div>
