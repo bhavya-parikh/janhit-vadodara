@@ -7,21 +7,23 @@
 .nav-logo {
   display: flex;
   height: 100px;
-  width: 650px;
+  width: 850px;
 }
 .vmc {
   display: flex;
+  padding-top: 28px;
   padding-left: 20px;
   font-size: 30px;
   font-weight: 500;
   font-family: "poppins";
-  width: 600px;
+  width: 800px;
 }
 .nav-menu {
+  width: 500px;
   display: flex;
   align-items: center;
   list-style: none;
-  gap: 50px;
+  gap: 40px;
   color: #626262;
   font-size: 20px;
   font-weight: 500;

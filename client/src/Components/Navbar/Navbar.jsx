@@ -36,7 +36,7 @@ export const Navbar = () => {
             setMenu("Login");
           }}
         >
-          Login{menu === "Login " ? <hr /> : <></>}
+          Login{menu === "Login" ? <hr /> : <></>}
         </li>
       </ul>
     </div>
