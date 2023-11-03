@@ -4,7 +4,6 @@ import Navbar from "../Navbar/Navbar";
 const Profile = ({ setUserState, username }) => {
   return (
     <div className="profile">
-      <Navbar />
       <h1 style={{ color: "white" }}>Welcome {username} !!</h1>
       <button
         className={basestyle.button_common}

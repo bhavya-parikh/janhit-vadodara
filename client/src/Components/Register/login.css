@@ -1,0 +1,24 @@
+#login1{
+    box-sizing: content-box;
+    margin: auto;
+    margin-top: 4%;
+    border-radius: 3%;
+}
+#loginh1{
+    font-weight: bold;
+    margin-top: 10%;
+    margin-bottom: 14%;
+    font-size: 170%;
+    /* font-weight: bolder; */
+
+}
+/* #but1{
+    width: 400px;
+    background: #fff;
+    border: 5px solid #d5d6d8;
+    box-shadow: 0 4px 9px rgb(0 0 10 / 64%), 0 8px 16px rgb(0 10 0 / 34%);
+    border-radius: 8px;
+    padding: 1rem;
+    align-items: center;
+    text-align: center;
+} */

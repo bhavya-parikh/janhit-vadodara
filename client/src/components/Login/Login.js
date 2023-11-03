@@ -4,7 +4,7 @@ import loginstyle from "./Login.module.css";
 import axios from "axios";
 import { useNavigate, NavLink } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import Navbar from "../Navbar/Navbar";
+import "../Register/login.css"
 
 const Login = ({ setUserState }) => {
   const navigate = useNavigate();
@@ -53,16 +53,15 @@ const Login = ({ setUserState }) => {
   }, [formErrors]);
   return (
     <>
-      <Navbar />
       <ToastContainer />
-      <div className={loginstyle.login}>
+      <div id="login1" className={loginstyle.login}>
         <form>
-          <h1>Login</h1>
+          <h1 id="loginh1">Login</h1>
           <input
             type="username"
             name="username"
             id="username"
-            placeholder="username"
+            placeholder="Username"
             onChange={changeHandler}
             value={user.username}
           />
