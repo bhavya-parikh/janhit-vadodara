@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import logo from "../Assets/Vmc.jpg";
 import "./Navbar.css";
+import { useNavigate } from "react-router-dom";
+
 export const Navbar = () => {
   const [menu, setMenu] = useState("Home");
+  const navigate = useNavigate();
   return (
     <div className="navbar">
       <div className="nav-logo">
@@ -34,6 +37,7 @@ export const Navbar = () => {
         <li
           onClick={() => {
             setMenu("Login");
+            navigate("/login");
           }}
         >
           Login{menu === "Login" ? <hr /> : <></>}
