@@ -1,0 +1,15 @@
+/* App.css */
+.card-grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-gap:30px;
+    justify-content: center;
+    max-width:1200px;
+    margin: auto;
+    
+  }
+  .ward_no{
+    text-align:right;
+    font-weight: bolder;
+    
+  }

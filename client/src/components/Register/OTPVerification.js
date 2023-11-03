@@ -1,9 +1,13 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./OTPVerification.css"; // Import the OTPVerification.css file for styling
-import Navbar from "../Navbar/Navbar";
+import React, { useEffect, useState } from "react";
+import basestyle from "../Base.module.css";
+import registerstyle from "./Register.module.css";
+import axios from "axios";
+import { useNavigate, NavLink } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import login1 from "../Register/login.css"
 
-const OTPVerification = () => {
+const OTPVerification  = () => {
   const navigate = useNavigate();
 
   const [otp, setOtp] = useState("");
@@ -27,11 +31,13 @@ const OTPVerification = () => {
     }
   };
 
+
   return (
-    <div className="register-container">
-      <Navbar />
+    <>
+      <ToastContainer />
+      <div id="login1" className={registerstyle.register}>
       <form className="register-form">
-        <h1>OTP Verification</h1>
+        <h1 id="loginh1">OTP Verification</h1>
         <input
           type="text"
           name="otp"
@@ -39,14 +45,15 @@ const OTPVerification = () => {
           placeholder="Enter OTP"
           value={otp}
           onChange={(e) => setOtp(e.target.value)}
-        />
+          />
         <button className="register-button" onClick={handleOTPVerification}>
           Verify OTP
         </button>
         <p className="error">{verificationStatus}</p>
-      </form>
-    </div>
+        </form>
+      </div>
+    </>
   );
 };
 
-export default OTPVerification;
+export default OTPVerification;;
