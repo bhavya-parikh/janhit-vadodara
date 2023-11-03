@@ -5,7 +5,7 @@ import axios from "axios";
 import { useNavigate, NavLink } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Navbar from "../Navbar/Navbar";
+import login1 from "../Register/login.css"
 
 const Register = () => {
   const navigate = useNavigate();
@@ -71,11 +71,10 @@ const Register = () => {
 
   return (
     <>
-      <Navbar />
       <ToastContainer />
-      <div className={registerstyle.register}>
+      <div id="login1" className={registerstyle.register}>
         <form>
-          <h1>Create your account</h1>
+          <h1 id="loginh1">Create your account</h1>
           <input
             type="text"
             name="addharid"

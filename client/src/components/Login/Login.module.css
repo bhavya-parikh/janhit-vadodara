@@ -1,8 +1,8 @@
 .login {
     width: 400px;
     background: #fff;
-    border: 1px solid #dddfe2;
-    box-shadow: 0 2px 4px rgb(0 0 10 / 64%), 0 8px 16px rgb(0 10 0 / 34%);
+    border: 5px solid #d5d6d8;
+    box-shadow: 0 4px 9px rgb(0 0 10 / 64%), 0 8px 16px rgb(0 10 0 / 34%);
     border-radius: 8px;
     padding: 1rem;
     align-items: center;
