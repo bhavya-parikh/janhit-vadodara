@@ -7,13 +7,16 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import Layout from "./Components/Layout/Layout";
+import Complaint from "./Components/Complaint/complaint";
 function App() {
   const [userstate, setUserState] = useState({});
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Layout />}></Route>
+        <Route path="/layout" element={<Layout />}></Route>
         <Route path="/otpverification" element={<OTPVerification />}></Route>
+        <Route path="/complaint" element={<Complaint />}></Route>
+
         <Route
           path="/login"
           element={<Login setUserState={setUserState} />}

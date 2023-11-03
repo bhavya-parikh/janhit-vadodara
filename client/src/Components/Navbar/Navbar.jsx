@@ -16,6 +16,7 @@ export const Navbar = () => {
         <li
           onClick={() => {
             setMenu("Home");
+            navigate("/Layout");
           }}
         >
           Home {menu === "Home" ? <hr /> : <></>}
@@ -23,6 +24,7 @@ export const Navbar = () => {
         <li
           onClick={() => {
             setMenu("Register Complaint");
+            navigate("/complaint");
           }}
         >
           Register Complaint{menu === "Register Complaint" ? <hr /> : <></>}
