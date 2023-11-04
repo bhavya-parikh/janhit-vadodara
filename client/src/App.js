@@ -6,11 +6,13 @@ import OTPVerification from "./Components/Register/OTPVerification";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
-import Layout from "./Components/Layout/Layout.jsx";
+import Layout from "./Components/Layout/Layout";
 import contect from "./Components/contect/contect";
 import Card from "./Components/contect/contect";
-import Navbar from "./Components/Navbar/Navbar.jsx";
+import Navbar from "./Components/Navbar/Navbar";
 import Complaint from "./Components/Complaint/complaint.jsx";
+
+import Dashboard from "./Components/Dashboard/dashboard";
 const cardData = [
   {
     name: "John Doe",
@@ -119,6 +121,9 @@ function App() {
           ></Route>
           <Route path="/signup" element={<Register />}></Route>
           <Route path="/complaint" element={<Complaint />}></Route>
+
+          <Route path="/signup" element={<Register />}></Route>
+          <Route path="/dashboard" element={<Dashboard />}></Route>
 
           <Route
             path="/contact"
