@@ -13,13 +13,17 @@ const Complaint = () => {
     address: "",
     mobileNo: "",
     issueCategory: "Select Category",
-    issueSubcategory: "Select Category",
-    ward: "Select Ward",
+    issueSubcategory: "Select SubCategory",
     area: "Select Area",
+    ward: "Select", // Add a default ward selection
     complaintDescription: "",
-    image1: null,
-    image2: null,
+    image: null,
+    assignedStaffUsername: "",
+    assignedStaff: "",
   });
+  const [ward, setWard] = useState(null);
+  const [assignedStaff, setassignedStaff] = useState(null); // Add state to store the staff name
+  const [assignedStaffUsername, setAssignedStaffUsername] = useState(null); // Add state to store the staff name
 
   const validateForm = (values) => {
     // You can add your form validation logic here.
@@ -35,29 +39,73 @@ const Complaint = () => {
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
+
     setComplaintDetails({
       ...complaint,
       [name]: value,
     });
+    if (name === "area" && value !== "Select") {
+      fetchWardData(value);
+    }
+
+    if (
+      name === "issueCategory" &&
+      complaint.ward !== "Select" &&
+      value !== "Select Category"
+    ) {
+      console.log("hi");
+      fetchAssignStaffData(value, complaint.ward);
+    }
+  };
+
+  const fetchWardData = (selectedArea) => {
+    // Make a POST request to fetch ward data based on the selected area
+    axios
+      .post("http://localhost:5000/api/fetchWardData", { area: selectedArea })
+      .then((res) => {
+        const wardNo = res.data.wardNo;
+        console.log(wardNo); // Access wardNo from res.data
+        setComplaintDetails((prevComplaint) => ({
+          ...prevComplaint,
+          ward: wardNo,
+        }));
+      })
+      .catch((error) => {
+        toast(error.response.data.message);
+      });
+  };
+
+  const fetchAssignStaffData = (selectedCategory, selectedWard) => {
+    axios
+      .post("http://localhost:5000/api/fetchFieldStaff", {
+        category: selectedCategory,
+        wardNo: selectedWard,
+      })
+      .then((res) => {
+        const assignedStaff = res.data.name;
+        const assignedStaffUsername = res.data.assignedStaffUsername;
+        console.log(assignedStaff, assignedStaffUsername);
+        setComplaintDetails((prevComplaint) => ({
+          ...prevComplaint,
+          assignedStaff,
+          assignedStaffUsername,
+        }));
+      })
+      .catch((error) => {
+        toast(error.response.data.message);
+      });
   };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setComplaintDetails({
       ...complaint,
-      image1: file,
+      image: file,
     });
   };
 
-  const handleFileChange1 = (e) => {
-    const file = e.target.files[0];
-    setComplaintDetails({
-      ...complaint,
-      image2: file,
-    });
-  };
   const getSubcategoryOptions = () => {
-    if (complaint.issueCategory === "Water Logged") {
+    if (complaint.issueCategory === "water logging") {
       return (
         <>
           <option value="Select Category">Select Category</option>
@@ -80,17 +128,16 @@ const Complaint = () => {
       return <option value="Select Category">Select Category</option>;
     }
   };
+
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       const formData = new FormData();
       for (let key in complaint) {
-        if (key === "image1" || key === "image2") {
-          if (complaint[key] !== null) {
-            formData.append(key, complaint[key]);
-          }
-        } else {
-          formData.append(key, complaint[key]);
+        if (key == "ward") {
+          formData.append("wardNo", complaint[key]);
         }
+        formData.append(key, complaint[key]);
+        console.log(key, complaint[key]);
       }
 
       axios
@@ -110,7 +157,7 @@ const Complaint = () => {
         <h1 className="form-header">
           Vadodara Municipal Corporation Complaint Form
         </h1>
-        <form>
+        <form encType="multipart/form-data">
           <div className="complaint-type">
             <p className="complaint-type1">Complaint type</p>
             <label>
@@ -181,6 +228,56 @@ const Complaint = () => {
           </div>
           <div>
             <label>
+              <p className="input-label">Ward:</p>
+              <select
+                name="ward"
+                value={complaint.ward} // Default to 'Ward 1' if ward is not set
+                onChange={changeHandler}
+              >
+                <option value="Select">Select</option>
+                <option value="1">Ward 1</option>
+                <option value="2">Ward 2</option>
+                <option value="3">Ward 3</option>
+                <option value="4">Ward 4</option>
+                <option value="5">Ward 5</option>
+                <option value="6">Ward 6</option>
+                <option value="7">Ward 7</option>
+                <option value="8">Ward 8</option>
+                <option value="9">Ward 9</option>
+                <option value="10">Ward 10</option>
+                <option value="11">Ward 11</option>
+                <option value="12">Ward 12</option>
+                <option value="13">Ward 13</option>
+                <option value="14">Ward 14</option>
+                <option value="15">Ward 15</option>
+                <option value="16">Ward 16</option>
+
+                <option value="Ward 17">Ward 17</option>
+                <option value="Ward 18">Ward 18</option>
+                <option value="Ward 19">Ward 19</option>
+              </select>
+            </label>
+            <label>
+              <p className="input-label">Area:</p>
+              <select
+                name="area"
+                value={complaint.area}
+                onChange={(e) => {
+                  changeHandler(e);
+                  fetchWardData(e.target.value);
+                }}
+              >
+                <option value="Select">Select</option>
+                <option value="mall">7 seas mall</option>
+                <option value="Ajwa">Ajwa</option>
+                <option value="Atapi">Atapi</option>
+                <option value="Aarav Building">Aarav Building</option>
+                {/* Add options for other areas */}
+              </select>
+            </label>
+          </div>
+          <div>
+            <label>
               <p className="input-label">Category:</p>
               <select
                 name="issueCategory"
@@ -188,7 +285,7 @@ const Complaint = () => {
                 onChange={changeHandler}
               >
                 <option value="Select Category">Select Category</option>
-                <option value="Water Logged">Water Logged</option>
+                <option value="water logging">Water Logged</option>
                 <option value="Pothholes">Street Light</option>
               </select>
             </label>
@@ -214,60 +311,21 @@ const Complaint = () => {
               />
             </label>
           </div>
-          <div>
-            <label>
-              <p className="input-label">Ward:</p>
-              <select
-                name="ward"
-                value={complaint.ward}
-                onChange={changeHandler}
-              >
-                <option value="Select">Select</option>
-                <option value="Ward 1">Ward 1</option>
-                <option value="Ward 2">Ward 2</option>
-                <option value="Ward 3">Ward 3</option>
-                <option value="Ward 4">Ward 4</option>
-                <option value="Ward 5">Ward 5</option>
-                <option value="Ward 6">Ward 6</option>
-                <option value="Ward 7">Ward 7</option>
-                <option value="Ward 8">Ward 8</option>
-                <option value="Ward 9">Ward 9</option>
-                <option value="Ward 10">Ward 10</option>
-                <option value="Ward 11">Ward 11</option>
-                <option value="Ward 12">Ward 12</option>
-                <option value="Ward 13">Ward 13</option>
-                <option value="Ward 14">Ward 14</option>
-                <option value="Ward 15">Ward 15</option>
-                <option value="Ward 16">Ward 16</option>
-
-                <option value="Ward 17">Ward 17</option>
-                <option value="Ward 18">Ward 18</option>
-                <option value="Ward 19">Ward 19</option>
-              </select>
-            </label>
-            <label>
-              <p className="input-label">Area:</p>
-              <select
-                name="area"
-                value={complaint.area}
-                onChange={changeHandler}
-              >
-                <option value="Select">Select</option>
-                <option value="mall">7 seas mall</option>
-                <option value="Ajwa">Ajwa</option>
-                <option value="Atapi">Atapi</option>
-                {/* Add options for other areas */}
-              </select>
-            </label>
-          </div>
+          <input
+            type="hidden"
+            name="assignedStaffUsername"
+            value={"BhavyaP"}
+            onChange={changeHandler}
+            required
+          />
           <div>
             <label>
               <p className="input-label">Assigned Staff:</p>
               <input
                 type="text"
-                name="AssignStaff"
-                value={complaint.AssignStaff}
-                onChange={changeHandler}
+                name="assignedStaff"
+                value={"Bhavya Parikh"}
+                onChange={changeHandler} // If needed
                 disabled
               />
             </label>
@@ -276,16 +334,11 @@ const Complaint = () => {
           <div>
             <label>
               <p className="input-label">Upload Image1:</p>
-              <input type="file" accept="image/*" onChange={handleFileChange} />
-            </label>
-          </div>
-          <div>
-            <label>
-              <p className="input-label">Upload Image2:</p>
               <input
                 type="file"
                 accept="image/*"
-                onChange={handleFileChange1}
+                name="image"
+                onChange={handleFileChange}
               />
             </label>
           </div>
