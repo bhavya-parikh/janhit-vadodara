@@ -23,7 +23,10 @@ module.exports.fetchFieldStaff = asyncHandler(async (req, res) => {
     category: req.body.category,
   });
   if (fieldStaff) {
-    res.status(200).send({ message: fieldStaff.name });
+    res.status(200).send({
+      name: fieldStaff.name,
+      assignedStaffUsername: fieldStaff.username,
+    });
   } else {
     res.status(404).send({ message: "Field Staff not yet assigned" });
   }
