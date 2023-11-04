@@ -21,19 +21,6 @@ const dashboard = asyncHandler(async (req, res) => {
   if (!validate) {
     res.status(403).send({ message: "Wrong Pass" });
   }
-
-  try {
-    const complaint = await Complaint.find({
-      assignedStaffUsername: req.body.assignedStaffUsername,
-    });
-    if (results.length > 0) {
-      res.json(complaint);
-    } else {
-      res.json([]);
-    }
-  } catch (error) {
-    res.status(500).json({ error: "error occured while fetching complaints" });
-  }
 });
 
 const fetchData = asyncHandler(async (req, res) => {
