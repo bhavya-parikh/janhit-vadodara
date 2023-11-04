@@ -1,216 +1,301 @@
-import React, { useState } from "react";
-import "./complaint.css"; // Import your CSS file
-import Navbar from "../Navbar/Navbar";
+import React, { useState, useEffect } from "react";
+import "./complaint.css"; // Import your new CSS file
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-function Complaint() {
-  const [formData, setFormData] = useState({
-    isPrivate: false,
-    isPublic: false,
-    firstName: "",
-    lastName: "",
-    name: "",
-    mobileNumber: "",
-    category: "Select Category",
-    subcategory: "Select Subcategory",
-    issueDescription: "",
-    image: null,
+const Complaint = () => {
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
+  const [complaint, setComplaintDetails] = useState({
+    complaintType: "Private",
+    firstname: "",
+    lastname: "",
+    address: "",
+    mobileNo: "",
+    issueCategory: "Select Category",
+    issueSubcategory: "Select Category",
+    ward: "Select Ward",
+    area: "Select Area",
+    complaintDescription: "",
+    image1: null,
+    image2: null,
   });
 
-  const navigate = useNavigate();
-
-  const handleCheckboxChange = (e) => {
-    const { name, checked } = e.target;
-    setFormData({ ...formData, [name]: checked });
+  const validateForm = (values) => {
+    // You can add your form validation logic here.
+    // For now, let's return an empty object.
+    return {};
   };
 
-  const handleInputChange = (e) => {
+  const complaintHandler = (e) => {
+    e.preventDefault();
+    setFormErrors(validateForm(complaint));
+    setIsSubmit(true);
+  };
+
+  const changeHandler = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleCategoryChange = (e) => {
-    const { value } = e.target;
-    setFormData({ ...formData, category: value });
-  };
-
-  const handleSubcategoryChange = (e) => {
-    const { value } = e.target;
-    setFormData({ ...formData, subcategory: value });
+    setComplaintDetails({
+      ...complaint,
+      [name]: value,
+    });
   };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setFormData({ ...formData, image: file });
+    setComplaintDetails({
+      ...complaint,
+      image1: file,
+    });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // You can implement the submission logic here.
+  const handleFileChange1 = (e) => {
+    const file = e.target.files[0];
+    setComplaintDetails({
+      ...complaint,
+      image2: file,
+    });
   };
-
-  const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
-  const [image, setImage] = useState("");
-
-  const handleChange = (e) => {
-    setTitle(e.target.value);
+  const getSubcategoryOptions = () => {
+    if (complaint.issueCategory === "Water Logged") {
+      return (
+        <>
+          <option value="Select Category">Select Category</option>
+          <option value="Contaminated Water">Contaminated Water</option>
+          <option value="Direct Water Running">Direct Water Running</option>
+        </>
+      );
+    } else if (complaint.issueCategory === "Pothholes") {
+      return (
+        <>
+          <option value="Select Category">Select Category</option>
+          <option value="Street Light Not Working">
+            Street Light Not Working
+          </option>
+          <option value="Insufficient Light">Insufficient Light</option>
+        </>
+      );
+    } else {
+      // Default options when "Select Category" is chosen
+      return <option value="Select Category">Select Category</option>;
+    }
   };
-  const handleChangeDesc = (e) => {
-    setDesc(e.target.value);
-  };
-
-  const handleClick = () => {
-    console.log(title, desc, image, 19);
-
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("description", desc);
-    formData.append("image", image);
-
-    axios
-      .post("http://localhost:5000/api/services", formData, {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
-      .then((res) => {
-        console.log(res.data);
-
-        if (res.data.code === 403 && res.data.message === "Token Expired") {
-          localStorage.setItem("token", null);
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      const formData = new FormData();
+      for (let key in complaint) {
+        if (key === "image1" || key === "image2") {
+          if (complaint[key] !== null) {
+            formData.append(key, complaint[key]);
+          }
+        } else {
+          formData.append(key, complaint[key]);
         }
-      })
-      .catch((err) => {
-        console.log(err, "err");
-      });
-  };
+      }
+
+      axios
+        .post("http://localhost:5000/api/services/complaint", formData)
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((error) => {
+          toast(error.response.data.message);
+        });
+    }
+  }, [formErrors, isSubmit]);
 
   return (
     <div>
-      <Navbar />
-      <div className="main1">
-        <div className="main-container">
-          <h1>Vadodara Municipal Corporation Complaint Form</h1>
-          <form onSubmit={handleSubmit}>
-            <div>
-              <p className="he1">Complain type</p>
-              <label>
-                <input
-                  type="radio"
-                  name="complaintType"
-                  checked={formData.complaintType}
-                  onChange={handleCheckboxChange}
-                />
-                Private
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="complaintType"
-                  checked={formData.complaintType}
-                  onChange={handleCheckboxChange}
-                />
-                Public
-              </label>
-            </div>
-            <div>
-              <label>
-                <p className="fname">First Name:</p>
-                <input
-                  type="text"
-                  name="firstname"
-                  value={formData.firstName}
-                  onChange={handleInputChange}
-                />
-              </label>
-              <label>
-                <p className="lname">Last Name:</p>
-                <input
-                  type="text"
-                  name="lastname"
-                  value={formData.lastName}
-                  onChange={handleInputChange}
-                />
-              </label>
-            </div>
-            <div>
-              <label>
-                <p className="mnumber">Mobile Number:</p>
-                <input
-                  type="text"
-                  name="mobileNo"
-                  value={formData.mobileNumber}
-                  onChange={handleInputChange}
-                />
-              </label>
-            </div>
-            <div>
-              <label>
-                Address:
-                <textarea
-                  name="address"
-                  value={formData.address} // Change this line to use formData.address
-                  onChange={handleInputChange}
-                />
-              </label>
-            </div>
+      <div className="main-container">
+        <h1 className="form-header">
+          Vadodara Municipal Corporation Complaint Form
+        </h1>
+        <form>
+          <div className="complaint-type">
+            <p className="complaint-type1">Complaint type</p>
+            <label>
+              <input
+                type="radio"
+                name="complaintType"
+                value="Private"
+                checked={complaint.complaintType === "Private"}
+                onChange={changeHandler}
+              />
+              Private
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="complaintType"
+                value="Public"
+                checked={complaint.complaintType === "Public"}
+                onChange={changeHandler}
+              />
+              Public
+            </label>
+          </div>
+          <div>
+            <label>
+              <p className="input-label">First Name:</p>
+              <input
+                type="text"
+                name="firstname"
+                value={complaint.firstname}
+                onChange={changeHandler}
+                required
+              />
+            </label>
+            <label>
+              <p className="input-label">Last Name:</p>
+              <input
+                type="text"
+                name="lastname"
+                value={complaint.lastname}
+                onChange={changeHandler}
+                required
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              <p className="input-label">Mobile Number:</p>
+              <input
+                type="text"
+                name="mobileNo"
+                value={complaint.mobileNo}
+                onChange={changeHandler}
+                required
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              <p className="input-label"> Address:</p>
+              <textarea
+                name="address"
+                value={complaint.address}
+                onChange={changeHandler}
+                required
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              <p className="input-label">Category:</p>
+              <select
+                name="issueCategory"
+                value={complaint.issueCategory}
+                onChange={changeHandler}
+              >
+                <option value="Select Category">Select Category</option>
+                <option value="Water Logged">Water Logged</option>
+                <option value="Pothholes">Street Light</option>
+              </select>
+            </label>
+            <label>
+              <p className="input-label">Subcategory:</p>
+              <select
+                name="issueSubcategory"
+                value={complaint.issueSubcategory}
+                onChange={changeHandler}
+              >
+                {getSubcategoryOptions()}
+              </select>
+            </label>
+          </div>
+          <div>
+            <label>
+              <p className="input-label"> Issue Description:</p>
+              <textarea
+                name="complaintDescription"
+                value={complaint.complaintDescription}
+                onChange={changeHandler}
+                required
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              <p className="input-label">Ward:</p>
+              <select
+                name="ward"
+                value={complaint.ward}
+                onChange={changeHandler}
+              >
+                <option value="Select">Select</option>
+                <option value="Ward 1">Ward 1</option>
+                <option value="Ward 2">Ward 2</option>
+                <option value="Ward 3">Ward 3</option>
+                <option value="Ward 4">Ward 4</option>
+                <option value="Ward 5">Ward 5</option>
+                <option value="Ward 6">Ward 6</option>
+                <option value="Ward 7">Ward 7</option>
+                <option value="Ward 8">Ward 8</option>
+                <option value="Ward 9">Ward 9</option>
+                <option value="Ward 10">Ward 10</option>
+                <option value="Ward 11">Ward 11</option>
+                <option value="Ward 12">Ward 12</option>
+                <option value="Ward 13">Ward 13</option>
+                <option value="Ward 14">Ward 14</option>
+                <option value="Ward 15">Ward 15</option>
+                <option value="Ward 16">Ward 16</option>
 
-            <div>
-              <label>
-                <p className="category">Category:</p>
-                <select
-                  name="issueCategory"
-                  value={formData.category}
-                  onChange={handleCategoryChange}
-                >
-                  <option value="Select Category">Water Logged</option>
-                  <option value="Category1">Diabries</option>
-                  <option value="Category2">pothholes</option>
-                </select>
-              </label>
-              <label>
-                <p className="subc">Subcategory:</p>
-                <select
-                  name="issueSubcategory"
-                  value={formData.subcategory}
-                  onChange={handleSubcategoryChange}
-                >
-                  <option value="Category1">Diabries</option>
-                  <option value="Select Category">Water Logged</option>
-                  <option value="Category2">pothholes</option>
-                </select>
-              </label>
-            </div>
-            <div>
-              <label>
-                Issue Description:
-                <textarea
-                  name="complaintDescription"
-                  value={formData.complaintDescription}
-                  onChange={handleInputChange}
-                />
-              </label>
-            </div>
-            <div>
-              <label>
-                {" "}
-                <p>Upload Image:</p>
-                <input
-                  multiple
-                  onChange={(e) => setImage(e.target.files[0])}
-                  type="file"
-                  name="images"
-                />
-              </label>
-            </div>
-            <button onClick={handleClick} className="add-btn" type="submit">
-              Submit
-            </button>
-          </form>
-        </div>
+                <option value="Ward 17">Ward 17</option>
+                <option value="Ward 18">Ward 18</option>
+                <option value="Ward 19">Ward 19</option>
+              </select>
+            </label>
+            <label>
+              <p className="input-label">Area:</p>
+              <select
+                name="area"
+                value={complaint.area}
+                onChange={changeHandler}
+              >
+                <option value="Select">Select</option>
+                <option value="mall">7 seas mall</option>
+                <option value="Ajwa">Ajwa</option>
+                <option value="Atapi">Atapi</option>
+                {/* Add options for other areas */}
+              </select>
+            </label>
+          </div>
+          <div>
+            <label>
+              <p className="input-label">Assigned Staff:</p>
+              <input
+                type="text"
+                name="AssignStaff"
+                value={complaint.AssignStaff}
+                onChange={changeHandler}
+                disabled
+              />
+            </label>
+          </div>
+
+          <div>
+            <label>
+              <p className="input-label">Upload Image1:</p>
+              <input type="file" accept="image/*" onChange={handleFileChange} />
+            </label>
+          </div>
+          <div>
+            <label>
+              <p className="input-label">Upload Image2:</p>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange1}
+              />
+            </label>
+          </div>
+          <button onClick={complaintHandler} className="btn" type="submit">
+            Submit
+          </button>
+        </form>
       </div>
     </div>
   );
-}
+};
 
 export default Complaint;

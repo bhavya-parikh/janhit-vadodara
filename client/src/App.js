@@ -6,11 +6,11 @@ import OTPVerification from "./Components/Register/OTPVerification";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
-import Layout from "./Components/Layout/Layout";
+import Layout from "./Components/Layout/Layout.jsx";
 import contect from "./Components/contect/contect";
 import Card from "./Components/contect/contect";
-import Navbar from "./Components/Navbar/Navbar";
-
+import Navbar from "./Components/Navbar/Navbar.jsx";
+import Complaint from "./Components/Complaint/complaint.jsx";
 const cardData = [
   {
     name: "John Doe",
@@ -51,7 +51,7 @@ const cardData = [
   {
     name: "John Doe",
     mobileNumber: "123-456-7890",
-    emailid: "temp-mail@gmail.com",
+    email: "temp-mail@gmail.com",
     wardNo: "Ward 7",
   },
   {
@@ -69,7 +69,7 @@ const cardData = [
   {
     name: "John Doe",
     mobileNumber: "123-456-7890",
-    emailid: "temp-mail@gmail.com",
+    email: "temp-mail@gmail.com",
     wardNo: "Ward 10",
   },
   {
@@ -87,7 +87,7 @@ const cardData = [
   {
     name: "John Doe",
     mobileNumber: "123-456-7890",
-    emailid: "temp-mail@gmail.com",
+    email: "temp-mail@gmail.com",
     wardNo: "Ward 13",
   },
   {
@@ -111,7 +111,7 @@ function App() {
       <Navbar />
       <div className="App">
         <Routes>
-          <Route path="/" element={<Layout />}></Route>
+          <Route path="/layout" element={<Layout />}></Route>
           <Route path="/otpverification" element={<OTPVerification />}></Route>
           <Route
             path="/login"
