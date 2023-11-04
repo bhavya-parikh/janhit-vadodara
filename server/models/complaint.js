@@ -33,6 +33,18 @@ const complaintSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please enter Complaint Description"],
   },
+  wardNo: {
+    type: String,
+    required: [true, "Please enter Ward Number"],
+  },
+  area: {
+    type: String,
+    required: [true, "Please enter Area"],
+  },
+  assignedStaff: {
+    type: String,
+    required: [true, "Please enter Assigned Staff"],
+  },
   imageUrl: [
     {
       type: String,
