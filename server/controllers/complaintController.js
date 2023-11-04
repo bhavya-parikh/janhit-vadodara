@@ -11,6 +11,9 @@ module.exports.complaint = asyncHandler(async (req, res) => {
     issueCategory,
     issueSubcategory,
     complaintDescription,
+    wardNo,
+    area,
+    assignedStaff,
   } = req.body;
   const imageUrl = req.file.path;
   if (
@@ -22,7 +25,10 @@ module.exports.complaint = asyncHandler(async (req, res) => {
     !issueCategory ||
     !issueSubcategory ||
     !complaintDescription ||
-    !imageUrl
+    !imageUrl ||
+    !wardNo ||
+    !area ||
+    !assignedStaff
   ) {
     res.status(400).send({ message: "Please add all fields" });
   }
@@ -37,6 +43,10 @@ module.exports.complaint = asyncHandler(async (req, res) => {
     issueCategory,
     issueSubcategory,
     complaintDescription,
+    wardNo,
+    area,
+    assignedStaff,
+    assignedStaffUsername,
     imageUrl,
   });
 
@@ -50,9 +60,28 @@ module.exports.complaint = asyncHandler(async (req, res) => {
       issueCategory,
       issueSubcategory,
       complaintDescription,
+      wardNo,
+      area,
+      assignedStaff,
+      assignedStaffUsername,
       imageUrl,
     });
   } else {
     res.status(400).send({ error: "Invalid user data" });
+  }
+});
+
+module.exports.fetchComplaints = asyncHandler(async (req, res) => {
+  try {
+    const complaint = await Complaint.find({
+      assignedStaffUsername: req.body.username,
+    });
+    if (results.length > 0) {
+      res.json(complaint);
+    } else {
+      res.json([]);
+    }
+  } catch (error) {
+    res.status(500).json({ error: "error occured while fetching complaints" });
   }
 });
