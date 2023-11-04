@@ -45,6 +45,10 @@ const complaintSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please enter Assigned Staff"],
   },
+  assignedStaffUsername: {
+    type: String,
+    required: [true, "Please enter Assigned Staff"],
+  },
   imageUrl: [
     {
       type: String,

@@ -14,6 +14,7 @@ module.exports.complaint = asyncHandler(async (req, res) => {
     wardNo,
     area,
     assignedStaff,
+    assignedStaffUsername,
   } = req.body;
   const imageUrl = req.file.path;
   if (
@@ -28,7 +29,8 @@ module.exports.complaint = asyncHandler(async (req, res) => {
     !imageUrl ||
     !wardNo ||
     !area ||
-    !assignedStaff
+    !assignedStaff ||
+    !assignedStaffUsername
   ) {
     res.status(400).send({ message: "Please add all fields" });
   }
@@ -74,14 +76,10 @@ module.exports.complaint = asyncHandler(async (req, res) => {
 module.exports.fetchComplaints = asyncHandler(async (req, res) => {
   try {
     const complaint = await Complaint.find({
-      assignedStaffUsername: req.body.username,
+      assignedStaffUsername: req.body.assignedStaffUsername,
     });
-    if (results.length > 0) {
-      res.json(complaint);
-    } else {
-      res.json([]);
-    }
+    res.status(200).send(complaint);
   } catch (error) {
-    res.status(500).json({ error: "error occured while fetching complaints" });
+    res.status(500).send(error);
   }
 });

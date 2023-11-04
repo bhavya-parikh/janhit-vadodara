@@ -3,9 +3,9 @@ const asyncHandler = require("express-async-handler");
 
 const dashboard = asyncHandler(async (req, res) => {
   const admin = {
-    username,
-    password,
-    role,
+    username: req.body.username,
+    password: req.body.password,
+    role: req.body.role,
   };
 
   const Admin = await Admin.findOne({ username: req.body.username });
@@ -21,7 +21,19 @@ const dashboard = asyncHandler(async (req, res) => {
   if (!validate) {
     res.status(403).send({ message: "Wrong Pass" });
   }
-  res.status(200).send({ message: "Logged In!", user });
+
+  try {
+    const complaint = await Complaint.find({
+      assignedStaffUsername: req.body.assignedStaffUsername,
+    });
+    if (results.length > 0) {
+      res.json(complaint);
+    } else {
+      res.json([]);
+    }
+  } catch (error) {
+    res.status(500).json({ error: "error occured while fetching complaints" });
+  }
 });
 
 const fetchData = asyncHandler(async (req, res) => {
