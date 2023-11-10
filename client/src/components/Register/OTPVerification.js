@@ -5,9 +5,9 @@ import axios from "axios";
 import { useNavigate, NavLink } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import login1 from "../Register/login.css"
+import login1 from "../Register/login.css";
 
-const OTPVerification  = () => {
+const OTPVerification = () => {
   const navigate = useNavigate();
 
   const [otp, setOtp] = useState("");
@@ -31,29 +31,29 @@ const OTPVerification  = () => {
     }
   };
 
-
   return (
     <>
       <ToastContainer />
       <div id="login1" className={registerstyle.register}>
-      <form className="register-form">
-        <h1 id="loginh1">OTP Verification</h1>
-        <input
-          type="text"
-          name="otp"
-          id="otp"
-          placeholder="Enter OTP"
-          value={otp}
-          onChange={(e) => setOtp(e.target.value)}
+        <form className="register-form">
+          <h1 id="loginh1">OTP Verification</h1>
+          <input
+            className="keyur"
+            type="text"
+            name="otp"
+            id="otp"
+            placeholder="Enter OTP"
+            value={otp}
+            onChange={(e) => setOtp(e.target.value)}
           />
-        <button className="register-button" onClick={handleOTPVerification}>
-          Verify OTP
-        </button>
-        <p className="error">{verificationStatus}</p>
+          <button className="register-button" onClick={handleOTPVerification}>
+            Verify OTP
+          </button>
+          <p className="error">{verificationStatus}</p>
         </form>
       </div>
     </>
   );
 };
 
-export default OTPVerification;;
+export default OTPVerification;

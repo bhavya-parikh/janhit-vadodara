@@ -6,10 +6,12 @@ import OTPVerification from "./Components/Register/OTPVerification";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
-import Layout from "./Components/Layout/Layout";
-import contect from "./Components/contect/contect";
+import Layout from "./Components/Layout/Layout.jsx";
 import Card from "./Components/contect/contect";
 import Navbar from "./Components/Navbar/Navbar";
+import Complaint from "./Components/Complaint/complaint.jsx";
+import ComplaintTracking from "./Components/Complaint/complaintTracking.jsx";
+
 import Dashboard from "./Components/Dashboard/dashboard";
 const cardData = [
   {
@@ -51,7 +53,7 @@ const cardData = [
   {
     name: "John Doe",
     mobileNumber: "123-456-7890",
-    emailid: "temp-mail@gmail.com",
+    email: "temp-mail@gmail.com",
     wardNo: "Ward 7",
   },
   {
@@ -69,7 +71,7 @@ const cardData = [
   {
     name: "John Doe",
     mobileNumber: "123-456-7890",
-    emailid: "temp-mail@gmail.com",
+    email: "temp-mail@gmail.com",
     wardNo: "Ward 10",
   },
   {
@@ -87,7 +89,7 @@ const cardData = [
   {
     name: "John Doe",
     mobileNumber: "123-456-7890",
-    emailid: "temp-mail@gmail.com",
+    email: "temp-mail@gmail.com",
     wardNo: "Ward 13",
   },
   {
@@ -108,7 +110,7 @@ function App() {
   const [userstate, setUserState] = useState({});
   return (
     <>
-      <Navbar></Navbar>
+      <Navbar />
       <div className="App">
         <Routes>
           <Route path="/" element={<Layout />}></Route>
@@ -118,8 +120,12 @@ function App() {
             element={<Login setUserState={setUserState} />}
           ></Route>
           <Route path="/signup" element={<Register />}></Route>
+          <Route path="/complaint" element={<Complaint />}></Route>
+
           <Route path="/signup" element={<Register />}></Route>
           <Route path="/dashboard" element={<Dashboard />}></Route>
+          <Route exact path="/" component={Complaint} />
+          <Route path="/complaintTracking" component={ComplaintTracking} />
 
           <Route
             path="/contact"

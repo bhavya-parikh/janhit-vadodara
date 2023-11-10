@@ -4,7 +4,7 @@ import loginstyle from "./Login.module.css";
 import axios from "axios";
 import { useNavigate, NavLink } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import "../Register/login.css"
+import "../Register/login.css";
 
 const Login = ({ setUserState }) => {
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ const Login = ({ setUserState }) => {
         .post("http://localhost:5000/api/user/login", user)
         .then((res) => {
           setUserState(res.data.user);
-          navigate("/", { replace: true });
+          navigate("/Layout", { replace: true });
         })
         .catch((err) => {
           toast(err.response.data.message);

@@ -1,0 +1,209 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+
+* {
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+#registration-page {
+  height: 100%;
+  background: #78a7ba;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: scroll;
+}
+
+.signup-form {
+  flex: 1;
+  max-width: 600px;
+  border-radius: 10px;
+  background-color: #eff0f1;
+  border: 1px solid #999;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+/* FORM HEADER */
+.form-header {
+  padding: 15px 0;
+  font-size: 30px;
+  font-family: "Times New Roman", Times, serif;
+  padding-left: 500px;
+  border-bottom: 1px solid #cccccc;
+  color: blue;
+}
+
+.form-header h1 {
+  font-size: 28px;
+  text-align: center;
+  color: #111; /* Change label color to a bright black */
+}
+/* Complaint Type Styling */
+.complaint-type1 {
+  padding-left: 20px;
+}
+.complaint-type {
+  margin-top: 50px;
+  margin-left: 20px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #111; /* Change the text color to a bright black */
+}
+
+/* Radio Button Styling */
+.complaint-type label {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.complaint-type input[type="radio"] {
+  margin-right: 5px;
+  width: 50px;
+  height: 20px;
+}
+
+/* Radio Button Label Styling */
+.complaint-type label input[type="radio"]:checked + span::before {
+  background-color: #1bba93; /* Change the checked radio button color */
+  border-color: #1bba93; /* Change the checked radio button border color */
+}
+
+/* FORM BODY */
+.form-body {
+  background: white;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap; /* Allow two input fields in one row */
+  justify-content: space-between; /* Add space between the input fields */
+}
+.input-label {
+  padding-top: 10px;
+}
+.input-group {
+  flex-basis: calc(50% - 5px); /* Set input fields to 50% width with spacing */
+  display: flex;
+  flex-direction: column;
+  margin: 10px 5px;
+}
+
+/* FORM BODY - Gender & Hobbies */
+.radio-group,
+.checkbox-group {
+  display: flex;
+}
+
+.radio-group div,
+.checkbox-group div {
+  flex: 1;
+}
+
+.radio-group label,
+.checkbox-group label {
+  color: #666;
+  cursor: pointer;
+}
+
+/* FORM BODY - Source of Income & Income */
+.range-group {
+  display: flex;
+}
+
+.range-group input {
+  flex: 1;
+}
+
+.range-group label {
+  margin-left: 10px;
+  background-color: #1bba93;
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 17px;
+  text-align: center;
+}
+
+/* MOBILE VIEW */
+@media only screen and (max-width: 500px) {
+  .row {
+    flex-direction: column;
+  }
+
+  .btn {
+    flex: 1;
+  }
+}
+
+/* FORM FOOTER */
+.form-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.btn {
+  padding: 10px 20px;
+  background-color: #1bba93;
+  font-size: 17px;
+  margin-left: 500px;
+  border: none;
+  border-radius: 5px;
+  color: #004e3a;
+  cursor: pointer;
+}
+
+/* INPUT */
+label {
+  max-width: 1000px;
+  display: inline-flex;
+  color: #111; /* Change label color to a bright black */
+  font-size: 17px;
+  font-weight: 500;
+  margin-left: 50px;
+  margin-top: 50px;
+}
+.rutu,
+input[type="email"],
+input[type="file"],
+input[type="number"],
+select {
+  margin-left: 10px;
+  margin-top: 10px;
+  display: flow-root;
+  width: 400px;
+  gap: 50px;
+  font-size: 18px;
+  height: 34px;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: #666;
+  border: 1px solid #d6d6d6;
+  border-radius: 4px;
+  background: white;
+  outline: none;
+}
+textarea {
+  margin-left: 10px;
+  margin-top: 10px;
+  display: flex;
+  width: 400px;
+  gap: 50px;
+  font-size: 18px;
+  height: 34px;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: #fa0000;
+  border: 1px solid #d6d6d6;
+  border-radius: 4px;
+  background: white;
+  outline: none;
+}

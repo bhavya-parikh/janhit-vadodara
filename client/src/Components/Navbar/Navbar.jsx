@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import logo from "../Assets/Vmc.jpg";
 import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
-
 export const Navbar = () => {
   const [menu, setMenu] = useState("Home");
   const navigate = useNavigate();
@@ -17,7 +16,6 @@ export const Navbar = () => {
           onClick={() => {
             setMenu("Home");
             navigate("/");
-
           }}
         >
           Home {menu === "Home" ? <hr /> : <></>}
@@ -25,6 +23,7 @@ export const Navbar = () => {
         <li
           onClick={() => {
             setMenu("Register Complaint");
+            navigate("/complaint");
           }}
         >
           Register Complaint{menu === "Register Complaint" ? <hr /> : <></>}
@@ -50,4 +49,3 @@ export const Navbar = () => {
   );
 };
 export default Navbar;
-
