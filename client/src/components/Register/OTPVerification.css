@@ -10,17 +10,16 @@
   align-items: center;
   text-align: center;
 }
-input[type="text"] {
-    border-radius: 20px;
-    border: 2px solid lightgrey;
-    outline: none;
-    color: #1d2129;
-    margin: 2% 0;
-    width: 90%;
-    padding: 12px;
-    font-size: 16px;
+.keyur {
+  border-radius: 20px;
+  border: 2px solid lightgrey;
+  outline: none;
+  color: #1d2129;
+  margin: 2% 0;
+  width: 90%;
+  padding: 12px;
+  font-size: 16px;
 }
 .error {
   color: #ff0000; /* Error message text color */
 }
-  
