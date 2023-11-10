@@ -6,11 +6,11 @@ import OTPVerification from "./Components/Register/OTPVerification";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
-import Layout from "./Components/Layout/Layout";
-import contect from "./Components/contect/contect";
+import Layout from "./Components/Layout/Layout.jsx";
 import Card from "./Components/contect/contect";
 import Navbar from "./Components/Navbar/Navbar";
 import Complaint from "./Components/Complaint/complaint.jsx";
+import ComplaintTracking from "./Components/Complaint/complaintTracking.jsx";
 
 import Dashboard from "./Components/Dashboard/dashboard";
 const cardData = [
@@ -113,7 +113,7 @@ function App() {
       <Navbar />
       <div className="App">
         <Routes>
-          <Route path="/layout" element={<Layout />}></Route>
+          <Route path="/" element={<Layout />}></Route>
           <Route path="/otpverification" element={<OTPVerification />}></Route>
           <Route
             path="/login"
@@ -124,6 +124,8 @@ function App() {
 
           <Route path="/signup" element={<Register />}></Route>
           <Route path="/dashboard" element={<Dashboard />}></Route>
+          <Route exact path="/" component={Complaint} />
+          <Route path="/complaintTracking" component={ComplaintTracking} />
 
           <Route
             path="/contact"

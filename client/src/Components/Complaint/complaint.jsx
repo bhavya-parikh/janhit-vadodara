@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./complaint.css"; // Import your new CSS file
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const Complaint = () => {
   const [formErrors, setFormErrors] = useState({});
@@ -157,7 +158,7 @@ const Complaint = () => {
         <h1 className="form-header">
           Vadodara Municipal Corporation Complaint Form
         </h1>
-        <form encType="multipart/form-data">
+        <form encType="multipart/form-data" action="./complaintTracking.jsx">
           <div className="complaint-type">
             <p className="complaint-type1">Complaint type</p>
             <label>
@@ -185,6 +186,7 @@ const Complaint = () => {
             <label>
               <p className="input-label">First Name:</p>
               <input
+                className="rutu"
                 type="text"
                 name="firstname"
                 value={complaint.firstname}
@@ -195,6 +197,7 @@ const Complaint = () => {
             <label>
               <p className="input-label">Last Name:</p>
               <input
+                className="rutu"
                 type="text"
                 name="lastname"
                 value={complaint.lastname}
@@ -207,6 +210,7 @@ const Complaint = () => {
             <label>
               <p className="input-label">Mobile Number:</p>
               <input
+                className="rutu"
                 type="text"
                 name="mobileNo"
                 value={complaint.mobileNo}
@@ -268,8 +272,8 @@ const Complaint = () => {
                 }}
               >
                 <option value="Select">Select</option>
-                <option value="mall">7 seas mall</option>
-                <option value="Ajwa">Ajwa</option>
+                <option value="7 seas Mall">7 seas Mall</option>
+                <option value="AADARSH NAGAR">AADARSH NAGAR</option>
                 <option value="Atapi">Atapi</option>
                 <option value="Aarav Building">Aarav Building</option>
                 {/* Add options for other areas */}
@@ -314,7 +318,7 @@ const Complaint = () => {
           <input
             type="hidden"
             name="assignedStaffUsername"
-            value={"BhavyaP"}
+            value={complaint.assignedStaffUsername}
             onChange={changeHandler}
             required
           />
@@ -322,9 +326,10 @@ const Complaint = () => {
             <label>
               <p className="input-label">Assigned Staff:</p>
               <input
+                className="rutu"
                 type="text"
                 name="assignedStaff"
-                value={"Bhavya Parikh"}
+                value={complaint.assignedStaff}
                 onChange={changeHandler} // If needed
                 disabled
               />
@@ -343,7 +348,7 @@ const Complaint = () => {
             </label>
           </div>
           <button onClick={complaintHandler} className="btn" type="submit">
-            Submit
+            <Link to="../Complaint/complaintTracking.jsx">Submit</Link>
           </button>
         </form>
       </div>

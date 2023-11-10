@@ -5,7 +5,7 @@ import axios from "axios";
 import { useNavigate, NavLink } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import login1 from "../Register/login.css"
+import login1 from "../Register/login.css";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -76,6 +76,7 @@ const Register = () => {
         <form>
           <h1 id="loginh1">Create your account</h1>
           <input
+            className="keyur"
             type="text"
             name="addharid"
             id="addharid"
@@ -85,6 +86,7 @@ const Register = () => {
           />
           <p className={basestyle.error}>{formErrors.addharid}</p>
           <input
+            className="keyur"
             type="text"
             name="username"
             id="username"
@@ -94,6 +96,7 @@ const Register = () => {
           />
           <p className={basestyle.error}>{formErrors.username}</p>
           <input
+            className="keyur"
             type="password"
             name="password"
             id="password"

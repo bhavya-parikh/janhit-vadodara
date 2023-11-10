@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import logo from "../Assets/Vmc.jpg";
 import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
-
 export const Navbar = () => {
   const [menu, setMenu] = useState("Home");
   const navigate = useNavigate();
