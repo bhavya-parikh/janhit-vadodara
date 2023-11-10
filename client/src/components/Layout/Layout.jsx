@@ -3,6 +3,7 @@ import Navbar from "../Navbar/Navbar";
 import "./Layout.css";
 import ComplaintCounters from "../NumberAnimation/Number";
 import Testimonial from "../Testimonials/Testimonial";
+import front from "../Assets/vmc_image.png";
 const Layout = () => {
   return (
     <div>
@@ -33,7 +34,7 @@ const Layout = () => {
             </button>
           </div>
           <div>
-            <img src="/images/front.png" className="mr-40" alt="Front" />
+            <img src={front} className="mr-40" alt="Front" />
           </div>
         </div>
 

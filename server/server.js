@@ -16,7 +16,14 @@ const PORT = 5000;
 
 const db = require("./db/user");
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+app.use(cookieParser());
 
 const apiRoutes = require("./routes/api");
 app.use("/api", apiRoutes);

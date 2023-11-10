@@ -8,9 +8,10 @@ function Dashboard() {
     // Make an HTTP request to fetch data from the server
     axios
       .post("http://localhost:5000/api/fetchComplaints", {
-        assignedStaffUserName: "BhavyaP",
+        assignedStaffUsername: "BhavyaP",
       }) // Replace with your API endpoint
       .then((response) => {
+        console.log(response);
         setComplaints(response.data);
       })
       .catch((error) => {
@@ -28,7 +29,7 @@ function Dashboard() {
             <th>Mobile Number</th>
             <th>Issue Subcategory</th>
             <th>Complaint Description</th>
-            <th>Area</th>
+            <th>Address</th>
           </tr>
         </thead>
         <tbody>
@@ -40,7 +41,7 @@ function Dashboard() {
               <td>{complaint.mobileNo}</td>
               <td>{complaint.issueSubcategory}</td>
               <td>{complaint.complaintDescription}</td>
-              <td>{complaint.area}</td>
+              <td>{complaint.address}</td>
             </tr>
           ))}
         </tbody>
