@@ -10,9 +10,15 @@ import Layout from "./Components/Layout/Layout.jsx";
 import Card from "./Components/contect/contect";
 import Navbar from "./Components/Navbar/Navbar";
 import Complaint from "./Components/Complaint/complaint.jsx";
-import ComplaintTracking from "./Components/Complaint/complaintTracking.jsx";
+import { ComplaintTracking } from "./Components/ComplaintTracking/complainttracking.jsx";
 
 import Dashboard from "./Components/Dashboard/dashboard";
+import AdminLogin from "./Components/AdminLogin/AdminLogin.js";
+import FieldStaffLogin from "./Components/FieldStaffLogin/FieldStaffLogin.js";
+import CommissionerLogin from "./Components/CommissionerLogin/CommissionerLogin.js";
+import AddFieldStaff from "./Components/deptHead/addFieldStaff.jsx";
+import { RemoveFieldStaff } from "./Components/deptHead/RemoveFieldStaff.jsx";
+import Review from "./Components/Review/Review.jsx";
 const cardData = [
   {
     name: "John Doe",
@@ -111,43 +117,50 @@ function App() {
   return (
     <>
       <Navbar />
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<Layout />}></Route>
-          <Route path="/otpverification" element={<OTPVerification />}></Route>
-          <Route
-            path="/login"
-            element={<Login setUserState={setUserState} />}
-          ></Route>
-          <Route path="/signup" element={<Register />}></Route>
-          <Route path="/complaint" element={<Complaint />}></Route>
-
-          <Route path="/signup" element={<Register />}></Route>
-          <Route path="/dashboard" element={<Dashboard />}></Route>
-          <Route exact path="/" component={Complaint} />
-          <Route path="/complaintTracking" component={ComplaintTracking} />
-
-          <Route
-            path="/contact"
-            element={
-              <>
-                <h1 className="contact_us">Contact Us</h1>
-                <div className="card-grid">
-                  {cardData.map((data, index) => (
-                    <Card
-                      key={index}
-                      name={data.name}
-                      mobileNumber={data.mobileNumber}
-                      email={data.email}
-                      wardNo={data.wardNo}
-                    />
-                  ))}
-                </div>
-              </>
-            }
-          ></Route>
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/" element={<Layout />}></Route>
+        <Route path="/otpverification" element={<OTPVerification />}></Route>
+        <Route
+          path="/ComplaintTracking"
+          element={<ComplaintTracking />}
+        ></Route>
+        <Route path="/AdminLogin" element={<AdminLogin />}></Route>
+        <Route path="/FieldStaffLogin" element={<FieldStaffLogin />}></Route>
+        <Route path="/AddFieldStaff" element={<AddFieldStaff />}></Route>
+        <Route path="/RemoveFieldStaff" element={<RemoveFieldStaff />}></Route>
+        <Route
+          path="/CommissionerLogin"
+          element={<CommissionerLogin />}
+        ></Route>
+        <Route
+          path="/login"
+          element={<Login setUserState={setUserState} />}
+        ></Route>
+        <Route path="/signup" element={<Register />}></Route>
+        <Route path="/complaint" element={<Complaint />}></Route>
+        <Route path="/signup" element={<Register />}></Route>
+        <Route path="/dashboard" element={<Dashboard />}></Route>
+        <Route path="/Review" element={<Review />}></Route>
+        <Route
+          path="/contact"
+          element={
+            <>
+              <h1 className="contact_us">Contact Us</h1>
+              <div className="card-grid">
+                {cardData.map((data, index) => (
+                  <Card
+                    key={index}
+                    name={data.name}
+                    mobileNumber={data.mobileNumber}
+                    email={data.email}
+                    wardNo={data.wardNo}
+                  />
+                ))}
+              </div>
+            </>
+          }
+        ></Route>
+      </Routes>
     </>
   );
 }
