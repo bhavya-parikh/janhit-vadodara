@@ -12,8 +12,6 @@ import { ToastContainer } from "react-toastify";
 import Layout from "./Components/Layout/Layout.jsx";
 import Card from "./Components/contect/contect";
 import Navbar from "./Components/Navbar/Navbar";
-import Complaint from "./Components/Complaint/Complaint.jsx";
-import ComplaintTracking from "./Components/Complaint/complaintTracking.jsx";
 import ProtectedRouteUser from "./Components/ProtectedRouterUser";
 import ProtectedRouteFieldStaff from "./Components/ProtectedRouteFieldStaff";
 import Dashboard from "./Components/Dashboard/dashboard";
@@ -23,6 +21,15 @@ import Main from "./Components/Layout/Main";
 import "./assets/styles/main.css";
 import "./assets/styles/responsive.css";
 
+import Complaint from "./Components/Complaint/complaint.jsx";
+import { ComplaintTracking } from "./Components/ComplaintTracking/complainttracking.jsx";
+
+import AdminLogin from "./Components/AdminLogin/AdminLogin.js";
+import FieldStaffLogin from "./Components/FieldStaffLogin/FieldStaffLogin.js";
+import CommissionerLogin from "./Components/CommissionerLogin/CommissionerLogin.js";
+import AddFieldStaff from "./Components/deptHead/addFieldStaff.jsx";
+import { RemoveFieldStaff } from "./Components/deptHead/RemoveFieldStaff.jsx";
+import Review from "./Components/Review/Review.jsx";
 const cardData = [
   {
     name: "John Doe",
@@ -138,8 +145,6 @@ function App() {
           <Route element={<ProtectedRouteUser />}>
             <Route path="/complaint" element={<Complaint />}></Route>
           </Route>
-
-          <Route path="/signup" element={<Register />}></Route>
           <Route path="/dashboard" element={<Dashboard />}></Route>
           <Route
             path="/dashboard1"
@@ -149,9 +154,19 @@ function App() {
               </Main>
             }
           />
-
+          <Route path="/Review" element={<Review />}></Route>
           <Route path="/complaintTracking" component={ComplaintTracking} />
-
+          <Route path="/AdminLogin" element={<AdminLogin />}></Route>
+          <Route path="/FieldStaffLogin" element={<FieldStaffLogin />}></Route>
+          <Route path="/AddFieldStaff" element={<AddFieldStaff />}></Route>
+          <Route
+            path="/RemoveFieldStaff"
+            element={<RemoveFieldStaff />}
+          ></Route>
+          <Route
+            path="/CommissionerLogin"
+            element={<CommissionerLogin />}
+          ></Route>
           <Route
             path="/contact"
             element={

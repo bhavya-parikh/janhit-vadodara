@@ -1,14 +1,29 @@
 import React, { useState, useEffect } from "react";
-import "./complaint.css"; // Import your new CSS file
 import axios from "axios";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  Form,
+  Input,
+  Button,
+  Select,
+  Radio,
+  Upload,
+  message,
+  Typography,
+} from "antd";
+// import "antd/dist/antd.css";
+
+const { Option } = Select;
+const { TextArea } = Input;
 
 const Complaint = () => {
+  const navigate = useNavigate();
+  const [form] = Form.useForm();
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [complaint, setComplaintDetails] = useState({
-    complaintType: "Private",
+    complaintType: "",
     firstname: "",
     lastname: "",
     address: "",
@@ -22,29 +37,25 @@ const Complaint = () => {
     assignedStaffUsername: "",
     assignedStaff: "",
   });
-  const [wardNo, setWardNo] = useState(null);
-  const [assignedStaff, setassignedStaff] = useState(null); // Add state to store the staff name
-  const [assignedStaffUsername, setAssignedStaffUsername] = useState(null); // Add state to store the staff name
 
-  const validateForm = (values) => {
-    // You can add your form validation logic here.
-    // For now, let's return an empty object.
-    return {};
+  const validateForm = () => ({});
+
+  const complaintHandler = async () => {
+    try {
+      await form.validateFields();
+      setFormErrors(validateForm(complaint));
+      setIsSubmit(true);
+    } catch (errorInfo) {
+      console.log("Failed:", errorInfo);
+    }
   };
 
-  const complaintHandler = (e) => {
-    e.preventDefault();
-    setFormErrors(validateForm(complaint));
-    setIsSubmit(true);
-  };
-
-  const changeHandler = (e) => {
-    const { name, value } = e.target;
-
+  const changeHandler = (name, value) => {
     setComplaintDetails({
       ...complaint,
       [name]: value,
     });
+
     if (name === "area" && value !== "Select") {
       fetchWardData(value);
     }
@@ -54,18 +65,16 @@ const Complaint = () => {
       complaint.wardNo !== "Select" &&
       value !== "Select Category"
     ) {
-      console.log("hi");
-      fetchAssignStaffData(value, complaint.wardNo);
+      fetchAssignStaffData(value, complaint.ward);
     }
   };
 
   const fetchWardData = (selectedArea) => {
-    // Make a POST request to fetch ward data based on the selected area
     axios
       .post("http://localhost:5000/api/fetchWardData", { area: selectedArea })
       .then((res) => {
         const wardNo = res.data.wardNo;
-        console.log(wardNo); // Access wardNo from res.data
+        form.setFieldsValue({ ward: wardNo });
         setComplaintDetails((prevComplaint) => ({
           ...prevComplaint,
           wardNo: wardNo,
@@ -85,48 +94,43 @@ const Complaint = () => {
       .then((res) => {
         const assignedStaff = res.data.name;
         const assignedStaffUsername = res.data.assignedStaffUsername;
-        console.log(assignedStaff, assignedStaffUsername);
-        setComplaintDetails((prevComplaint) => ({
-          ...prevComplaint,
+
+        // Set the assigned staff values in the form
+        form.setFieldsValue({
           assignedStaff,
           assignedStaffUsername,
-        }));
+        });
       })
       .catch((error) => {
         toast(error.response.data.message);
       });
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setComplaintDetails({
-      ...complaint,
-      image: file,
-    });
+  const handleFileChange = (file) => {
+    form.setFieldsValue({ image: [file] });
   };
 
   const getSubcategoryOptions = () => {
     if (complaint.issueCategory === "water logging") {
       return (
         <>
-          <option value="Select Category">Select Category</option>
-          <option value="Contaminated Water">Contaminated Water</option>
-          <option value="Direct Water Running">Direct Water Running</option>
+          <Option value="Select Category">Select Category</Option>
+          <Option value="Contaminated Water">Contaminated Water</Option>
+          <Option value="Direct Water Running">Direct Water Running</Option>
         </>
       );
     } else if (complaint.issueCategory === "Pothholes") {
       return (
         <>
-          <option value="Select Category">Select Category</option>
-          <option value="Street Light Not Working">
+          <Option value="Select Category">Select Category</Option>
+          <Option value="Street Light Not Working">
             Street Light Not Working
-          </option>
-          <option value="Insufficient Light">Insufficient Light</option>
+          </Option>
+          <Option value="Insufficient Light">Insufficient Light</Option>
         </>
       );
     } else {
-      // Default options when "Select Category" is chosen
-      return <option value="Select Category">Select Category</option>;
+      return <Option value="Select Category">Select Category</Option>;
     }
   };
 
@@ -138,13 +142,15 @@ const Complaint = () => {
           formData.append("wardNo", complaint[key]);
         }
         formData.append(key, complaint[key]);
-        console.log(key, complaint[key]);
       }
 
       axios
         .post("http://localhost:5000/api/services/complaint", formData)
         .then((res) => {
           console.log(res.data);
+          navigate(
+            `/complainttracking/${res.data.complaintId}/${complaint.issueDescription}`
+          );
         })
         .catch((error) => {
           toast(error.response.data.message);
@@ -153,205 +159,210 @@ const Complaint = () => {
   }, [formErrors, isSubmit]);
 
   return (
-    <div>
-      <div className="main-container">
-        <h1 className="form-header">
-          Vadodara Municipal Corporation Complaint Form
-        </h1>
-        <form encType="multipart/form-data" action="./complaintTracking.jsx">
-          <div className="complaint-type">
-            <p className="complaint-type1">Complaint type</p>
-            <label>
-              <input
-                type="radio"
-                name="complaintType"
-                value="Private"
-                checked={complaint.complaintType === "Private"}
-                onChange={changeHandler}
-              />
-              Private
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="complaintType"
-                value="Public"
-                checked={complaint.complaintType === "Public"}
-                onChange={changeHandler}
-              />
-              Public
-            </label>
-          </div>
-          <div>
-            <label>
-              <p className="input-label">First Name:</p>
-              <input
-                className="rutu"
-                type="text"
-                name="firstname"
-                value={complaint.firstname}
-                onChange={changeHandler}
-                required
-              />
-            </label>
-            <label>
-              <p className="input-label">Last Name:</p>
-              <input
-                className="rutu"
-                type="text"
-                name="lastname"
-                value={complaint.lastname}
-                onChange={changeHandler}
-                required
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              <p className="input-label">Mobile Number:</p>
-              <input
-                className="rutu"
-                type="text"
-                name="mobileNo"
-                value={complaint.mobileNo}
-                onChange={changeHandler}
-                required
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              <p className="input-label"> Address:</p>
-              <textarea
-                name="address"
-                value={complaint.address}
-                onChange={changeHandler}
-                required
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              <p className="input-label">Ward:</p>
-              <select
-                name="ward"
-                value={complaint.wardNo} // Default to 'Ward 1' if ward is not set
-                onChange={changeHandler}
-              >
-                <option value="Select">Select</option>
-                <option value="1">Ward 1</option>
-                <option value="2">Ward 2</option>
-                <option value="3">Ward 3</option>
-                <option value="4">Ward 4</option>
-                <option value="5">Ward 5</option>
-                <option value="6">Ward 6</option>
-                <option value="7">Ward 7</option>
-                <option value="8">Ward 8</option>
-                <option value="9">Ward 9</option>
-                <option value="10">Ward 10</option>
-                <option value="11">Ward 11</option>
-                <option value="12">Ward 12</option>
-                <option value="13">Ward 13</option>
-                <option value="14">Ward 14</option>
-                <option value="15">Ward 15</option>
-                <option value="16">Ward 16</option>
+    <div className="w-400 mx-auto p-6 bg-white rounded-lg shadow-md">
+      <hr className="border-black" />
+      <h1 className="text-4xl font-bold mb-8 text-center text-blue-800 ">
+        Vadodara Municipal Corporation Complaint Form
+      </h1>
+      <Form
+        form={form}
+        className="grid grid-cols-4 w-auto gap-6"
+        encType="multipart/form-data"
+        action="./complaintTracking.jsx"
+      >
+        <div className="col-span-2">
+          <Form.Item
+            label="Complaint Type"
+            name="complaintType"
+            rules={[
+              { required: true, message: "Please select a complaint type" },
+            ]}
+          >
+            <Radio.Group
+              onChange={(e) => changeHandler("complaintType", e.target.value)}
+            >
+              <Radio value="Private">Private</Radio>
+              <Radio value="Public">Public</Radio>
+            </Radio.Group>
+          </Form.Item>
+        </div>
+        <br />
+        <div className="col-span-2">
+          <Form.Item
+            label="First Name"
+            name="firstname"
+            rules={[
+              { required: true, message: "Please enter your first name" },
+            ]}
+          >
+            <Input
+              onChange={(e) => changeHandler("firstname", e.target.value)}
+            />
+          </Form.Item>
+        </div>
 
-                <option value="Ward 17">Ward 17</option>
-                <option value="Ward 18">Ward 18</option>
-                <option value="Ward 19">Ward 19</option>
-              </select>
-            </label>
-            <label>
-              <p className="input-label">Area:</p>
-              <select
-                name="area"
-                value={complaint.area}
-                onChange={(e) => {
-                  changeHandler(e);
-                  fetchWardData(e.target.value);
-                }}
-              >
-                <option value="Select">Select</option>
-                <option value="7 seas Mall">7 seas Mall</option>
-                <option value="AADARSH NAGAR">AADARSH NAGAR</option>
-                <option value="Atapi">Atapi</option>
-                <option value="Aarav Building">Aarav Building</option>
-                {/* Add options for other areas */}
-              </select>
-            </label>
-          </div>
-          <div>
-            <label>
-              <p className="input-label">Category:</p>
-              <select
-                name="issueCategory"
-                value={complaint.issueCategory}
-                onChange={changeHandler}
-              >
-                <option value="Select Category">Select Category</option>
-                <option value="water logging">Water Logged</option>
-                <option value="Pothholes">Street Light</option>
-              </select>
-            </label>
-            <label>
-              <p className="input-label">Subcategory:</p>
-              <select
-                name="issueSubcategory"
-                value={complaint.issueSubcategory}
-                onChange={changeHandler}
-              >
-                {getSubcategoryOptions()}
-              </select>
-            </label>
-          </div>
-          <div>
-            <label>
-              <p className="input-label"> Issue Description:</p>
-              <textarea
-                name="complaintDescription"
-                value={complaint.complaintDescription}
-                onChange={changeHandler}
-                required
-              />
-            </label>
-          </div>
-          <input
-            type="hidden"
-            name="assignedStaffUsername"
-            value={complaint.assignedStaffUsername}
-            onChange={changeHandler}
-            required
-          />
-          <div>
-            <label>
-              <p className="input-label">Assigned Staff:</p>
-              <input
-                className="rutu"
-                type="text"
-                name="assignedStaff"
-                value={complaint.assignedStaff}
-                onChange={changeHandler} // If needed
-                disabled
-              />
-            </label>
-          </div>
+        <div className="col-span-2">
+          <Form.Item
+            label="Last Name"
+            name="lastname"
+            rules={[{ required: true }]}
+          >
+            <Input />
+          </Form.Item>
+        </div>
 
-          <div>
-            <label>
-              <p className="input-label">Upload Image1:</p>
-              <input
-                type="file"
-                accept="image/*"
-                name="image"
-                onChange={handleFileChange}
-              />
-            </label>
-          </div>
-          <button onClick={complaintHandler} className="btn" type="submit">
-            <Link to="../Complaint/complaintTracking.jsx">Submit</Link>
-          </button>
-        </form>
-      </div>
+        <div className="col-span-2">
+          <Form.Item
+            label="Mobile Number"
+            name="mobileNo"
+            rules={[{ required: true }]}
+          >
+            <Input />
+          </Form.Item>
+        </div>
+
+        <div className="col-span-2">
+          <Form.Item
+            label="Address"
+            name="address"
+            rules={[{ required: true }]}
+          >
+            <TextArea />
+          </Form.Item>
+        </div>
+
+        <div className="col-span-2">
+          <Form.Item label="Ward" name="ward" rules={[{ required: true }]}>
+            <Select onChange={(value) => changeHandler("ward", value)}>
+              <Option value="Select">Select</Option>
+              <Option value="1">Ward 1</Option>
+              <Option value="2">Ward 2</Option>
+              <Option value="3">Ward 3</Option>
+              <Option value="4">Ward 4</Option>
+              <Option value="5">Ward 5</Option>
+              <Option value="6">Ward 6</Option>
+              <Option value="7">Ward 7</Option>
+              <Option value="8">Ward 8</Option>
+              <Option value="9">Ward 9</Option>
+              <Option value="10">Ward 10</Option>
+              <Option value="11">Ward 11</Option>
+              <Option value="12">Ward 12</Option>
+              <Option value="13">Ward 13</Option>
+              <Option value="14">Ward 14</Option>
+              <Option value="15">Ward 15</Option>
+              <Option value="16">Ward 16</Option>
+              <Option value="Ward 17">Ward 17</Option>
+              <Option value="Ward 18">Ward 18</Option>
+              <Option value="Ward 19">Ward 19</Option>
+            </Select>
+          </Form.Item>
+        </div>
+
+        <div className="col-span-2">
+          <Form.Item
+            onChange={(value) => changeHandler("area", value)}
+            label="Area"
+            name="area"
+            rules={[{ required: true }]}
+          >
+            <Select onChange={(value) => fetchWardData(value)}>
+              <Option value="Select">Select</Option>
+              <Option value="7 seas Mall">7 seas Mall</Option>
+              <Option value="AADARSH NAGAR">AADARSH NAGAR</Option>
+              <Option value="Atapi">Atapi</Option>
+              <Option value="Aarav Building">Aarav Building</Option>
+            </Select>
+          </Form.Item>
+        </div>
+
+        <div className="col-span-2">
+          <Form.Item
+            label="Category"
+            name="issueCategory"
+            rules={[{ required: true, message: "Please select a category" }]}
+          >
+            <Select
+              onChange={(value) => {
+                changeHandler("issueCategory", value);
+                fetchAssignStaffData(value, form.getFieldValue("ward"));
+              }}
+            >
+              <Option value="water logging">Water Logged</Option>
+              <Option value="Pothholes">Street Light</Option>
+            </Select>
+          </Form.Item>
+        </div>
+
+        <div className="col-span-2">
+          <Form.Item
+            label="Subcategory"
+            name="issueSubcategory"
+            rules={[{ required: true, message: "Please select a subcategory" }]}
+          >
+            <Select
+              onChange={(value) => changeHandler("issueSubcategory", value)}
+            >
+              {getSubcategoryOptions()}
+            </Select>
+          </Form.Item>
+        </div>
+
+        <div className="col-span-2">
+          <Form.Item
+            label="Issue Description"
+            name="complaintDescription"
+            rules={[
+              { required: true, message: "Please provide a description" },
+            ]}
+          >
+            <TextArea
+              onChange={(e) =>
+                changeHandler("complaintDescription", e.target.value)
+              }
+            />
+          </Form.Item>
+        </div>
+
+        <div className="col-span-2">
+          <Form.Item label="Assigned Staff" name="assignedStaff">
+            <Input disabled />
+          </Form.Item>
+        </div>
+
+        <div className="col-span-2">
+          <Form.Item
+            label="Upload Image"
+            name="image"
+            valuePropName="fileList"
+            getValueFromEvent={handleFileChange}
+          >
+            <Upload beforeUpload={() => false}>
+              <Button>Upload</Button>
+            </Upload>
+          </Form.Item>
+        </div>
+        <hr />
+        <div className="col-span-2 justify-end ml-96">
+          <Form.Item>
+            <Button
+              className="bg-blue-700 w-56 h-16  text-white font-bold rounded-full text-xl  transition-all duration-300 transform hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+              onClick={complaintHandler}
+            >
+              <Link to="/complaintTracking">Submit</Link>
+            </Button>
+          </Form.Item>
+        </div>
+        <div className="col-span-2">
+          <Form.Item>
+            <Button
+              className="bg-blue-700 w-56 h-16  text-white font-bold rounded-full text-xl  transition-all duration-300 transform hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+              onClick={() => form.resetFields()}
+            >
+              Reset
+            </Button>
+          </Form.Item>
+        </div>
+      </Form>
     </div>
   );
 };

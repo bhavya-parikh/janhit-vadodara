@@ -1,27 +1,21 @@
 import React, { useState, useEffect } from "react";
 import basestyle from "../Base.module.css";
-import loginstyle from "./Login.module.css";
+import loginstyle from "../Login/Login.module.css";
 import axios from "axios";
 import { useNavigate, NavLink } from "react-router-dom";
-import "react-toastify/dist/ReactToastify.min.css";
 import { ToastContainer, toast } from "react-toastify";
 import "../Register/login.css";
-import { useAuth } from "../../AuthProvider";
-const Login = ({ setUserState }) => {
+
+// ... (your existing imports)
+const AdminLogin = ({ setUserState }) => {
   const navigate = useNavigate();
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-  const [user, setUserDetails] = useState({ username: "", password: "" });
-  const { setAuth } = useAuth();
-
-  const handleError = (err) =>
-    toast.error(err, {
-      position: "top-right",
-    });
-  const handleSuccess = (msg) =>
-    toast.success(msg, {
-      position: "top-right",
-    });
+  const [user, setUserDetails] = useState({
+    username: "",
+    password: "",
+    userType: "",
+  });
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
@@ -29,6 +23,15 @@ const Login = ({ setUserState }) => {
       ...user,
       [name]: value,
     });
+    if (name === "userType" && value === "user") {
+      navigate("/Login"); // Replace "/admin-login" with the actual route for your admin login page
+    }
+    if (name === "userType" && value === "fieldstaff") {
+      navigate("/FieldStaffLogin"); // Replace "/admin-login" with the actual route for your admin login page
+    }
+    if (name === "userType" && value === "commissioner") {
+      navigate("/CommissionerLogin"); // Replace "/admin-login" with the actual route for your admin login page
+    }
   };
 
   const validateForm = (values) => {
@@ -53,28 +56,22 @@ const Login = ({ setUserState }) => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       console.log(user);
       axios
-        .post("http://localhost:5000/api/user/login", user, {
-          withCredentials: true,
-        })
+        .post("http://localhost:5000/api/user/login", user)
         .then((res) => {
-          handleSuccess("Logged In Successfully!");
-          setAuth(true);
-          localStorage.setItem("token", res.data.token);
           setUserState(res.data.user);
-          navigate("/", { replace: true });
+          navigate("/dashboard", { replace: true });
         })
         .catch((err) => {
-          toast.error(err.response.data.message);
+          toast(err.response.data.message);
         });
     }
   }, [formErrors]);
-
   return (
     <>
       <ToastContainer />
       <div id="login1" className={loginstyle.login}>
         <form>
-          <h1 id="loginh1">Login</h1>
+          <h1 id="loginh1">Login As Admin</h1>
           <input
             type="text"
             name="username"
@@ -93,16 +90,24 @@ const Login = ({ setUserState }) => {
             value={user.password}
           />
           <p className={basestyle.error}>{formErrors.password}</p>
+          <select
+            id="userType"
+            name="userType"
+            value={user.userType}
+            onChange={changeHandler}
+            className="shadow appearance-none border rounded w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          >
+            <option value="admin">Admin</option>
+            <option value="commissioner">Commissioner</option>
+            <option value="fieldstaff">Field Staff</option>
+          </select>
+
           <button className={basestyle.button_common} onClick={loginHandler}>
             Login
           </button>
         </form>
-        {user.userType === "user" && (
-          <NavLink to="/signup">Not yet registered? Register Now</NavLink>
-        )}
       </div>
     </>
   );
 };
-
-export default Login;
+export default AdminLogin;
