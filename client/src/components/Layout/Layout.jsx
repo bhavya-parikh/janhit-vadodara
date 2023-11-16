@@ -49,8 +49,8 @@ const Layout = () => {
               </a>
             </button>
           </div>
-          <div>
-            <img src="/images/front.png" className="mr-40" alt="Front" />
+          <div className="right-image-container">
+            <img className="right-img" src={home_image} alt="" />
           </div>
         </div>
 
@@ -62,7 +62,7 @@ const Layout = () => {
           <div className="second-p-con pl-32">
             <div>
               <h1 className="text-5xl text-white font-bold inset-x-0">
-                Complaint Registerd
+                Complaint Registered
               </h1>
             </div>
             <div className="px-6 py-6">
@@ -89,7 +89,7 @@ const Layout = () => {
         </section>
 
         <footer id="footer">
-          <a
+          {/* <a
             className="btn btn-primary btn-lg btn-floating footer-link-1"
             style={{ backgroundColor: "#367E18" }}
             href="#!"
@@ -114,7 +114,7 @@ const Layout = () => {
             role="button"
           >
             <i className="fab fa-twitter"></i>
-          </a>
+          </a> */}
 
           <p
             style={{ textAlign: "center", paddingTop: "50px", color: "white" }}
