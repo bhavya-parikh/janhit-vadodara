@@ -1,16 +1,15 @@
-#login1{
-    box-sizing: content-box;
-    margin: auto;
-    margin-top: 4%;
-    border-radius: 3%;
+#login1 {
+  box-sizing: content-box;
+  margin: auto;
+  margin-top: 4%;
+  border-radius: 3%;
 }
-#loginh1{
-    font-weight: bold;
-    margin-top: 10%;
-    margin-bottom: 14%;
-    font-size: 170%;
-    /* font-weight: bolder; */
-
+#loginh1 {
+  font-weight: bold;
+  margin-top: 10%;
+  margin-bottom: 14%;
+  font-size: 170%;
+  /* font-weight: bolder; */
 }
 /* #but1{
     width: 400px;

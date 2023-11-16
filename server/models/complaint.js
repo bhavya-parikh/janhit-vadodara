@@ -49,12 +49,19 @@ const complaintSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please enter Assigned Staff"],
   },
+  complaintStatus: {
+    type: String,
+    default: "Pending",
+  },
   imageUrl: [
     {
       type: String,
       required: [true, "Please Upload Image"],
     },
   ],
+  imageFieldStaff: {
+    type: String,
+  },
 });
 
 const ComplaintModel = mongoose.model("Complaint", complaintSchema);
