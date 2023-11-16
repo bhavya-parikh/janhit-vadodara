@@ -4,7 +4,8 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/user");
 
 const registerUser = asyncHandler(async (req, res, next) => {
-  const { addharid, username, password } = req.body;
+  const { addharid, username, password, createdAt } = req.body;
+  const role = "user";
   if (!addharid || !username || !password) {
     console.log(addharid, username, password);
     res.status(400).send({ message: "Please add all fields" });
@@ -21,13 +22,17 @@ const registerUser = asyncHandler(async (req, res, next) => {
         addharid,
         username,
         password: hashedPassword,
+        createdAt,
+        role,
       });
       if (user) {
-        const token = createSecretToken(user._id);
+        const token = createSecretToken(user);
         res.cookie("token", token, {
           withCredentials: true,
           httpOnly: false,
         });
+
+        console.log(token);
         res.status(201).json({
           message: "User signed in successfully",
           success: true,
@@ -45,7 +50,8 @@ const registerUser = asyncHandler(async (req, res, next) => {
 
 const loginUser = asyncHandler(async (req, res, next) => {
   try {
-    const { username, password } = req.body;
+    const { username, password, role } = req.body;
+    console.log(username, password);
     if (!username || !password) {
       return res.json({ message: "All fields are required" });
     }
@@ -53,25 +59,49 @@ const loginUser = asyncHandler(async (req, res, next) => {
     if (!user) {
       res.status(404).send({ message: "User Not Found" });
     }
-    const validate = await bcrypt.compare(password, user.password);
+    const userRole = user.role;
+    const validate = await bcrypt.compare(req.body.password, user.password);
     if (!validate) {
-      res.status(403).send({ message: "Wrong Pass" });
+      return res.status(403).json({ message: "Incorrect Password or Email!" });
     }
-    const token = createSecretToken(user._id);
+    const token = createSecretToken(user);
     res.cookie("token", token, {
       withCredentials: true,
       httpOnly: false,
     });
     res
       .status(201)
-      .json({ message: "User logged in successfully", success: true });
+      .json({ message: "User logged in successfully", token, user });
     next();
-  } catch (error) {
-    console.error(error);
+  } catch (error) {}
+});
+
+const logoutUser = asyncHandler(async (req, res, next) => {
+  res.cookie("token", "", {
+    httpOnly: true,
+    expires: new Date(0),
+  });
+  res.status(200).json({ message: "Logged out successfully" });
+});
+
+const getUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    res.json({
+      _id: user._id,
+      username: user.username,
+      role: user.role,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
   }
 });
 
 module.exports = {
   registerUser,
   loginUser,
+  logoutUser,
+  getUserProfile,
 };

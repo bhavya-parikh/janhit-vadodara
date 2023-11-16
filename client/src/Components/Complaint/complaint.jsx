@@ -16,13 +16,13 @@ const Complaint = () => {
     issueCategory: "Select Category",
     issueSubcategory: "Select SubCategory",
     area: "Select Area",
-    ward: "Select", // Add a default ward selection
+    wardNo: "Select", // Add a default ward selection
     complaintDescription: "",
     image: null,
     assignedStaffUsername: "",
     assignedStaff: "",
   });
-  const [ward, setWard] = useState(null);
+  const [wardNo, setWardNo] = useState(null);
   const [assignedStaff, setassignedStaff] = useState(null); // Add state to store the staff name
   const [assignedStaffUsername, setAssignedStaffUsername] = useState(null); // Add state to store the staff name
 
@@ -51,11 +51,11 @@ const Complaint = () => {
 
     if (
       name === "issueCategory" &&
-      complaint.ward !== "Select" &&
+      complaint.wardNo !== "Select" &&
       value !== "Select Category"
     ) {
       console.log("hi");
-      fetchAssignStaffData(value, complaint.ward);
+      fetchAssignStaffData(value, complaint.wardNo);
     }
   };
 
@@ -68,7 +68,7 @@ const Complaint = () => {
         console.log(wardNo); // Access wardNo from res.data
         setComplaintDetails((prevComplaint) => ({
           ...prevComplaint,
-          ward: wardNo,
+          wardNo: wardNo,
         }));
       })
       .catch((error) => {
@@ -134,7 +134,7 @@ const Complaint = () => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       const formData = new FormData();
       for (let key in complaint) {
-        if (key == "ward") {
+        if (key == "wardNo") {
           formData.append("wardNo", complaint[key]);
         }
         formData.append(key, complaint[key]);
@@ -235,7 +235,7 @@ const Complaint = () => {
               <p className="input-label">Ward:</p>
               <select
                 name="ward"
-                value={complaint.ward} // Default to 'Ward 1' if ward is not set
+                value={complaint.wardNo} // Default to 'Ward 1' if ward is not set
                 onChange={changeHandler}
               >
                 <option value="Select">Select</option>

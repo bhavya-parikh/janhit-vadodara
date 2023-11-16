@@ -1,18 +1,28 @@
+import axios from "axios";
 import "./App.css";
+import { useAuth } from "./AuthProvider";
+import "react-toastify/dist/ReactToastify.min.css";
 import Profile from "./Components/Profile/Profile";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
 import OTPVerification from "./Components/Register/OTPVerification";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import Layout from "./Components/Layout/Layout.jsx";
 import Card from "./Components/contect/contect";
 import Navbar from "./Components/Navbar/Navbar";
-import Complaint from "./Components/Complaint/complaint.jsx";
+import Complaint from "./Components/Complaint/Complaint.jsx";
 import ComplaintTracking from "./Components/Complaint/complaintTracking.jsx";
-
+import ProtectedRouteUser from "./Components/ProtectedRouterUser";
+import ProtectedRouteFieldStaff from "./Components/ProtectedRouteFieldStaff";
 import Dashboard from "./Components/Dashboard/dashboard";
+import AuthNavbar from "./Components/Navbar/AuthNavbar";
+import Home from "./Components/Dashboard/dashboad1";
+import Main from "./Components/Layout/Main";
+import "./assets/styles/main.css";
+import "./assets/styles/responsive.css";
+
 const cardData = [
   {
     name: "John Doe",
@@ -107,10 +117,15 @@ const cardData = [
 ];
 
 function App() {
+  const { auth } = useAuth();
+
+  const [userRole, setUserRole] = useState(null);
+
   const [userstate, setUserState] = useState({});
   return (
     <>
-      <Navbar />
+      <ToastContainer />
+      {auth ? <AuthNavbar /> : <Navbar />}
       <div className="App">
         <Routes>
           <Route path="/" element={<Layout />}></Route>
@@ -120,11 +135,21 @@ function App() {
             element={<Login setUserState={setUserState} />}
           ></Route>
           <Route path="/signup" element={<Register />}></Route>
-          <Route path="/complaint" element={<Complaint />}></Route>
+          <Route element={<ProtectedRouteUser />}>
+            <Route path="/complaint" element={<Complaint />}></Route>
+          </Route>
 
           <Route path="/signup" element={<Register />}></Route>
           <Route path="/dashboard" element={<Dashboard />}></Route>
-          <Route exact path="/" component={Complaint} />
+          <Route
+            path="/dashboard1"
+            element={
+              <Main>
+                <Home />
+              </Main>
+            }
+          />
+
           <Route path="/complaintTracking" component={ComplaintTracking} />
 
           <Route

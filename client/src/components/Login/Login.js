@@ -3,14 +3,25 @@ import basestyle from "../Base.module.css";
 import loginstyle from "./Login.module.css";
 import axios from "axios";
 import { useNavigate, NavLink } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.min.css";
 import { ToastContainer, toast } from "react-toastify";
 import "../Register/login.css";
-
+import { useAuth } from "../../AuthProvider";
 const Login = ({ setUserState }) => {
   const navigate = useNavigate();
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [user, setUserDetails] = useState({ username: "", password: "" });
+  const { setAuth } = useAuth();
+
+  const handleError = (err) =>
+    toast.error(err, {
+      position: "top-right",
+    });
+  const handleSuccess = (msg) =>
+    toast.success(msg, {
+      position: "top-right",
+    });
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
@@ -41,13 +52,18 @@ const Login = ({ setUserState }) => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       console.log(user);
       axios
-        .post("http://localhost:5000/api/user/login", user)
+        .post("http://localhost:5000/api/user/login", user, {
+          withCredentials: true,
+        })
         .then((res) => {
+          handleSuccess("Logged In Successfully!");
+          setAuth(true);
+          localStorage.setItem("token", res.data.token);
           setUserState(res.data.user);
-          navigate("/Layout", { replace: true });
+          navigate("/", { replace: true });
         })
         .catch((err) => {
-          toast(err.response.data.message);
+          toast.error(err.response.data.message);
         });
     }
   }, [formErrors]);
