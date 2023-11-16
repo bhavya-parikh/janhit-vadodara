@@ -6,6 +6,7 @@ import Testimonial from "../Testimonials/Testimonial";
 const Layout = () => {
   return (
     <div>
+      <Navbar />
       <section id="body-part">
         {/* First Part */}
         <div className="first-p flex items-center justify-between shadow-lg">
