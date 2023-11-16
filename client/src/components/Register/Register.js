@@ -59,7 +59,9 @@ const Register = () => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       console.log(user);
       axios
-        .post("http://localhost:5000/api/user/register", user)
+        .post("http://localhost:5000/api/user/register", user, {
+          withCredentials: true,
+        })
         .then((res) => {
           navigate("/OTPVerification", { replace: true });
         })

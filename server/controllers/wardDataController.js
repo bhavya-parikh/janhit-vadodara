@@ -22,3 +22,7 @@ module.exports.addWardData = asyncHandler(async (req, res) => {
     });
   }
 });
+
+// module.exports.getallwards = asyncHandler(async(req, res))=> {
+
+// }

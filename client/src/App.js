@@ -1,18 +1,29 @@
+import axios from "axios";
 import "./App.css";
+import { useAuth } from "./AuthProvider";
+import "react-toastify/dist/ReactToastify.min.css";
 import Profile from "./Components/Profile/Profile";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
 import OTPVerification from "./Components/Register/OTPVerification";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import Layout from "./Components/Layout/Layout.jsx";
 import Card from "./Components/contect/contect";
 import Navbar from "./Components/Navbar/Navbar";
+import ProtectedRouteUser from "./Components/ProtectedRouterUser";
+import ProtectedRouteFieldStaff from "./Components/ProtectedRouteFieldStaff";
+import Dashboard from "./Components/Dashboard/dashboard";
+import AuthNavbar from "./Components/Navbar/AuthNavbar";
+import Home from "./Components/Dashboard/dashboad1";
+import Main from "./Components/Layout/Main";
+import "./assets/styles/main.css";
+import "./assets/styles/responsive.css";
+
 import Complaint from "./Components/Complaint/complaint.jsx";
 import { ComplaintTracking } from "./Components/ComplaintTracking/complainttracking.jsx";
 
-import Dashboard from "./Components/Dashboard/dashboard";
 import AdminLogin from "./Components/AdminLogin/AdminLogin.js";
 import FieldStaffLogin from "./Components/FieldStaffLogin/FieldStaffLogin.js";
 import CommissionerLogin from "./Components/CommissionerLogin/CommissionerLogin.js";
@@ -113,54 +124,70 @@ const cardData = [
 ];
 
 function App() {
+  const { auth } = useAuth();
+
+  const [userRole, setUserRole] = useState(null);
+
   const [userstate, setUserState] = useState({});
   return (
     <>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Layout />}></Route>
-        <Route path="/otpverification" element={<OTPVerification />}></Route>
-        <Route
-          path="/ComplaintTracking"
-          element={<ComplaintTracking />}
-        ></Route>
-        <Route path="/AdminLogin" element={<AdminLogin />}></Route>
-        <Route path="/FieldStaffLogin" element={<FieldStaffLogin />}></Route>
-        <Route path="/AddFieldStaff" element={<AddFieldStaff />}></Route>
-        <Route path="/RemoveFieldStaff" element={<RemoveFieldStaff />}></Route>
-        <Route
-          path="/CommissionerLogin"
-          element={<CommissionerLogin />}
-        ></Route>
-        <Route
-          path="/login"
-          element={<Login setUserState={setUserState} />}
-        ></Route>
-        <Route path="/signup" element={<Register />}></Route>
-        <Route path="/complaint" element={<Complaint />}></Route>
-        <Route path="/signup" element={<Register />}></Route>
-        <Route path="/dashboard" element={<Dashboard />}></Route>
-        <Route path="/Review" element={<Review />}></Route>
-        <Route
-          path="/contact"
-          element={
-            <>
-              <h1 className="contact_us">Contact Us</h1>
-              <div className="card-grid">
-                {cardData.map((data, index) => (
-                  <Card
-                    key={index}
-                    name={data.name}
-                    mobileNumber={data.mobileNumber}
-                    email={data.email}
-                    wardNo={data.wardNo}
-                  />
-                ))}
-              </div>
-            </>
-          }
-        ></Route>
-      </Routes>
+      <ToastContainer />
+      {auth ? <AuthNavbar /> : <Navbar />}
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Layout />}></Route>
+          <Route path="/otpverification" element={<OTPVerification />}></Route>
+          <Route
+            path="/login"
+            element={<Login setUserState={setUserState} />}
+          ></Route>
+          <Route path="/signup" element={<Register />}></Route>
+          <Route element={<ProtectedRouteUser />}>
+            <Route path="/complaint" element={<Complaint />}></Route>
+          </Route>
+          <Route path="/dashboard" element={<Dashboard />}></Route>
+          <Route
+            path="/dashboard1"
+            element={
+              <Main>
+                <Home />
+              </Main>
+            }
+          />
+          <Route path="/Review" element={<Review />}></Route>
+          <Route path="/complaintTracking" component={ComplaintTracking} />
+          <Route path="/AdminLogin" element={<AdminLogin />}></Route>
+          <Route path="/FieldStaffLogin" element={<FieldStaffLogin />}></Route>
+          <Route path="/AddFieldStaff" element={<AddFieldStaff />}></Route>
+          <Route
+            path="/RemoveFieldStaff"
+            element={<RemoveFieldStaff />}
+          ></Route>
+          <Route
+            path="/CommissionerLogin"
+            element={<CommissionerLogin />}
+          ></Route>
+          <Route
+            path="/contact"
+            element={
+              <>
+                <h1 className="contact_us">Contact Us</h1>
+                <div className="card-grid">
+                  {cardData.map((data, index) => (
+                    <Card
+                      key={index}
+                      name={data.name}
+                      mobileNumber={data.mobileNumber}
+                      email={data.email}
+                      wardNo={data.wardNo}
+                    />
+                  ))}
+                </div>
+              </>
+            }
+          ></Route>
+        </Routes>
+      </div>
     </>
   );
 }

@@ -13,6 +13,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please Enter your password"],
   },
+  role: {
+    type: String,
+    default: "user",
+  },
+  createdAt: {
+    type: Date,
+    default: new Date(),
+  },
 });
 
 const UserModel = mongoose.model("User", userSchema);

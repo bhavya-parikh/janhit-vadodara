@@ -83,3 +83,44 @@ module.exports.fetchComplaints = asyncHandler(async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+module.exports.updateComplaintStatus = asyncHandler(async (req, res) => {
+  try {
+    const complaintStatus = req.body.newStatus;
+    if (complaintStatus === "Completed") {
+      const complaint = await Complaint.findOne({ _id: req.body.complaintId });
+      console.log(complaint);
+      if (!complaint.imageFieldStaff) {
+        return res.send(404).json({ error: "Upload Image First!" });
+      }
+    }
+    const complaint = await Complaint.updateOne(
+      { _id: req.body.complaintId },
+      {
+        $set: {
+          complaintStatus: req.body.newStatus,
+        },
+      }
+    );
+    res.status(200).send(complaint);
+  } catch (err) {
+    console.log(err);
+    res.status(404).send(err.message);
+  }
+});
+
+module.exports.addimage = asyncHandler(async (req, res) => {
+  try {
+    const complaint = await Complaint.updateOne(
+      { _id: req.body.complaintId },
+      {
+        $set: {
+          imageFieldStaff: req.file.path,
+        },
+      }
+    );
+    res.status(200).send(complaint);
+  } catch (err) {
+    res.status(404).send("Unable To Update Right Now!");
+  }
+});

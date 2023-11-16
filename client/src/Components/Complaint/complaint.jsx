@@ -30,8 +30,8 @@ const Complaint = () => {
     mobileNo: "",
     issueCategory: "Select Category",
     issueSubcategory: "Select SubCategory",
-    area: "Select",
-    ward: "Select",
+    area: "Select Area",
+    wardNo: "Select", // Add a default ward selection
     complaintDescription: "",
     image: null,
     assignedStaffUsername: "",
@@ -62,7 +62,7 @@ const Complaint = () => {
 
     if (
       name === "issueCategory" &&
-      complaint.ward !== "Select" &&
+      complaint.wardNo !== "Select" &&
       value !== "Select Category"
     ) {
       fetchAssignStaffData(value, complaint.ward);
@@ -77,7 +77,7 @@ const Complaint = () => {
         form.setFieldsValue({ ward: wardNo });
         setComplaintDetails((prevComplaint) => ({
           ...prevComplaint,
-          ward: wardNo,
+          wardNo: wardNo,
         }));
       })
       .catch((error) => {
@@ -138,7 +138,7 @@ const Complaint = () => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       const formData = new FormData();
       for (let key in complaint) {
-        if (key === "ward") {
+        if (key == "wardNo") {
           formData.append("wardNo", complaint[key]);
         }
         formData.append(key, complaint[key]);

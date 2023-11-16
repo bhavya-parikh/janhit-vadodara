@@ -1,12 +1,28 @@
-import React from "react";
-import Navbar from "../Navbar/Navbar";
+import { React, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.min.css";
+
 import "./Layout.css";
+import { useCookies } from "react-cookie";
 import ComplaintCounters from "../NumberAnimation/Number";
 import Testimonial from "../Testimonials/Testimonial";
+import home_image from "../Assets/home_image.png";
+import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
+import { useAuth } from "../../AuthProvider";
 const Layout = () => {
+  const navigate = useNavigate();
+  const [cookies, removeCookie] = useCookies([]);
+  const [username, setUsername] = useState("");
+  const { setAuth } = useAuth();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) setAuth(true);
+  });
   return (
     <div>
-      <Navbar />
+      <ToastContainer />
       <section id="body-part">
         {/* First Part */}
         <div className="first-p flex items-center justify-between shadow-lg">
