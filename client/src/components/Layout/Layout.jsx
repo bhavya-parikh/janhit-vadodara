@@ -23,12 +23,12 @@ const Layout = () => {
               about civic issues and facilitating their swift resolution.
             </p>
             <button className="text-white font-semibold py-2 px-6 hover:border-transparent rounded-full">
-              <a href="/request-certificate" className="hover:text-white">
+              <a href="/complaintTracking" className="hover:text-white">
                 Track Complaint
               </a>
             </button>
             <button className="text-white font-semibold py-2 px-6 ml-6 mt-8 hover:border-transparent rounded-full">
-              <a href="/complain-form" className="hover:text-white">
+              <a href="/complaint" className="hover:text-white">
                 Register Complaint
               </a>
             </button>
@@ -43,7 +43,7 @@ const Layout = () => {
           className="flex items-center justify-between px-20 py-20 shadow-lg"
           id="second-p"
         >
-          <div className="second-p-con pl-32">
+          <div className="second-p-con pl-24">
             <div>
               <h1 className="text-5xl text-white font-bold inset-x-0">
                 Complaint Registered
