@@ -1,12 +1,12 @@
 import React from "react";
+import Navbar from "../Navbar/Navbar";
 import "./Layout.css";
 import ComplaintCounters from "../NumberAnimation/Number";
 import Testimonial from "../Testimonials/Testimonial";
-import home_image from "../Assets/home_image.png";
-
 const Layout = () => {
   return (
     <div>
+      <Navbar />
       <section id="body-part">
         {/* First Part */}
         <div className="first-p flex items-center justify-between shadow-lg">
@@ -23,18 +23,18 @@ const Layout = () => {
               about civic issues and facilitating their swift resolution.
             </p>
             <button className="text-white font-semibold py-2 px-6 hover:border-transparent rounded-full">
-              <a href="/complaintTracking" className="hover:text-white">
+              <a href="/request-certificate" className="hover:text-white">
                 Track Complaint
               </a>
             </button>
             <button className="text-white font-semibold py-2 px-6 ml-6 mt-8 hover:border-transparent rounded-full">
-              <a href="/complaint" className="hover:text-white">
+              <a href="/complain-form" className="hover:text-white">
                 Register Complaint
               </a>
             </button>
           </div>
-          <div className="right-image-container">
-            <img className="right-img" src={home_image} alt="" />
+          <div>
+            <img src="/images/front.png" className="mr-40" alt="Front" />
           </div>
         </div>
 
@@ -43,10 +43,10 @@ const Layout = () => {
           className="flex items-center justify-between px-20 py-20 shadow-lg"
           id="second-p"
         >
-          <div className="second-p-con pl-24">
+          <div className="second-p-con pl-32">
             <div>
               <h1 className="text-5xl text-white font-bold inset-x-0">
-                Complaint Registered
+                Complaint Registerd
               </h1>
             </div>
             <div className="px-6 py-6">
@@ -73,7 +73,7 @@ const Layout = () => {
         </section>
 
         <footer id="footer">
-          {/* <a
+          <a
             className="btn btn-primary btn-lg btn-floating footer-link-1"
             style={{ backgroundColor: "#367E18" }}
             href="#!"
@@ -98,7 +98,7 @@ const Layout = () => {
             role="button"
           >
             <i className="fab fa-twitter"></i>
-          </a> */}
+          </a>
 
           <p
             style={{ textAlign: "center", paddingTop: "50px", color: "white" }}
