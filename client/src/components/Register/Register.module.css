@@ -19,3 +19,19 @@
   padding: 12px;
   font-size: 16px;
 }
+.keyur .ant-btn {
+  background-color: #1890ff;
+  color: #aa0000;
+  border-color: #1890ff;
+}
+
+.keyur .ant-btn:hover,
+.keyur .ant-btn:focus {
+  background-color: #40a9ff;
+  border-color: #40a9ff;
+}
+
+.keyur .ant-btn:active {
+  background-color: #096dd9;
+  border-color: #096dd9;
+}
