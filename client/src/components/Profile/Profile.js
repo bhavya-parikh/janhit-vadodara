@@ -1,6 +1,6 @@
 import React from "react";
 import basestyle from "../Base.module.css";
-import Navbar from "../Navbar/Navbar";
+import Navbar from "../Navbar/Navbar/Navbar";
 const Profile = ({ setUserState, username }) => {
   return (
     <div className="profile">

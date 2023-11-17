@@ -4,10 +4,12 @@
   background-color: white; /* Replace with your color value */
 }
 .first-p-text {
+
   text-align: center;
   height: 300px;
   width: 800px;
 }
+
 button {
   color: white;
   font-weight: bold;
@@ -67,6 +69,10 @@ button:hover {
   text-align: center;
   background: #161616; /* Replace with your color value */
   height: 150px;
+}
+@media (max-width: 768px){
+
+ 
 }
 /* .footer-link-1 {
   position: relative;
