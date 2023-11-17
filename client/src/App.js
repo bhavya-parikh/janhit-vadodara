@@ -30,6 +30,7 @@ import CommissionerLogin from "./Components/CommissionerLogin/CommissionerLogin.
 import AddFieldStaff from "./Components/deptHead/addFieldStaff.jsx";
 import { RemoveFieldStaff } from "./Components/deptHead/RemoveFieldStaff.jsx";
 import Review from "./Components/Review/Review.jsx";
+import { MyComplaints } from "./Components/MyComplaints/MyComplaints.jsx";
 const cardData = [
   {
     name: "John Doe",
@@ -132,7 +133,7 @@ function App() {
   return (
     <>
       <ToastContainer />
-      {auth ? <AuthNavbar /> : <Navbar />}
+      {/* {auth ? <AuthNavbar /> : <Navbar />} */}
       <div className="App">
         <Routes>
           <Route path="/" element={<Layout />}></Route>
@@ -155,10 +156,22 @@ function App() {
             }
           />
           <Route path="/Review" element={<Review />}></Route>
-          <Route path="/complaintTracking" component={ComplaintTracking} />
-          <Route path="/AdminLogin" element={<AdminLogin />}></Route>
-          <Route path="/FieldStaffLogin" element={<FieldStaffLogin />}></Route>
-          <Route path="/AddFieldStaff" element={<AddFieldStaff />}></Route>
+          <Route
+            path="/complaintTracking"
+            element={<ComplaintTracking />}
+          ></Route>
+          <Route
+            path="/AdminLogin"
+            element={<AdminLogin setUserState={setUserState} />}
+          ></Route>
+          <Route
+            path="/FieldStaffLogin"
+            element={<FieldStaffLogin setUserState={setUserState} />}
+          ></Route>
+          <Route
+            path="/AddFieldStaff"
+            element={<AddFieldStaff setUserState={setUserState} />}
+          ></Route>
           <Route
             path="/RemoveFieldStaff"
             element={<RemoveFieldStaff />}
@@ -167,6 +180,8 @@ function App() {
             path="/CommissionerLogin"
             element={<CommissionerLogin />}
           ></Route>
+          <Route path="/mycomplaints" element={<MyComplaints />}></Route>
+
           <Route
             path="/contact"
             element={

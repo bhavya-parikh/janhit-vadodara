@@ -1,112 +1,164 @@
 import React, { useState, useEffect } from "react";
+import { Form, Input, Button, Select } from "antd";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
+import axios from "axios";
 import basestyle from "../Base.module.css";
 import loginstyle from "../Login/Login.module.css";
-import axios from "axios";
-import { useNavigate, NavLink } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "../Register/login.css";
+import { useAuth } from "../../AuthProvider";
+
+const { Option } = Select;
 
 const CommissionerLogin = ({ setUserState }) => {
   const navigate = useNavigate();
+  const [form] = Form.useForm();
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const { setAuth } = useAuth();
   const [user, setUserDetails] = useState({
     username: "",
     password: "",
-    userType: "",
+    role: "",
   });
-
-  const changeHandler = (e) => {
-    const { name, value } = e.target;
+  const changeHandler = (value, changedValues) => {
     setUserDetails({
       ...user,
-      [name]: value,
+      ...changedValues,
     });
-    if (name === "userType" && value === "user") {
-      navigate("/Login");
-    }
-    if (name === "userType" && value === "admin") {
-      navigate("/AdminLogin");
-    }
-    if (name === "userType" && value === "fieldstaff") {
-      navigate("/FieldStaffLogin");
+    switch (value) {
+      case "fieldStaff":
+        navigate("/FieldStaffLogin");
+        break;
+      case "admin":
+        navigate("/AdminLogin");
+        break;
+      case "commissioner":
+        navigate("/CommissionerLogin");
+        break;
+      default:
+        break;
     }
   };
-
+  const onFinish = async () => {
+    // Handle the form submission logic here if needed
+  };
   const validateForm = (values) => {
     const error = {};
-    const regex = /^[^\s+@]+@[^\s@]+\.[^\s@]{2,}$/i;
+
     if (!values.username) {
       error.username = "Username is required";
     }
+
     if (!values.password) {
       error.password = "Password is required";
     }
+
     return error;
   };
 
-  const loginHandler = (e) => {
-    e.preventDefault();
-    setFormErrors(validateForm(user));
-    setIsSubmit(true);
-  };
+  const loginHandler = async () => {
+    try {
+      const errors = validateForm(user);
+      setFormErrors(errors);
+      setIsSubmit(true);
 
-  useEffect(() => {
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(user);
-      axios
-        .post("http://localhost:5000/api/user/login", user)
-        .then((res) => {
-          setUserState(res.data.user);
-          navigate("/", { replace: true });
-        })
-        .catch((err) => {
-          toast(err.response.data.message);
-        });
+      if (Object.keys(errors).length === 0) {
+        const response = axios
+          .post("http://localhost:5000/api/admin/login", user, {
+            withCredentials: true,
+          })
+          .then((res) => {
+            toast("Logged in success");
+            setAuth(true);
+            localStorage.setItem("token", res.data.token);
+            setUserState(res.data.User);
+            navigate("/", { replace: true });
+            console.log("done");
+          })
+          .catch((err) => {
+            // toast.error(err.response.data.message);
+            console.log(err.message);
+          });
+      }
+    } catch {
+      // toast.error(err.response.data.message);
     }
+  };
+  useEffect(() => {
+    form.setFieldsValue({
+      username: "",
+      password: "",
+      role: "commissioner",
+    });
   }, [formErrors]);
+
   return (
     <>
       <ToastContainer />
-      <div id="login1" className={loginstyle.login}>
-        <form>
-          <h1 id="loginh1">Login As Commissioner</h1>
-          <input
-            type="text"
-            name="username"
-            id="username"
-            placeholder="Username"
-            onChange={changeHandler}
-            value={user.username}
-          />
-          <p className={basestyle.error}>{formErrors.username}</p>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Password"
-            onChange={changeHandler}
-            value={user.password}
-          />
-          <p className={basestyle.error}>{formErrors.password}</p>
-          <select
-            id="userType"
-            name="userType"
-            value={user.userType}
-            onChange={changeHandler}
-            className="shadow appearance-none border rounded w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          >
-            <option value="commissioner">Commissioner</option>
-            <option value="fieldstaff">Field Staff</option>
-            <option value="admin">Admin</option>
-          </select>
-
-          <button className={basestyle.button_common} onClick={loginHandler}>
-            Login
-          </button>
-        </form>
-      </div>
+      <section className="bg-gray-50 dark:bg-gray-900">
+        <div className="flex flex-col items-center justify-center w-full  sm:w-auto ml-0  md:w-auto mb-24 mt-10 mx-auto h-fit ">
+          <div className="bg-white border-2 border-gray-300 shadow-md rounded p-4 text-center">
+            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+              <Form
+                form={form}
+                name="loginForm"
+                onFinish={onFinish}
+                onValuesChange={changeHandler}
+              >
+                <h1 className="text-xl font-bold mb-4  leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                  Login As commissioner
+                </h1>
+                <Form.Item
+                  name="username"
+                  rules={[{ required: true, message: "Username is required" }]}
+                >
+                  <Input
+                    prefix={<UserOutlined />}
+                    placeholder="Username"
+                    className="rounded-lg"
+                  />
+                </Form.Item>
+                <Form.Item
+                  name="password"
+                  rules={[{ required: true, message: "Password is required" }]}
+                >
+                  <Input.Password
+                    prefix={<LockOutlined />}
+                    placeholder="••••••••"
+                    className="rounded-lg"
+                  />
+                </Form.Item>
+                <Form.Item
+                  name="role"
+                  rules={[{ required: true, message: "User type is required" }]}
+                >
+                  <Select
+                    className="w-96"
+                    placeholder="Select User Type"
+                    onSelect={changeHandler}
+                  >
+                    <Option value="commissioner">Commissioner</Option>
+                    <Option value="admin">Admin</Option>
+                    <Option value="fieldStaff">Field Staff</Option>
+                  </Select>
+                </Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  onClick={loginHandler}
+                  className={basestyle.button_common}
+                >
+                  Login
+                </Button>
+              </Form>
+            </div>{" "}
+          </div>
+        </div>
+      </section>
     </>
   );
 };
+
 export default CommissionerLogin;

@@ -10,13 +10,18 @@ const Review = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="bg-white border-2 border-gray-300 shadow-md rounded-md p-8 w-">
-        <h1 className="text-3xl font-bold mb-6 text-center">
+    <div className="flex items-center justify-center  bg-gray-100">
+      <div className="sm:w-96 mt-2 h-max md:w-fit bg-white border-2 border-gray-300 shadow-md rounded-md p-8">
+        <h1 className="sm:text-xl md:text-3xl font-bold mb-6 text-center ">
           Share your valuable thoughts!
         </h1>
-        <p>We'd really appreciate your thoughts to make things better.</p>
-        <p className="ml-20 mt-1"> Feel free to share your review with us!</p>
+        <p className="sm:text-xs md:text-xl text-center">
+          We'd really appreciate your thoughts to make things better.
+        </p>
+        <p className="sm:text-xs md:text-xl text-center mt-3">
+          {" "}
+          Feel free to share your review with us!
+        </p>
         <Form
           name="reviewForm"
           onFinish={onFinish}
