@@ -75,7 +75,6 @@ const AdminLogin = ({ setUserState }) => {
             localStorage.setItem("token", res.data.token);
             setUserState(res.data.User);
             navigate("/", { replace: true });
-            console.log("done");
           })
           .catch((err) => {
             // toast.error(err.response.data.message);
