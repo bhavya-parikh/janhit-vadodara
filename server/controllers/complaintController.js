@@ -48,7 +48,6 @@ module.exports.complaint = asyncHandler(async (req, res) => {
     try {
       // Verify and decode the JWT token
       const decoded = jwt.verify(token, process.env.TOKEN_KEY);
-      console.log(decoded);
       // Fetch user information based on the decoded user ID using the provided user model
       const user = await userModel.findById(decoded.id._id);
       if (!user) {
@@ -102,7 +101,6 @@ module.exports.complaint = asyncHandler(async (req, res) => {
 });
 
 module.exports.fetchComplaintsAdmin = asyncHandler(async (req, res) => {
-  console.log(req.cookies.token);
   try {
     const token = req.cookies.token;
     if (token) {
@@ -149,7 +147,6 @@ module.exports.updateComplaintStatus = asyncHandler(async (req, res) => {
     const complaintStatus = req.body.newStatus;
     if (complaintStatus === "Completed") {
       const complaint = await Complaint.findOne({ _id: req.body.complaintId });
-      console.log(complaint);
       if (!complaint.imageFieldStaff) {
         return res.send(404).json({ error: "Upload Image First!" });
       }

@@ -7,7 +7,6 @@ const registerUser = asyncHandler(async (req, res, next) => {
   const { addharid, username, password, createdAt } = req.body;
   const role = "user";
   if (!addharid || !username || !password) {
-    console.log(addharid, username, password);
     res.status(400).send({ message: "Please add all fields" });
   } else {
     const userExist = await User.findOne({ username });
@@ -32,7 +31,6 @@ const registerUser = asyncHandler(async (req, res, next) => {
           httpOnly: false,
         });
 
-        console.log(token);
         res.status(201).json({
           message: "User signed in successfully",
           success: true,
@@ -51,7 +49,6 @@ const registerUser = asyncHandler(async (req, res, next) => {
 const loginUser = asyncHandler(async (req, res, next) => {
   try {
     const { username, password, role } = req.body;
-    console.log(username, password);
     if (!username || !password) {
       return res.json({ message: "All fields are required" });
     }

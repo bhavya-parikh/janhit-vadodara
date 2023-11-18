@@ -1,19 +1,23 @@
 const FieldStaff = require("../models/fieldStaff");
 const asyncHandler = require("express-async-handler");
+const bcrypt = require("bcryptjs");
 
 module.exports.addFieldStaff = asyncHandler(async (req, res) => {
   const { name, username, password, wardNo, category } = req.body;
   if (!name || !username || !password || !wardNo || !category) {
-    res.status(400).send({ message: "Please Add All Fields" });
-  } else {
+    return res.status(400).send({ message: "Please Add All Fields" });
+  }
+  try {
     const fieldStaffExists = await FieldStaff.findOne({ username });
     if (fieldStaffExists) {
-      res.status(400).send({ message: "Field Staff Already Exist!" });
-    } else {
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(password, salt);
+      return res.status(400).send({ message: "Field Staff Already Exists!" });
     }
+  } catch (err) {
+    return res.status(400).send({ message: err });
   }
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+
   const fieldStaff = await FieldStaff.create({
     name,
     username,
