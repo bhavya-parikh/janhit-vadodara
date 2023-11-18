@@ -1,6 +1,8 @@
 const Admin = require("../models/admin");
 const FieldStaff = require("../models/fieldStaff");
 const asyncHandler = require("express-async-handler");
+const bcrypt = require("bcryptjs");
+const { createSecretToken } = require("../util/SecretToken");
 
 const dashboard = asyncHandler(async (req, res, next) => {
   const username = req.body.username;
@@ -18,7 +20,12 @@ const dashboard = asyncHandler(async (req, res, next) => {
   if (!User) {
     res.status(404).send({ message: "User Not Found" });
   }
-  const validate = await bcrypt.compare(req.body.password, user.password);
+  var validate = 0;
+  if (req.body.password == User.password) {
+    validate = 1;
+  } else {
+    validate = 0;
+  }
   if (!validate) {
     res.status(403).send({ message: "Wrong Pass" });
   }

@@ -30,7 +30,7 @@ import {
   RightOutlined,
 } from "@ant-design/icons";
 import Paragraph from "antd/lib/typography/Paragraph";
-import Navbar from "../Navbar/Navbar";
+import Navbar from "../Navbar/Navbar/Navbar";
 import Echart from "../chart/EChart";
 import LineChart from "../chart/LineChart";
 import ava1 from "../../assets/images/logo-shopify.svg";

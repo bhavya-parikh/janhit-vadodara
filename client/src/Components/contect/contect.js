@@ -1,7 +1,7 @@
 // Card.js
 import React from 'react';
 import './contect.css';
-import Navbar from '../Navbar/Navbar';
+import Navbar from '../Navbar/Navbar/Navbar';
 
 function Card({ name, mobileNumber, email, wardNo }) {
   return (

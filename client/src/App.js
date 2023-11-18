@@ -11,11 +11,11 @@ import { useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import Layout from "./Components/Layout/Layout.jsx";
 import Card from "./Components/contect/contect";
-import Navbar from "./Components/Navbar/Navbar";
+import Navbar from "./Components/Navbar/Navbar/Navbar.jsx";
 import ProtectedRouteUser from "./Components/ProtectedRouterUser";
 import ProtectedRouteFieldStaff from "./Components/ProtectedRouteFieldStaff";
 import Dashboard from "./Components/Dashboard/dashboard";
-import AuthNavbar from "./Components/Navbar/AuthNavbar";
+import AuthNavbar from "./Components/Navbar/AuthNavbar/AuthNavbar.jsx";
 import Home from "./Components/Dashboard/dashboad1";
 import Main from "./Components/Layout/Main";
 import "./assets/styles/main.css";
@@ -30,6 +30,7 @@ import CommissionerLogin from "./Components/CommissionerLogin/CommissionerLogin.
 import AddFieldStaff from "./Components/deptHead/addFieldStaff.jsx";
 import { RemoveFieldStaff } from "./Components/deptHead/RemoveFieldStaff.jsx";
 import Review from "./Components/Review/Review.jsx";
+import { MyComplaints } from "./Components/MyComplaints/MyComplaints.jsx";
 const cardData = [
   {
     name: "John Doe",
@@ -155,10 +156,22 @@ function App() {
             }
           />
           <Route path="/Review" element={<Review />}></Route>
-          <Route path="/complaintTracking" component={ComplaintTracking} />
-          <Route path="/AdminLogin" element={<AdminLogin />}></Route>
-          <Route path="/FieldStaffLogin" element={<FieldStaffLogin />}></Route>
-          <Route path="/AddFieldStaff" element={<AddFieldStaff />}></Route>
+          <Route
+            path="/complaintTracking"
+            element={<ComplaintTracking />}
+          ></Route>
+          <Route
+            path="/AdminLogin"
+            element={<AdminLogin setUserState={setUserState} />}
+          ></Route>
+          <Route
+            path="/FieldStaffLogin"
+            element={<FieldStaffLogin setUserState={setUserState} />}
+          ></Route>
+          <Route
+            path="/AddFieldStaff"
+            element={<AddFieldStaff setUserState={setUserState} />}
+          ></Route>
           <Route
             path="/RemoveFieldStaff"
             element={<RemoveFieldStaff />}
@@ -167,6 +180,8 @@ function App() {
             path="/CommissionerLogin"
             element={<CommissionerLogin />}
           ></Route>
+          <Route path="/mycomplaints" element={<MyComplaints />}></Route>
+
           <Route
             path="/contact"
             element={

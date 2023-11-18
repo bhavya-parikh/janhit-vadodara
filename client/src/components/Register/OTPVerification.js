@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import basestyle from "../Base.module.css";
-import registerstyle from "./Register.module.css";
-import axios from "axios";
-import { useNavigate, NavLink } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import React, { useState } from "react";
+import { Form, Input, Button, message } from "antd";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import login1 from "../Register/login.css";
+import registerstyle from "./Register.module.css";
+import basestyle from "../Base.module.css";
+import loginstyle from "../Login/Login.module.css";
 
 const OTPVerification = () => {
   const navigate = useNavigate();
@@ -34,26 +34,51 @@ const OTPVerification = () => {
   return (
     <>
       <ToastContainer />
-      <div id="login1" className={registerstyle.register}>
-        <form className="register-form">
-          <h1 id="loginh1">OTP Verification</h1>
-          <input
-            className="keyur"
-            type="text"
-            name="otp"
-            id="otp"
-            placeholder="Enter OTP"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-          />
-          <button className="register-button" onClick={handleOTPVerification}>
-            Verify OTP
-          </button>
-          <p className="error">{verificationStatus}</p>
-        </form>
-      </div>
+      <section className="bg-gray-50 dark:bg-gray-900">
+        <div className="flex flex-col items-center justify-center w-full  sm:w-auto ml-0  md:w-auto mb-24 mt-10 mx-auto h-fit ">
+          <div className="bg-white border-2 border-gray-300 shadow-md rounded p-4 text-center">
+            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+              <Form
+                className="register-form"
+                onFinish={handleOTPVerification}
+                initialValues={{ otp }}
+              >
+                <h1 id="loginh1">OTP Verification</h1>
+                <Form.Item
+                  className="keyur"
+                  type="text"
+                  name="otp"
+                  id="otp"
+                  placeholder="Enter OTP"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                  rules={[
+                    { required: true, message: "Please enter OTP" },
+                    {
+                      pattern: /^\d{3}$/,
+                      message: "Please enter a valid 3-digit OTP",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Enter OTP" />
+                </Form.Item>
+                <Form.Item>
+                  <Button
+                    onClick={handleOTPVerification}
+                    type="primary"
+                    htmlType="submit"
+                    className={basestyle.button_common}
+                  >
+                    Verify OTP
+                  </Button>
+                </Form.Item>
+                <p className="error">{verificationStatus}</p>
+              </Form>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 };
-
 export default OTPVerification;
