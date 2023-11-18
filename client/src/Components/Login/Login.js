@@ -46,9 +46,13 @@ const Login = ({ setUserState }) => {
 
       if (Object.keys(errors).length === 0) {
         const response = axios
-          .post(`${process.env.REACT_APP_VERCEL_URL}/api/user/login`, user, {
-            withCredentials: true,
-          })
+          .post(
+            `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/user/login`,
+            user,
+            {
+              withCredentials: true,
+            }
+          )
           .then((res) => {
             toast("Logged in success");
             setAuth(true);

@@ -27,10 +27,13 @@ function DataTableRowActions({ row }) {
   const [isPopupVisible, setPopupVisibility] = useState(false);
   const statusHandler = (selectedStatus) => {
     axios
-      .post(`${process.env.REACT_APP_VERCEL_URL}/api/updateComplaintStatus`, {
-        complaintId: taskId,
-        newStatus: selectedStatus,
-      })
+      .post(
+        `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/updateComplaintStatus`,
+        {
+          complaintId: taskId,
+          newStatus: selectedStatus,
+        }
+      )
       .then((response) => {
         toast.success("Status Updated Successfully!");
       })
@@ -55,7 +58,7 @@ function DataTableRowActions({ row }) {
 
     axios
       .post(
-        `${process.env.REACT_APP_VERCEL_URL}/api/services/complaint/addimage`,
+        `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/services/complaint/addimage`,
         formData
       )
       .then((response) => {

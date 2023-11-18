@@ -59,7 +59,7 @@ const Register = () => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       console.log(user);
       axios
-        .post(`${process.env.REACT_APP_VERCEL_URL}`, user, {
+        .post(`${process.env.REACT_APP_VERCEL_ENV_BASEURL}`, user, {
           withCredentials: true,
         })
         .then((res) => {

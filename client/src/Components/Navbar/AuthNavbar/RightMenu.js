@@ -15,7 +15,7 @@ const RightMenu = ({ mode }) => {
   const { setAuth, user } = useAuth();
   const logout = async () => {
     const res = await axios.post(
-      `${process.env.REACT_APP_VERCEL_URL}/api/user/logout/`,
+      `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/user/logout/`,
       {
         withCredentials: true,
       }
