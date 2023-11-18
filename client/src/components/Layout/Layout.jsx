@@ -68,13 +68,13 @@ const Layout = () => {
                 Complaint Registered
               </h1>
             </div>
-            <div className="flex items-center justify-center md:justify-start px-4 py-3 md:px-2 py-4 md:py-6">
+            <div className="flex items-center justify-center md:justify-start px-4 py-3  md:px-2 py-4 md:py-6">
               <ComplaintCounters type="registered" />
             </div>
           </div>
           <div className="md:w-1/2 pl-0 md:pr-32">
             <div className="w-max md:w-full">
-              <h1 className="text-2xl md:text-4xl lg:text-4xl text-white font-bold">
+              <h1 className="text-2xl md:text-4xl lg:text-4xl md:pl-8 text-white font-bold">
                 Complaint Accomplished
               </h1>
             </div>
