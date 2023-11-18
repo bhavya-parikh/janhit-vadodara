@@ -17,7 +17,7 @@ app.use("/uploads", express.static("uploads"));
 const cors = require("cors");
 
 const PORT = 5000;
-const db = require("./db/user");
+const db = require("./src/db/user");
 
 app.use(
   cors({
@@ -28,7 +28,7 @@ app.use(
 );
 app.use(cookieParser());
 
-const apiRoutes = require("./routes/api");
+const apiRoutes = require("./src/routes/api");
 app.use("/api", apiRoutes);
 
 app.listen(PORT, () => {
