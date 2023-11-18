@@ -97,7 +97,7 @@ const Complaint = () => {
 
   const fetchWardData = (selectedArea) => {
     axios
-      .post(`${process.env.REACT_APP_BASEURL}/api/fetchWardData`, {
+      .post(`${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/fetchWardData`, {
         area: selectedArea,
       })
       .then((res) => {
@@ -117,7 +117,7 @@ const Complaint = () => {
 
   const fetchAssignStaffData = (selectedCategory, selectedWard) => {
     axios
-      .post(`${process.env.REACT_APP_BASEURL}/api/fetchFieldStaff`, {
+      .post(`${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/fetchFieldStaff`, {
         category: selectedCategory,
         wardNo: selectedWard,
       })
@@ -181,7 +181,7 @@ const Complaint = () => {
       setUploading(true);
       axios
         .post(
-          `${process.env.REACT_APP_BASEURL}/api/services/complaint`,
+          `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/services/complaint`,
           formData,
           {
             withCredentials: true,
