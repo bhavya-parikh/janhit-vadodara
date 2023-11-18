@@ -46,7 +46,7 @@ const Login = ({ setUserState }) => {
 
       if (Object.keys(errors).length === 0) {
         const response = axios
-          .post(`${process.env.REACT_APP_BASEURL}/api/user/login`, user, {
+          .post(`${process.env.REACT_APP_VERCEL_URL}/api/user/login`, user, {
             withCredentials: true,
           })
           .then((res) => {

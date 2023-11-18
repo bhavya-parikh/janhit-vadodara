@@ -66,7 +66,7 @@ const FieldStaffLogin = ({ setUserState }) => {
 
       if (Object.keys(errors).length === 0) {
         const response = axios
-          .post(`${process.env.REACT_APP_BASEURL}/api/admin/login`, user, {
+          .post(`${process.env.REACT_APP_VERCEL_URL}/api/admin/login`, user, {
             withCredentials: true,
           })
           .then((res) => {

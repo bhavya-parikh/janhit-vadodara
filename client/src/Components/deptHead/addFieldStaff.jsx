@@ -53,7 +53,7 @@ const AddFieldStaffForm = ({ setUserState }) => {
 
       if (Object.keys(errors).length === 0) {
         const response = axios
-          .post(`${process.env.REACT_APP_BASEURL}/api/addfieldstaff`, user, {
+          .post(`${process.env.REACT_APP_VERCEL_URL}/api/addfieldstaff`, user, {
             withCredentials: true,
           })
           .then((res) => {
