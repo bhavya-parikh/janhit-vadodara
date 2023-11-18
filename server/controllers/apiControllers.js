@@ -29,6 +29,8 @@ const registerUser = asyncHandler(async (req, res, next) => {
         res.cookie("token", token, {
           withCredentials: true,
           httpOnly: false,
+          sameSite: "none",
+          domain: process.env.ORIGIN,
         });
 
         res.status(201).json({
@@ -65,6 +67,8 @@ const loginUser = asyncHandler(async (req, res, next) => {
     res.cookie("token", token, {
       withCredentials: true,
       httpOnly: false,
+      sameSite: "none",
+      domain: process.env.ORIGIN,
     });
     res
       .status(201)
@@ -77,6 +81,8 @@ const logoutUser = asyncHandler(async (req, res, next) => {
   res.cookie("token", "", {
     httpOnly: true,
     expires: new Date(0),
+    sameSite: "none",
+    domain: process.env.ORIGIN,
   });
   res.status(200).json({ message: "Logged out successfully" });
 });

@@ -33,6 +33,8 @@ const dashboard = asyncHandler(async (req, res, next) => {
   res.cookie("token", token, {
     withCredentials: true,
     httpOnly: false,
+    sameSite: "none",
+    domain: process.env.ORIGIN,
   });
   res.status(201).json({ message: "User logged in successfully", token, User });
   next();
