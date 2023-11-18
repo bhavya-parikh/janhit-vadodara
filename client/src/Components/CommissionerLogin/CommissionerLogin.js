@@ -66,9 +66,13 @@ const CommissionerLogin = ({ setUserState }) => {
 
       if (Object.keys(errors).length === 0) {
         const response = axios
-          .post("http://localhost:5000/api/admin/login", user, {
-            withCredentials: true,
-          })
+          .post(
+            `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/admin/login`,
+            user,
+            {
+              withCredentials: true,
+            }
+          )
           .then((res) => {
             toast("Logged in success");
             setAuth(true);

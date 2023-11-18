@@ -2,7 +2,6 @@ import axios from "axios";
 import "./App.css";
 import { useAuth } from "./AuthProvider";
 import "react-toastify/dist/ReactToastify.min.css";
-import Profile from "./Components/Profile/Profile";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
 import OTPVerification from "./Components/Register/OTPVerification";

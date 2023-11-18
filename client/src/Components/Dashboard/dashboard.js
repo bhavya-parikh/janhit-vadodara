@@ -57,7 +57,7 @@ const Dashboard = () => {
       dataIndex: "images",
       render: (text, record) => (
         <img
-          src={`http://localhost:5000/${record.images[0]}`}
+          src={`${process.env.REACT_APP_VERCEL_ENV_BASEURL}/${record.images[0]}`}
           style={{
             maxHeight: "250px", // Adjust the height as needed
           }}
@@ -132,7 +132,7 @@ const Dashboard = () => {
         formData.append("image", selectedFiles[record._id]);
         axios
           .post(
-            "http://localhost:5000/api/services/complaint/addimage",
+            `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/services/complaint/addimage`,
             formData
           )
           .then((response) => {
@@ -157,10 +157,13 @@ const Dashboard = () => {
 
   const updateComplaintStatus = (complaintId, newStatus) => {
     axios
-      .post("http://localhost:5000/api/updateComplaintStatus", {
-        complaintId,
-        newStatus,
-      })
+      .post(
+        `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/updateComplaintStatus`,
+        {
+          complaintId,
+          newStatus,
+        }
+      )
       .then((response) => {
         console.log("Status Updated Successfully!");
         message.success("Status Updated Successfully!");
@@ -175,7 +178,7 @@ const Dashboard = () => {
   useEffect(() => {
     axios
       .post(
-        "http://localhost:5000/api/fetchComplaintsAdmin",
+        `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/fetchComplaintsAdmin`,
         {},
         {
           withCredentials: true,

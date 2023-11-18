@@ -16,13 +16,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static("uploads"));
 const cors = require("cors");
 
-const PORT = process.env.PORT || 3001;
-const db = require("./db/user");
+const PORT = process.env.PORT || 5000;
+const db = require("./src/db/user");
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["https://janhit-vadodara.vercel.app"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 
-const apiRoutes = require("./routes/api");
+const apiRoutes = require("./src/routes/api");
 app.use("/api", apiRoutes);
 app.get("/", (req, res) => {
   res.send("Hey this is my API running 🥳");
