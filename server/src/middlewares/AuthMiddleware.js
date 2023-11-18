@@ -8,12 +8,10 @@ const authorize = (role, userModel) =>
     // Extract the JWT token from the cookie
     token = req.cookies.token;
 
-    console.log("Token is", token);
     if (token) {
       try {
         // Verify and decode the JWT token
         const decoded = jwt.verify(token, process.env.TOKEN_KEY);
-        console.log(decoded);
 
         // Fetch user information based on the decoded user ID using the provided user model
         const user = await userModel.findById(decoded.id._id);
@@ -27,7 +25,6 @@ const authorize = (role, userModel) =>
         // Check user's role for role-based access control
         if (user.role === role) {
           // Allow access for admin
-          console.log("access granded");
           next();
         } else {
           res
@@ -45,8 +42,8 @@ const authorize = (role, userModel) =>
   });
 
 module.exports = {
-  CitizenOnly: authorize("user", require("../models/user")),
-  FieldStaffOnly: authorize("fieldStaff", require("../models/fieldStaff")),
+  CitizenOnly: authorize("user", require("../../models/user")),
+  FieldStaffOnly: authorize("fieldStaff", require("../../models/fieldStaff")),
   // DepartmentHeadOnly: authorize("deptHead", require("../models/deptHead")),
   // CommissionerOnly: authorize(
   //   "Commissioner",
