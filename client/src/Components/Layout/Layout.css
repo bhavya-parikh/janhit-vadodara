@@ -1,13 +1,31 @@
+/* #body-part {
+
+} */
 .first-p {
   height: 590px;
   width: 100%;
   background-color: white; /* Replace with your color value */
 }
+@media (max-width: 767px) {
+  .first-p {
+    height: 480px;
+    margin-top: 0%;
+    padding-right: 5%;
+    padding-left: 5%;
+    padding-bottom: 100px;
+  }
+}
 .first-p-text {
-
   text-align: center;
   height: 300px;
   width: 800px;
+}
+@media (max-width: 767px) {
+  .first-p-text {
+    /* height: 680px; Adjust the height for mobile devices */
+    margin-right: 50px;
+    margin-right: 0;
+  }
 }
 
 button {
@@ -22,19 +40,18 @@ button {
   transition: all 0.3s ease-in-out;
   background-color: #687eff; /* Replace with your color value */
   height: 60px;
-  width: 200px;
+  width: 250px;
   button:hover {
     background-color: #80b3ff; /* Replace with your color value */
   }
 }
 .right-image-container {
-  width: 40%;
+  width: 50%;
   height: 40px;
   margin-bottom: 800px;
 }
 .right-img {
-  margin-top: 100px;
-  padding-bottom: 100px;
+  padding-bottom: 10px;
   width: 800px;
   height: 800px;
 }
@@ -57,9 +74,15 @@ button:hover {
 
 #third-part {
   background-color: white; /* Replace with your color value */
-  height: 700px;
+  height: 100vh; /* Set the height to 100% of the viewport height */
 }
-
+@media (max-width: 767px) {
+  #third-part {
+    height: auto;
+    margin-top: 0;
+    padding-bottom: 190px;
+  }
+}
 .third-p-heading {
   text-align: center;
   padding-bottom: 50px;
@@ -68,12 +91,15 @@ button:hover {
 #footer {
   text-align: center;
   background: #161616; /* Replace with your color value */
-  height: 150px;
+  height: 150px; /* Adjust the height as needed */
+  padding: 0 2rem;
 }
-@media (max-width: 768px){
+@media (max-width: 767px) {
+  #footer {
+    height: 40vh;
+  }
+}
 
- 
-}
 /* .footer-link-1 {
   position: relative;
   top: 30px;
@@ -289,5 +315,3 @@ required:after {
     height: 3rem;
   }
 } */
-
-/* Additional responsive styles can be added as needed for your specific design. */

@@ -133,7 +133,7 @@ function App() {
   return (
     <>
       <ToastContainer />
-      {/* {auth ? <AuthNavbar /> : <Navbar />} */}
+      {auth ? <AuthNavbar /> : <Navbar />}
       <div className="App">
         <Routes>
           <Route path="/" element={<Layout />}></Route>
