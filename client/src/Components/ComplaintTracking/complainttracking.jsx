@@ -3,7 +3,6 @@ import axios from "axios";
 import { Form, Input, Button, Checkbox, Span } from "antd";
 import { useNavigate } from "react-router-dom";
 
-
 export const ComplaintTracking = () => {
   const navigate = useNavigate();
   const [trackingInfo, setTrackingInfo] = useState({
@@ -57,39 +56,17 @@ export const ComplaintTracking = () => {
             placeholder="Enter Complaint ID"
           />
         </div>
-        <div className="justify-center">
-          <p className="absolute bg-white px-2 text-gray-500 justify-center">
-            or
-          </p>
-          <hr className="border-gray-400 absolute w-full h-0.5" />
-        </div>
-        <div className="relative mt-10">
-          <Form.Item
-            htmlFor="username"
-            className="block text-gray-700 text-sm font-bold mb-2 mt-4"
+        <div className=" flex justify-center  md:h-fit md:col-start-2 md:col-span-1 md:mr-4 flex justify-center  md:ml-2">
+          <Button
+            type="submit"
+            className="button_common bg-blue-500 text-white py-2 px-4 rounded"
+            onClick={() => {
+              navigate("/progress");
+            }}
           >
-            Username:
-          </Form.Item>
-          <Input
-            type="text"
-            id="username"
-            name="username"
-            value={trackingInfo.username}
-            onChange={changeHandler}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Enter Username"
-          />
+            Submit
+          </Button>
         </div>
-        <Button
-          type="submit"
-          className="button_common bg-blue-500 text-white py-2 px-4 rounded"
-          onClick={() => {
-            
-            navigate("/progress");
-          }}
-        >
-          Submit
-        </Button>
       </Form>
       {response && (
         <div className="mt-4 text-gray-700">
