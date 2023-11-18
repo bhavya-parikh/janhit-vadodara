@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static("uploads"));
 const cors = require("cors");
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 const db = require("./src/db/user");
 
 app.use(
