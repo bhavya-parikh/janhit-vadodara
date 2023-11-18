@@ -1,0 +1,37 @@
+.register {
+  width: 400px;
+  background: #fff;
+  border: 5px solid #d5d6d8;
+  box-shadow: 0 4px 9px rgb(0 0 10 / 64%), 0 8px 16px rgb(0 10 0 / 34%);
+  border-radius: 8px;
+  padding: 1rem;
+  align-items: center;
+  text-align: center;
+}
+
+.register > form input {
+  border-radius: 20px;
+  border: 2px solid lightgrey;
+  outline: none;
+  color: #1d2129;
+  margin: 2% 0;
+  width: 90%;
+  padding: 12px;
+  font-size: 16px;
+}
+.keyur .ant-btn {
+  background-color: #1890ff;
+  color: #aa0000;
+  border-color: #1890ff;
+}
+
+.keyur .ant-btn:hover,
+.keyur .ant-btn:focus {
+  background-color: #40a9ff;
+  border-color: #40a9ff;
+}
+
+.keyur .ant-btn:active {
+  background-color: #096dd9;
+  border-color: #096dd9;
+}
