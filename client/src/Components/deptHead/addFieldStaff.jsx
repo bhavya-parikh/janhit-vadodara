@@ -53,9 +53,13 @@ const AddFieldStaffForm = ({ setUserState }) => {
 
       if (Object.keys(errors).length === 0) {
         const response = axios
-          .post("http://localhost:5000/api/addfieldstaff", user, {
-            withCredentials: true,
-          })
+          .post(
+            `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/addfieldstaff`,
+            user,
+            {
+              withCredentials: true,
+            }
+          )
           .then((res) => {
             toast("FieldStaff Added successfully");
             setAuth(true);

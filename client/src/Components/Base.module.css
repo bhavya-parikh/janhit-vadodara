@@ -1,0 +1,25 @@
+.button_common {
+    color: white;
+    font-weight: bold;
+    padding: 15px 30px;
+    border: none;
+    font-size: 22px;
+    border-radius: 15px;
+    margin: 1rem;
+    width: 90%;
+    transition: all 0.3s ease-in-out;
+    background-color: #687eff; /* Replace with your color value */
+    height: 60px;
+    width: 200px;
+    button:hover {
+        background-color: #80b3ff; /* Replace with your color value */
+      }
+    }
+    
+.error {
+    color: red;
+    text-align: left;
+    margin: auto;
+    font-size: 16px;
+    padding: 0px 1rem;
+}
