@@ -66,7 +66,7 @@ const AdminLogin = ({ setUserState }) => {
 
       if (Object.keys(errors).length === 0) {
         const response = axios
-          .post("http://localhost:5000/api/admin/login", user, {
+          .post(`${process.env.BASEURL}/api/admin/login`, user, {
             withCredentials: true,
           })
           .then((res) => {

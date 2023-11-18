@@ -59,7 +59,7 @@ const Register = () => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       console.log(user);
       axios
-        .post("http://localhost:5000/api/user/register", user, {
+        .post(`${process.env.REACT_APP_BASEURL}`, user, {
           withCredentials: true,
         })
         .then((res) => {

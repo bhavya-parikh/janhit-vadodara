@@ -27,7 +27,7 @@ function DataTableRowActions({ row }) {
   const [isPopupVisible, setPopupVisibility] = useState(false);
   const statusHandler = (selectedStatus) => {
     axios
-      .post("http://localhost:5000/api/updateComplaintStatus", {
+      .post(`${process.env.REACT_APP_BASEURL}/api/updateComplaintStatus`, {
         complaintId: taskId,
         newStatus: selectedStatus,
       })
@@ -54,7 +54,10 @@ function DataTableRowActions({ row }) {
     formData.append("image", selectedFile);
 
     axios
-      .post("http://localhost:5000/api/services/complaint/addimage", formData)
+      .post(
+        `${process.env.REACT_APP_BASEURL}/api/services/complaint/addimage`,
+        formData
+      )
       .then((response) => {
         toast.success("Image Uploaded Successfully!");
         setPopupVisibility(false);

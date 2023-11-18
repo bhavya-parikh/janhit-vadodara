@@ -97,7 +97,9 @@ const Complaint = () => {
 
   const fetchWardData = (selectedArea) => {
     axios
-      .post("http://localhost:5000/api/fetchWardData", { area: selectedArea })
+      .post(`${process.env.REACT_APP_BASEURL}/api/fetchWardData`, {
+        area: selectedArea,
+      })
       .then((res) => {
         const wardNo = res.data.wardNo;
         form.setFieldsValue({ wardNo: wardNo });
@@ -115,7 +117,7 @@ const Complaint = () => {
 
   const fetchAssignStaffData = (selectedCategory, selectedWard) => {
     axios
-      .post("http://localhost:5000/api/fetchFieldStaff", {
+      .post(`${process.env.REACT_APP_BASEURL}/api/fetchFieldStaff`, {
         category: selectedCategory,
         wardNo: selectedWard,
       })
@@ -178,9 +180,13 @@ const Complaint = () => {
       });
       setUploading(true);
       axios
-        .post("http://localhost:5000/api/services/complaint", formData, {
-          withCredentials: true,
-        })
+        .post(
+          `${process.env.REACT_APP_BASEURL}/api/services/complaint`,
+          formData,
+          {
+            withCredentials: true,
+          }
+        )
         .then((res) => {
           setLoading(false);
           console.log(res.data);

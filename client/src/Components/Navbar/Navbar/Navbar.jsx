@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import logo from "../../Assets/Vmc.jpg";
 import "./Navbar.css";
 import { Layout, Button, Drawer } from "antd";
@@ -16,18 +16,21 @@ export const AuthNavbar = () => {
   const navigate = useNavigate();
   const { setAuth, user } = useAuth();
   const [visible, setVisible] = useState(false);
-    const showDrawer = () => {
-      setVisible(!visible);
-    };
+  const showDrawer = () => {
+    setVisible(!visible);
+  };
 
-    let { pathname: location } = useLocation();
-    useEffect(() => {
-      setVisible(false);
-    }, [location]);
+  let { pathname: location } = useLocation();
+  useEffect(() => {
+    setVisible(false);
+  }, [location]);
   const logout = async () => {
-    const res = await axios.post("http://localhost:5000/api/user/logout/", {
-      withCredentials: true,
-    });
+    const res = await axios.post(
+      `${process.env.REACT_APP_BASEURL}/api/user/logout/`,
+      {
+        withCredentials: true,
+      }
+    );
     console.log(res.data);
     localStorage.removeItem("token");
     setAuth(false);
@@ -39,20 +42,19 @@ export const AuthNavbar = () => {
       <Layout>
         <Layout.Header className="nav-header">
           <div className="logo">
-          <div className="navbar-menu">
-            <Button className="menuButton" type="text" onClick={showDrawer}>
-              <MenuOutlined />
-            </Button>
-            <div className="rightMenu">
-              <RightMenu mode={"horizontal"} />
+            <div className="navbar-menu">
+              <Button className="menuButton" type="text" onClick={showDrawer}>
+                <MenuOutlined />
+              </Button>
+              <div className="rightMenu">
+                <RightMenu mode={"horizontal"} />
+              </div>
+              <div className="leftMenu">
+                <LeftMenu mode={"horizontal"} />
+              </div>
+              <img src={logo} alt="logo" />
+              <h3 className="brand-font">Vadodara Municipal Corporation</h3>
             </div>
-            <div className="leftMenu">
-              <LeftMenu mode={"horizontal"} />
-            </div>
-            <img src={logo} alt="logo" />
-            <h3 className="brand-font">Vadodara Municipal Corporation</h3>
-          </div>
-          
 
             {/* <Drawer
               title={"Menu"}
@@ -73,4 +75,3 @@ export const AuthNavbar = () => {
   );
 };
 export default AuthNavbar;
-  

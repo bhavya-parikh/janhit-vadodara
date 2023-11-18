@@ -65,7 +65,7 @@ function DataTable({ columns, data }) {
                     {cell.column.columnDef.accessorKey === "imageUrl" ? (
                       // Render image element for imageUrl column
                       <img
-                        src={`http://localhost:5000/${cell.row.original.imageUrl[0]}`} // Assuming the imageUrl is stored in cell.value
+                        src={`${process.env.REACT_APP_BASEURL}/${cell.row.original.imageUrl[0]}`} // Assuming the imageUrl is stored in cell.value
                         style={{
                           maxHeight: "5%",
                         }}
