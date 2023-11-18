@@ -10,6 +10,7 @@ import {
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import { message } from "antd";
 
 const ProtectedRouteUser = (props) => {
   const token = localStorage.getItem("token");
@@ -23,11 +24,13 @@ const ProtectedRouteUser = (props) => {
     }
     if (token && jwtDecode(token).id.role !== "user") {
       presentPage();
-      toast("LogIn Or Register First!");
     }
   }, [token && jwtDecode(token).id.role !== "user"]);
 
-  if (!token) return <Navigate to="/" />;
+  if (!token) {
+    toast.error("Login Or Register to Register A Complaint");
+    return <Navigate to="/" />;
+  }
   const decodedData = jwtDecode(token);
 
   if (decodedData.id.role === "user") {
