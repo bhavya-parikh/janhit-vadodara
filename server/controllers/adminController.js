@@ -1,4 +1,5 @@
 const Admin = require("../models/admin");
+const FieldStaff = require("../models/fieldStaff");
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcryptjs");
 const { createSecretToken } = require("../util/SecretToken");
@@ -8,9 +9,12 @@ const dashboard = asyncHandler(async (req, res, next) => {
   const password = req.body.password;
   const role = req.body.role;
 
-  const User = await Admin.findOne({ username: req.body.username });
-
-  if (role !== "fieldStaff" && role !== "deptHead" && role !== "commissioner") {
+  var User;
+  if (role === "fieldStaff") {
+    User = await FieldStaff.findOne({ username });
+  } else if (role === "deptHead") {
+  } else if (role === "commissioner") {
+  } else {
     res.status(404).send({ message: "Role is invalid!" });
   }
   if (!User) {

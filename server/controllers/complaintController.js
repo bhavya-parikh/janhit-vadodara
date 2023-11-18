@@ -1,5 +1,7 @@
 const Complaint = require("../models/complaint");
+const userModel = require("../models/user");
 const asyncHandler = require("express-async-handler");
+const jwt = require("jsonwebtoken");
 
 module.exports.complaint = asyncHandler(async (req, res) => {
   const {
@@ -16,7 +18,7 @@ module.exports.complaint = asyncHandler(async (req, res) => {
     assignedStaff,
     assignedStaffUsername,
   } = req.body;
-  const imageUrl = req.file.path;
+  const images = req.files.map((file) => file.path);
   if (
     !complaintType ||
     !firstname ||
@@ -26,7 +28,7 @@ module.exports.complaint = asyncHandler(async (req, res) => {
     !issueCategory ||
     !issueSubcategory ||
     !complaintDescription ||
-    !imageUrl ||
+    !images.length ||
     !wardNo ||
     !area ||
     !assignedStaff ||
@@ -34,8 +36,32 @@ module.exports.complaint = asyncHandler(async (req, res) => {
   ) {
     res.status(400).send({ message: "Please add all fields" });
   }
+  if (!req.cookies.token) {
+    res.status(400).send({ message: "Login First To Do Complaint" });
+  }
 
   //Creating Complain
+
+  const token = req.cookies.token;
+  var username = "";
+  if (token) {
+    try {
+      // Verify and decode the JWT token
+      const decoded = jwt.verify(token, process.env.TOKEN_KEY);
+      console.log(decoded);
+      // Fetch user information based on the decoded user ID using the provided user model
+      const user = await userModel.findById(decoded.id._id);
+      if (!user) {
+        res.status(401).send({ message: "Not authorized, user not found" });
+      } else {
+        username = decoded.id.username;
+      }
+    } catch (err) {
+      console.log(err);
+      res.status(400).send({ message: "Something went wrong!" });
+    }
+  }
+
   const complaint = await Complaint.create({
     complaintType,
     firstname,
@@ -49,7 +75,8 @@ module.exports.complaint = asyncHandler(async (req, res) => {
     area,
     assignedStaff,
     assignedStaffUsername,
-    imageUrl,
+    images,
+    username,
   });
 
   if (complaint) {
@@ -66,21 +93,54 @@ module.exports.complaint = asyncHandler(async (req, res) => {
       area,
       assignedStaff,
       assignedStaffUsername,
-      imageUrl,
+      images,
+      username,
     });
   } else {
     res.status(400).send({ error: "Invalid user data" });
   }
 });
 
-module.exports.fetchComplaints = asyncHandler(async (req, res) => {
+module.exports.fetchComplaintsAdmin = asyncHandler(async (req, res) => {
+  console.log(req.cookies.token);
   try {
-    const complaint = await Complaint.find({
-      assignedStaffUsername: req.body.assignedStaffUsername,
-    });
-    res.status(200).send(complaint);
-  } catch (error) {
-    res.status(500).send(error);
+    const token = req.cookies.token;
+    if (token) {
+      try {
+        // Verify and decode the JWT token
+        const decoded = jwt.verify(token, process.env.TOKEN_KEY);
+        if (decoded.id.role === "user") {
+          res.status(400).send({ message: "Dashboard is only for admins" });
+        }
+        const complaint = await Complaint.find({
+          assignedStaffUsername: decoded.id.username,
+        });
+        res.status(200).send(complaint);
+      } catch (error) {
+        res.status(500).send(error);
+      }
+    } else {
+      res.status(400).send({ message: "Login First To Access The Dashboard!" });
+    }
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+module.exports.fetchComplaintsUser = asyncHandler(async (req, res) => {
+  const token = req.cookies.token;
+  if (token) {
+    try {
+      // Verify and decode the JWT token
+      const decoded = jwt.verify(token, process.env.TOKEN_KEY);
+      const complaintsList = await Complaint.find({
+        username: decoded.id.username,
+      }).exec();
+      res.json(complaintsList);
+    } catch (err) {
+      console.log(err);
+      res.status(400).send({ message: "Something went wrong!" });
+    }
   }
 });
 

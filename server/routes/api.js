@@ -14,7 +14,7 @@ router.post("/user/logout", authController.logoutUser);
 
 router.post(
   "/services/complaint",
-  upload.single("image"),
+  upload.array("images", 2),
   complaintController.complaint
 );
 router.post(
@@ -37,7 +37,9 @@ router.post("/fetchWardData", wardDataController.fetchWardData);
 //router.get("/getallwards", wardDataController.getAllWards);
 
 router.post("/addFieldStaff", fieldStaffController.addFieldStaff);
+router.post("/removeFieldStaff", fieldStaffController.removeFieldStaff);
 router.post("/fetchFieldStaff", fieldStaffController.fetchFieldStaff);
 
-router.post("/fetchComplaints", complaintController.fetchComplaints);
+router.post("fetchComplaintsUser", complaintController.fetchComplaintsUser);
+router.post("/fetchComplaintsAdmin", complaintController.fetchComplaintsAdmin);
 module.exports = router;
