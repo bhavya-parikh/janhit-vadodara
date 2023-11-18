@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Form, Input, Button, Checkbox, Span } from "antd";
+import { useNavigate } from "react-router-dom";
+
 
 export const ComplaintTracking = () => {
+  const navigate = useNavigate();
   const [trackingInfo, setTrackingInfo] = useState({
     complaintId: "",
     username: "",
@@ -80,6 +83,10 @@ export const ComplaintTracking = () => {
         <Button
           type="submit"
           className="button_common bg-blue-500 text-white py-2 px-4 rounded"
+          onClick={() => {
+            
+            navigate("/progress");
+          }}
         >
           Submit
         </Button>
