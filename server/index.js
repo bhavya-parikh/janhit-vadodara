@@ -30,7 +30,9 @@ app.use(cookieParser());
 
 const apiRoutes = require("./src/routes/api");
 app.use("/api", apiRoutes);
-
+app.get("/", (req, res) => {
+  res.send("Hey this is my API running 🥳");
+});
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

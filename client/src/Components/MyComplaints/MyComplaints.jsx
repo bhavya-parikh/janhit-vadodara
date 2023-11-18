@@ -4,6 +4,16 @@ import { useParams } from "react-router-dom";
 export const MyComplaints = () => {
   const { complaintId, issueDescription } = useParams();
   return (
+    // axios
+    //   .post("fecth",{}, trackingInfo)
+    //   .then((res) => {
+    //     // Handle the response, you can set it in state for display
+    //     setResponse(res.data);
+    //   })
+    //   .catch((err) => {
+    //     // Handle errors, you can set it in state for display
+    //     console.error(err);
+    //   });
     <div className="container mx-auto p-8">
       <h1 className="text-3xl font-bold mb-6 ">My Complaints</h1>
 

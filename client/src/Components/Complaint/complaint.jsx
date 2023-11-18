@@ -97,7 +97,7 @@ const Complaint = () => {
 
   const fetchWardData = (selectedArea) => {
     axios
-      .post(`${process.env.REACT_APP_BASEURL}/api/fetchWardData`, {
+      .post(`${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/fetchWardData`, {
         area: selectedArea,
       })
       .then((res) => {
@@ -117,7 +117,7 @@ const Complaint = () => {
 
   const fetchAssignStaffData = (selectedCategory, selectedWard) => {
     axios
-      .post(`${process.env.REACT_APP_BASEURL}/api/fetchFieldStaff`, {
+      .post(`${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/fetchFieldStaff`, {
         category: selectedCategory,
         wardNo: selectedWard,
       })
@@ -181,7 +181,7 @@ const Complaint = () => {
       setUploading(true);
       axios
         .post(
-          `${process.env.REACT_APP_BASEURL}/api/services/complaint`,
+          `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/services/complaint`,
           formData,
           {
             withCredentials: true,
@@ -228,14 +228,14 @@ const Complaint = () => {
   };
   return (
     <div className="w-400 mx-auto p-6 bg-white rounded-lg shadow-md">
-      <hr className="border-black" />
-      <h1 className="text-4xl font-bold mb-8 text-center text-blue-800 ">
+      {/* <hr className="border-black" /> */}
+      <h1 className="text-2xl md:text-4xl font-bold mb-8 text-center text-blue-800 ">
         Vadodara Municipal Corporation Complaint Form
       </h1>
       <Spin spinning={loading} tip="Submitting Your Complaint, Please Wait!">
         <Form
           form={form}
-          className="grid grid-cols-4 w-auto gap-6"
+          className="grid grid-cols-4 w-auto gap-7"
           encType="multipart/form-data"
         >
           <div className="col-span-2">
@@ -437,11 +437,12 @@ const Complaint = () => {
               </Upload>
             </Form.Item>
           </div>
-          <hr />
-          <div className="col-span-2 justify-end ml-96">
+          <br />
+          <div className="col-span-2 flex justify-center h-96 md:h-fit md:col-start-2 md:col-span-1 md:mr-4 flex justify-center md:justify-end md:ml-2">
             <Form.Item>
               <Button
-                className="bg-blue-700 w-56 h-16  text-white font-bold rounded-full text-xl  transition-all duration-300 transform hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+                type="primary"
+                className="bg-blue-700 w-20 mr-10 md:w-56 w-full h-16 text-white font-bold rounded-full text-xl transition-all duration-300 transform hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
                 onClick={complaintHandler}
               >
                 Submit
@@ -451,7 +452,8 @@ const Complaint = () => {
           <div className="col-span-2">
             <Form.Item>
               <Button
-                className="bg-blue-700 w-56 h-16  text-white font-bold rounded-full text-xl  transition-all duration-300 transform hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+                type="primary"
+                className="bg-blue-700 mr-10 w-20 md:w-56 w-full h-16 text-white font-bold rounded-full text-xl transition-all duration-300 transform hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
                 onClick={() => form.resetFields()}
               >
                 Reset

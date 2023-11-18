@@ -20,16 +20,32 @@ const navigate = useNavigate();
         setMenu("RegisterComplaint");
         navigate("/Complaint");
       }}>Register Complaint</Menu.Item>
-      <Menu.Item key="about"
+      <Menu.Item key="track complaint"
       onClick={() => {
-        setMenu("aboutus");
-        navigate("/aboutus");
-      }}>About Us</Menu.Item>
-      <Menu.Item key="contact"
-      onClick={() => {
-        setMenu("contact");
-        navigate("/contact");
-      }}>Contact Us</Menu.Item>
+        setMenu("Track complaint");
+        navigate("/complaintTracking");
+      }}>Track complaint </Menu.Item>
+      <Menu.SubMenu key="more" title="More">
+        <Menu.Item
+          key="aboutus"
+          onClick={() => {
+            setMenu("aboutus");
+            navigate("/aboutus");
+          }}
+        >
+          About Us
+        </Menu.Item>
+        <Menu.Item
+          key="contactus"
+          onClick={() => {
+            setMenu("contactus");
+            navigate("/contact");
+          }}
+        >
+          Contact Us
+        </Menu.Item>
+      </Menu.SubMenu>
+
     </Menu>
   );
 };
