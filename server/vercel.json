@@ -1,10 +1,20 @@
 {
   "version": 2,
-  "builds": [{ "src": "*.js", "use": "@vercel/node" }],
+  "builds": [
+    {
+      "src": "client/package.json",
+      "use": "@vercel/node",
+      "config": { "maxLambdaSize": "50mb" }
+    }
+  ],
   "routes": [
     {
+      "src": "/api/(.*)",
+      "dest": "server.js"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/"
+      "dest": "client/$1"
     }
   ]
 }
