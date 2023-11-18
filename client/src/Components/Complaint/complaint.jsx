@@ -442,7 +442,7 @@ const Complaint = () => {
             <Form.Item>
               <Button
                 type="primary"
-                className="bg-blue-700 mr-10 md:w-56 w-full h-16 text-white font-bold rounded-full text-xl transition-all duration-300 transform hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+                className="bg-blue-700 w-20 mr-10 md:w-56 w-full h-16 text-white font-bold rounded-full text-xl transition-all duration-300 transform hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
                 onClick={complaintHandler}
               >
                 Submit
@@ -453,7 +453,7 @@ const Complaint = () => {
             <Form.Item>
               <Button
                 type="primary"
-                className="bg-blue-700 mr-10 w-24 md:w-56 w-full h-16 text-white font-bold rounded-full text-xl transition-all duration-300 transform hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+                className="bg-blue-700 mr-10 w-20 md:w-56 w-full h-16 text-white font-bold rounded-full text-xl transition-all duration-300 transform hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
                 onClick={() => form.resetFields()}
               >
                 Reset
