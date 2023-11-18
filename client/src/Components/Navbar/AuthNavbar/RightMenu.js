@@ -32,6 +32,14 @@ const res = await axios.post("http://localhost:5000/api/user/logout/", {
           </>
         }
       >
+        <Menu.Item key="my complaint"onClick={() => {
+          setMenu("my complaint");
+          navigate("/mycomplaints");
+
+      }}>
+          <UserOutlined /> My Complaint
+          
+        </Menu.Item>
         <Menu.Item key="log-out"onClick={() => {
           setMenu("Logout");
           logout();

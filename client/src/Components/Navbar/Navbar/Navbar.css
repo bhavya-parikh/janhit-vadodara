@@ -52,7 +52,7 @@
 
 .navbar-menu .leftMenu {
   float:right;
-  zoom: 110%;
+  zoom: 99%;
 }
 
 .navbar-menu .rightMenu {
@@ -80,6 +80,7 @@
 .ant-drawer-body .ant-menu-horizontal > .ant-menu-submenu {
   display:inline-block ;
   width: 100%;
+  
 }
 
 .ant-drawer-body .ant-menu-horizontal {
