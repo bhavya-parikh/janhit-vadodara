@@ -26,17 +26,18 @@ const registerUser = asyncHandler(async (req, res, next) => {
       });
       if (user) {
         const token = createSecretToken(user);
-        res.cookie("token", token, {
-          withCredentials: true,
-          httpOnly: false,
-          sameSite: "none",
-          domain: process.env.ORIGIN,
-          secure: true,
-        });
+        // res.cookie("token", token, {
+        //   withCredentials: true,
+        //   httpOnly: false,
+        //   sameSite: "none",
+        //   domain: process.env.ORIGIN,
+        //   secure: true,
+        // });
 
         res.status(201).json({
           message: "User signed in successfully",
           success: true,
+          cookie: token,
           user,
         });
         next();
@@ -65,28 +66,31 @@ const loginUser = asyncHandler(async (req, res, next) => {
       return res.status(403).json({ message: "Incorrect Password or Email!" });
     }
     const token = createSecretToken(user);
-    res.cookie("token", token, {
-      withCredentials: true,
-      httpOnly: false,
-      sameSite: "none",
-      domain: process.env.ORIGIN,
-      secure: true,
+    // res.cookie("token", token, {
+    //   withCredentials: true,
+    //   httpOnly: false,
+    //   sameSite: "none",
+    //   domain: process.env.ORIGIN,
+    //   secure: true,
+    // });
+    res.status(201).json({
+      message: "User logged in successfully",
+      token,
+      user,
+      cookie: token,
     });
-    res
-      .status(201)
-      .json({ message: "User logged in successfully", token, user });
     next();
   } catch (error) {}
 });
 
 const logoutUser = asyncHandler(async (req, res, next) => {
-  res.cookie("token", "", {
-    httpOnly: true,
-    expires: new Date(0),
-    sameSite: "none",
-    domain: process.env.ORIGIN,
-    secure: true,
-  });
+  // res.cookie("token", "", {
+  //   httpOnly: true,
+  //   expires: new Date(0),
+  //   sameSite: "none",
+  //   domain: process.env.ORIGIN,
+  //   secure: true,
+  // });
   res.status(200).json({ message: "Logged out successfully" });
 });
 
