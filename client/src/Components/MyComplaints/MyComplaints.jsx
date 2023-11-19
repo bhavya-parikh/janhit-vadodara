@@ -48,19 +48,16 @@ export const MyComplaints = () => {
     axios
       .post(
         `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/fetchComplaintsUser`,
-        { token: token },
+        {},
         {
           withCredentials: true,
         }
       )
       .then((response) => {
         console.log(response);
-        setLoading(false);
         setComplaints(response.data);
       })
       .catch((error) => {
-        setLoading(false);
-
         toast(error.response.data.message);
       });
   }, []);
@@ -80,7 +77,7 @@ export const MyComplaints = () => {
       case 'Escalated':
         return 'Your Complain Is Escalated.'
       default:
-        return "";
+        return '';
     }
   };
   const items2 = [
@@ -128,6 +125,7 @@ export const MyComplaints = () => {
       icon: <SmileOutlined />,
     },
   ];
+  
 
   return (
     <div className="container mx-auto p-8">
@@ -245,76 +243,8 @@ export const MyComplaints = () => {
             </button>
           )}
           </div>
-        ) : (
-          complaints.map((complaint, index) => (
-            <div
-              key={complaint._id}
-              className="bg-white p-6 rounded-lg shadow-md mb-4"
-            >
-              <div className="grid grid-cols-2 gap-4">
-                <div className="mb-4">
-                  <label
-                    className="block text-gray-600 text-lg font-semibold mb-2"
-                    htmlFor="complaintID"
-                  >
-                    Complaint ID:
-                  </label>
-                  <span className="text-gray-800">{complaint._id}</span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 gap-4">
-                <div className="mb-4">
-                  <label
-                    className="block text-gray-600 text-lg font-semibold mb-2"
-                    htmlFor="issueDescription"
-                  >
-                    Issue Description:
-                  </label>
-                  <p className="text-gray-800 w-full">
-                    {complaint.complaintDescription}
-                  </p>
-                </div>
-              </div>
-
-              <label
-                className="block text-gray-600 text-lg font-semibold mb-2"
-                htmlFor="status"
-              >
-                Status:
-              </label>
-              <>
-                {complaint.complaintStatus === "Disposed" ? (
-                  <>
-                    <Steps
-                      current={3}
-                      status="error"
-                      labelPlacement="vertical"
-                      items={items1}
-                    />
-                    <p className="text-gray-600 text-xl font-bold mb-2 mt-5 text-center">
-                      {getStatusDescription(complaint.complaintStatus)}
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <Steps
-                      current={items.findIndex(
-                        (item) => item.title === complaint.complaintStatus
-                      )}
-                      labelPlacement="vertical"
-                      items={items}
-                    />
-                    <p className="text-gray-600 text-xl font-bold mb-2 mt-5 text-center">
-                      {getStatusDescription(complaint.complaintStatus)}
-                    </p>
-                  </>
-                )}
-              </>
-            </div>
-          ))
-        )}
-      </div>
-    </>
+        ))
+      )}
+    </div>
   );
 };
