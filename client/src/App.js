@@ -31,22 +31,19 @@ import AddFieldStaff from "./Components/deptHead/addFieldStaff.jsx";
 import { RemoveFieldStaff } from "./Components/deptHead/RemoveFieldStaff.jsx";
 import Review from "./Components/Review/Review.jsx";
 import { MyComplaints } from "./Components/MyComplaints/MyComplaints.jsx";
-
-
+import Progressbar  from "../src/Components/Progressbar/Progress.js"
 const cardData = [
   {
     name: "John Doe",
     mobileNumber: "123-456-7890",
     email: "temp-mail@gmail.com",
     wardNo: "Ward 1",
-  },
-  {
+  },{
     name: "Jane Smith",
     mobileNumber: "987-654-3210",
     email: "temp-mail@gmail.com",
     wardNo: "Ward 2",
-  },
-  {
+  },{
     name: "Bob Johnson",
     mobileNumber: "555-123-4567",
     email: "temp-mail@gmail.com",
@@ -162,6 +159,10 @@ function App() {
           <Route
             path="/complaintTracking"
             element={<ComplaintTracking />}
+          ></Route>
+          <Route
+            path="/progress"
+            element={< Progressbar />}
           ></Route>
           <Route
             path="/AdminLogin"

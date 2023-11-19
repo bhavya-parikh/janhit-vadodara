@@ -84,6 +84,16 @@ export const MyComplaints = () => {
   
 
   return (
+    // axios
+    //   .post("fecth",{}, trackingInfo)
+    //   .then((res) => {
+    //     // Handle the response, you can set it in state for display
+    //     setResponse(res.data);
+    //   })
+    //   .catch((err) => {
+    //     // Handle errors, you can set it in state for display
+    //     console.error(err);
+    //   });
     <div className="container mx-auto p-8">
       <h1 className="text-4xl font-bold mb-6 text-black text-decoration-line: underline text-center">Complaints Details</h1>
 

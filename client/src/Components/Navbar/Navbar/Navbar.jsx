@@ -56,7 +56,7 @@ export const AuthNavbar = () => {
               <h3 className="brand-font">Vadodara Municipal Corporation</h3>
             </div>
 
-            {/* <Drawer
+            <Drawer
               title={"Menu"}
               placement="right"
               width={window.innerWidth > 900 ? 800 : window.innerWidth - 150}
@@ -67,7 +67,7 @@ export const AuthNavbar = () => {
             >
               <LeftMenu mode={"inline"} />
               <RightMenu mode={"inline"} />
-            </Drawer> */}
+            </Drawer>
           </div>
         </Layout.Header>
       </Layout>

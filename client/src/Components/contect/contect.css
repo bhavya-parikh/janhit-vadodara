@@ -1,4 +1,32 @@
-/* Card.css */
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px; /* Adjust as needed for space between cards */
+  padding: 3%;
+}
+
+.card {
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  background-color: #fff;
+  transition: all 0.3s;
+  /* margin-left: 4%;
+  margin-right: 2%; */
+}
+
+.card:hover {
+  background-color: #f0f0f0;
+  box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.3);
+}
+
+.ward_no {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
 
 .card-container {
   display: grid;
