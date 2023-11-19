@@ -64,7 +64,7 @@ const Layout = () => {
         >
           <div className="md:w-1/2 pl-0 md:pl-32">
             <div>
-              <h1 className="text-2xl md:text-4xl lg:text-4xl lg:ml-14 text-white font-bold">
+              <h1 className="text-2xl md:text-4xl md:pl-3 lg:text-4xl lg:ml-14 text-white font-bold">
                 Complaint Registered
               </h1>
             </div>
@@ -74,7 +74,7 @@ const Layout = () => {
           </div>
           <div className="md:w-1/2 pl-0 md:pr-32">
             <div className="w-max md:w-full">
-              <h1 className="text-2xl md:text-4xl lg:text-4xl text-white font-bold">
+              <h1 className="text-2xl md:text-4xl md:pl-6 lg:text-4xl text-white font-bold">
                 Complaint Accomplished
               </h1>
             </div>

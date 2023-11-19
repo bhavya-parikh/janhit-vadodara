@@ -1,6 +1,11 @@
 import React from "react";
 import { Menu, Avatar, message } from "antd";
-import { UserOutlined, CodeOutlined, LogoutOutlined,SolutionOutlined } from "@ant-design/icons";
+import {
+  UserOutlined,
+  CodeOutlined,
+  LogoutOutlined,
+  SolutionOutlined,
+} from "@ant-design/icons";
 import { logout } from "./AuthNavbar";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -31,18 +36,19 @@ const RightMenu = ({ mode }) => {
         title={
           <>
             <Avatar icon={<UserOutlined />} />
-            <span className="username"></span>
+            <span className="username">Hello, {user.username}! </span>
           </>
         }
       >
         <Menu.Item
           key="MyComplaint"
           onClick={() => {
+            // console.log(user);
             setMenu("Mycomplaint");
-              navigate("/mycomplaints");
+            navigate("/mycomplaints");
           }}
         >
-          <SolutionOutlined  /> My Complaints
+          <SolutionOutlined /> My Complaints
         </Menu.Item>
         <Menu.Item
           key="log-out"
