@@ -1,31 +1,25 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Select, Spin } from "antd";
+import { Form, Input, Button, Select } from "antd";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
-export const RemoveFieldStaff = () => {
+export const RemoveDeptHead = () => {
   const [form] = Form.useForm();
   const [formErrors, setFormErrors] = useState({});
-  const [Loading, setLoading] = useState(false);
 
   const onFinish = async (values) => {
     try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        toast("Login First To Remove A Field Staff");
-      } else {
-        setLoading(true);
-        const response = await axios.post(
-          `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/removeFieldStaff`,
-          { values, token },
-          {
-            withCredentials: true,
-          }
-        );
-      }
+      const response = await axios.post(
+        `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/removeFieldStaff`,
+        values,
+        {
+          withCredentials: true,
+        }
+      );
+      console.log("DeptHead removed successfully:", response.data);
+      toast("DeptHead Removed successfully");
     } catch (error) {
-      setLoading(false);
-      toast(error.response.data.message);
+      console.error("Error removing DeptHead:", error.message);
     }
   };
 
@@ -41,15 +35,9 @@ export const RemoveFieldStaff = () => {
 
   return (
     <div className="bg-white border-2 border-gray-300 shadow-md rounded-md p-4 mt-4 md:mt-24 max-w-md mx-auto">
-      <Spin
-        spinning={Loading}
-        fullscreen="true"
-        tip="Removing Field Staff, Please Wait!"
-      />
-      ;
       <Form
         form={form}
-        name="RemoveFieldStaff"
+        name="RemoveDeptHead"
         onFinish={onFinish}
         onValuesChange={() => {
           setFormErrors({});
@@ -59,7 +47,7 @@ export const RemoveFieldStaff = () => {
         }}
       >
         <h1 className="text-3xl font-bold mb-4 text-black text-center md:text-left">
-          Remove FieldStaff
+          Remove DepartMent Head
         </h1>
         <Form.Item
           label="Username"

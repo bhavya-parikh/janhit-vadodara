@@ -189,6 +189,8 @@ const[responseData,setResponseData] = useState([]);
   const handleUpload = () => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       const formData = new FormData();
+      const token = localStorage.getItem("token");
+      formData.append("token", token);
       for (let key in complaint) {
         formData.append(key, complaint[key]);
       }
@@ -250,78 +252,82 @@ const[responseData,setResponseData] = useState([]);
       <h1 className="text-2xl md:text-4xl font-bold mb-8 text-center text-blue-800 ">
         Vadodara Municipal Corporation Complaint Form
       </h1>
-      <Spin spinning={loading} tip="Submitting Your Complaint, Please Wait!">
-        <Form
-          form={form}
-          className="grid grid-cols-4 w-auto gap-7"
-          encType="multipart/form-data"
-        >
-          <div className="col-span-2">
-            <Form.Item
-              label="Complaint Type"
-              name="complaintType"
-              rules={[
-                { required: true, message: "Please select a complaint type" },
-              ]}
+      <Spin
+        spinning={loading}
+        fullscreen="true"
+        tip="Submitting Your Complaint, Please Wait!"
+      />
+      <Form
+        form={form}
+        className="grid grid-cols-4 w-auto gap-7"
+        encType="multipart/form-data"
+      >
+        <div className="col-span-2">
+          <Form.Item
+            label="Complaint Type"
+            name="complaintType"
+            rules={[
+              { required: true, message: "Please select a complaint type" },
+            ]}
+          >
+            <Radio.Group
+              onChange={(e) => changeHandler("complaintType", e.target.value)}
             >
-              <Radio.Group
-                onChange={(e) => changeHandler("complaintType", e.target.value)}
-              >
-                <Radio value="Private">Private</Radio>
-                <Radio value="Public">Public</Radio>
-              </Radio.Group>
-            </Form.Item>
-          </div>
-          <br />
-          <div className="col-span-2">
-            <Form.Item
-              label="First Name"
-              name="firstname"
-              rules={[
-                { required: true, message: "Please enter your first name" },
-              ]}
-            >
-              <Input
-                onChange={(e) => changeHandler("firstname", e.target.value)}
-              />
-            </Form.Item>
-          </div>
+              <Radio value="Private">Private</Radio>
+              <Radio value="Public">Public</Radio>
+            </Radio.Group>
+          </Form.Item>
+        </div>
+        <br />
+        <div className="col-span-2">
+          <Form.Item
+            label="First Name"
+            name="firstname"
+            rules={[
+              { required: true, message: "Please enter your first name" },
+            ]}
+          >
+            <Input
+              onChange={(e) => changeHandler("firstname", e.target.value)}
+            />
+          </Form.Item>
+        </div>
 
-          <div className="col-span-2">
-            <Form.Item
-              label="Last Name"
-              name="lastname"
-              rules={[{ required: true }]}
-            >
-              <Input
-                onChange={(e) => changeHandler("lastname", e.target.value)}
-              />
-            </Form.Item>
-          </div>
+        <div className="col-span-2">
+          <Form.Item
+            label="Last Name"
+            name="lastname"
+            rules={[{ required: true }]}
+          >
+            <Input
+              onChange={(e) => changeHandler("lastname", e.target.value)}
+            />
+          </Form.Item>
+        </div>
 
-          <div className="col-span-2">
-            <Form.Item
-              label="Mobile Number"
-              name="mobileNo"
-              rules={[{ required: true }]}
-            >
-              <Input
-                onChange={(e) => changeHandler("mobileNo", e.target.value)}
-              />
-            </Form.Item>
-          </div>
+        <div className="col-span-2">
+          <Form.Item
+            label="Mobile Number"
+            name="mobileNo"
+            rules={[{ required: true }]}
+          >
+            <Input
+              onChange={(e) => changeHandler("mobileNo", e.target.value)}
+            />
+          </Form.Item>
+        </div>
 
-          <div className="col-span-2">
-            <Form.Item
-              label="Address"
-              name="address"
-              rules={[{ required: true }]}
-            >
-              <TextArea
-                onChange={(e) => changeHandler("address", e.target.value)}
-              />
-            </Form.Item>
-          </div>
+        <div className="col-span-2">
+          <Form.Item
+            label="Address"
+            name="address"
+            rules={[{ required: true }]}
+          >
+            <TextArea
+              onChange={(e) => changeHandler("address", e.target.value)}
+            />
+          </Form.Item>
+        </div>
 
           <div className="col-span-2">
             <Form.Item
@@ -386,111 +392,96 @@ const[responseData,setResponseData] = useState([]);
               value={complaint.issueCategory}
               rules={[{ required: true, message: "Please select a category" }]}
             >
-              <Select
-                onChange={(value) => {
-                  changeHandler("issueCategory", value);
-                  // fetchAssignStaffData(value, form.getFieldValue("wardNo"));
-                }}
-              >
-                <Option value="water logging">Water Logged</Option>
-                <Option value="Pothholes">Street Light</Option>
-              </Select>
-            </Form.Item>
-          </div>
+              <Option value="water logging">Water Logged</Option>
+              <Option value="Pothholes">Street Light</Option>
+            </Select>
+          </Form.Item>
+        </div>
 
-          <div className="col-span-2">
-            <Form.Item
-              label="Subcategory"
-              name="issueSubcategory"
-              value={complaint.issueSubcategory}
-              rules={[
-                { required: true, message: "Please select a subcategory" },
-              ]}
+        <div className="col-span-2">
+          <Form.Item
+            label="Subcategory"
+            name="issueSubcategory"
+            value={complaint.issueSubcategory}
+            rules={[{ required: true, message: "Please select a subcategory" }]}
+          >
+            <Select
+              onChange={(value) => changeHandler("issueSubcategory", value)}
             >
-              <Select
-                onChange={(value) => changeHandler("issueSubcategory", value)}
-              >
-                {getSubcategoryOptions()}
-              </Select>
-            </Form.Item>
-          </div>
+              {getSubcategoryOptions()}
+            </Select>
+          </Form.Item>
+        </div>
 
-          <div className="col-span-2">
-            <Form.Item
-              label="Issue Description"
-              name="complaintDescription"
-              value={complaint.complaintDescription}
-              rules={[
-                { required: true, message: "Please provide a description" },
-              ]}
-            >
-              <TextArea
-                onChange={(e) =>
-                  changeHandler("complaintDescription", e.target.value)
-                }
-              />
-            </Form.Item>
-          </div>
+        <div className="col-span-2">
+          <Form.Item
+            label="Issue Description"
+            name="complaintDescription"
+            value={complaint.complaintDescription}
+            rules={[
+              { required: true, message: "Please provide a description" },
+            ]}
+          >
+            <TextArea
+              onChange={(e) =>
+                changeHandler("complaintDescription", e.target.value)
+              }
+            />
+          </Form.Item>
+        </div>
 
-          <div className="col-span-2">
-            <Form.Item label="Assigned Staff" name="assignedStaff">
-              <Input
-                disabled
-                value={complaint.assignedStaff}
-                onChange={(e) => changeHandler("assignedStaff", e.target.value)}
-              />
-            </Form.Item>
-          </div>
-          <input
-            type="hidden"
-            name="assignedStaffUsername"
-            value={complaint.assignedStaffUsername}
-            onChange={changeHandler}
-            required
-          />
-          <div className="col-span-2">
-            <Form.Item
-              label="Upload Image"
-              name="images"
-              valuePropName="fileList"
-              getValueFromEvent={getFile}
-            >
-              <Upload {...props} maxCount={2}>
-                <Button
-                  type="primary"
-                  loading={uploading}
-                  className="text-black"
-                >
-                  Select Image (Max 2 images)
-                </Button>
-              </Upload>
-            </Form.Item>
-          </div>
-          <br />
-          <div className="col-span-2 flex justify-center h-96 md:h-fit md:col-start-2 md:col-span-1 md:mr-4 flex justify-center md:justify-end md:ml-2">
-            <Form.Item>
-              <Button
-                type="primary"
-                className="bg-blue-700 w-20 mr-10 md:w-56 w-full h-16 text-white font-bold rounded-full text-xl transition-all duration-300 transform hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
-                onClick={complaintHandler}
-              >
-                Submit
+        <div className="col-span-2">
+          <Form.Item label="Assigned Staff" name="assignedStaff">
+            <Input
+              disabled
+              value={complaint.assignedStaff}
+              onChange={(e) => changeHandler("assignedStaff", e.target.value)}
+            />
+          </Form.Item>
+        </div>
+        <input
+          type="hidden"
+          name="assignedStaffUsername"
+          value={complaint.assignedStaffUsername}
+          onChange={changeHandler}
+          required
+        />
+        <div className="col-span-2">
+          <Form.Item
+            label="Upload Image"
+            name="images"
+            valuePropName="fileList"
+            getValueFromEvent={getFile}
+          >
+            <Upload {...props} maxCount={2}>
+              <Button type="primary" loading={uploading} className="text-black">
+                Select Image (Max 2 images)
               </Button>
-            </Form.Item>
-          </div>
-          <div className="col-span-2">
-            <Form.Item>
-              <Button
-                type="primary"
-                className="bg-blue-700 mr-10 w-20 md:w-56 w-full h-16 text-white font-bold rounded-full text-xl transition-all duration-300 transform hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
-                onClick={() => form.resetFields()}
-              >
-                Reset
-              </Button>
-            </Form.Item>
-          </div>
-        </Form>
-      </Spin>
+            </Upload>
+          </Form.Item>
+        </div>
+        <br />
+        <div className="col-span-2 flex justify-center h-96 md:h-fit md:col-start-2 md:col-span-1 md:mr-4 flex justify-center md:justify-end md:ml-2">
+          <Form.Item>
+            <Button
+              className="bg-blue-700 w-fit md:w-56 w-fit h-16 text-white font-bold rounded-full text-xl transition-all duration-300 transform hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+              onClick={complaintHandler}
+            >
+              Submit
+            </Button>
+          </Form.Item>
+        </div>
+        <div className="col-span-2">
+          <Form.Item>
+            <Button
+              className="bg-blue-700 w-fit md:w-56 w-fit h-16 text-white font-bold rounded-full text-xl transition-all duration-300 transform hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+              onClick={() => form.resetFields()}
+            >
+              Reset
+            </Button>
+          </Form.Item>
+        </div>
+      </Form>
     </div>
   );
 };

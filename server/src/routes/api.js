@@ -44,11 +44,13 @@ router.post("/fetchWardData", wardDataController.fetchWardData);
 router.post("/fetchWardAreas",wardDataController.fetchWardAreas);
 router.post("/fetchAllWardAreas", wardDataController.fetchAllWardAreas);
 
+//router.get("/getallwards", wardDataController.getAllWards);
+router.post("/addCategories", wardDataController.addCategories);
 router.post("/addFieldStaff", fieldStaffController.addFieldStaff);
 router.post("/removeFieldStaff", fieldStaffController.removeFieldStaff);
 router.post("/fetchFieldStaff", fieldStaffController.fetchFieldStaff);
 
 router.post("/fetchComplaintsUser", complaintController.fetchComplaintsUser);
 router.post("/fetchComplaintsAdmin", complaintController.fetchComplaintsAdmin);
-
+router.post("/trackComplaint", complaintController.trackComplaint);
 module.exports = router;

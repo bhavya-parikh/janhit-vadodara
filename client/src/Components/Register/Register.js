@@ -59,9 +59,13 @@ const Register = () => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       console.log(user);
       axios
-        .post(`${process.env.REACT_APP_VERCEL_ENV_BASEURL}`, user, {
-          withCredentials: true,
-        })
+        .post(
+          `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/user/register`,
+          user,
+          {
+            withCredentials: true,
+          }
+        )
         .then((res) => {
           navigate("/OTPVerification", { replace: true });
         })

@@ -1,3 +1,4 @@
+const Categories = require("../models/categories");
 const WardData = require("../models/wardData");
 const asyncHandler = require("express-async-handler");
 
@@ -37,3 +38,23 @@ module.exports.fetchAllWardAreas = asyncHandler(async (req, res) => {
   }));
   res.status(201).send( {wardDatas} );
 });
+module.exports.addCategories = asyncHandler(async (req, res) => {
+  const { category, subCategory } = req.body;
+  const wardData = await Categories.create({
+    category,
+    subCategory,
+  });
+  if (wardData) {
+    res.status(201).send({
+      message: "Data Added Successfully",
+    });
+  } else {
+    res.status(404).send({
+      message: "Data not Added",
+    });
+  }
+});
+
+// module.exports.getallwards = asyncHandler(async(req, res))=> {
+
+// }

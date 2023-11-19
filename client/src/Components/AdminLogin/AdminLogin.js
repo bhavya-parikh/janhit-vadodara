@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Select } from "antd";
+import { Form, Input, Button, Select, Spin } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -8,10 +8,11 @@ import axios from "axios";
 import basestyle from "../Base.module.css";
 import loginstyle from "../Login/Login.module.css";
 import { useAuth } from "../../AuthProvider";
-
 const { Option } = Select;
 
 const AdminLogin = ({ setUserState }) => {
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [formErrors, setFormErrors] = useState({});
@@ -27,19 +28,6 @@ const AdminLogin = ({ setUserState }) => {
       ...user,
       ...changedValues,
     });
-    switch (value) {
-      case "fieldStaff":
-        navigate("/FieldStaffLogin");
-        break;
-      case "admin":
-        navigate("/AdminLogin");
-        break;
-      case "commissioner":
-        navigate("/CommissionerLogin");
-        break;
-      default:
-        break;
-    }
   };
   const onFinish = async () => {
     // Handle the form submission logic here if needed
@@ -63,13 +51,14 @@ const AdminLogin = ({ setUserState }) => {
       const errors = validateForm(user);
       setFormErrors(errors);
       setIsSubmit(true);
-
+      setLoading(true);
       if (Object.keys(errors).length === 0) {
         const response = axios
           .post(`${process.env.BASEURL}/api/admin/login`, user, {
             withCredentials: true,
           })
           .then((res) => {
+            setLoading(false);
             toast("Logged in success");
             setAuth(true);
             localStorage.setItem("token", res.data.token);
@@ -77,6 +66,8 @@ const AdminLogin = ({ setUserState }) => {
             navigate("/", { replace: true });
           })
           .catch((err) => {
+            setLoading(false);
+
             // toast.error(err.response.data.message);
             console.log(err.message);
           });
@@ -89,7 +80,7 @@ const AdminLogin = ({ setUserState }) => {
     form.setFieldsValue({
       username: "",
       password: "",
-      role: "admin",
+      role: "",
     });
   }, [formErrors]);
 
@@ -100,6 +91,7 @@ const AdminLogin = ({ setUserState }) => {
         <div className="flex flex-col items-center justify-center w-full  sm:w-auto ml-0  md:w-auto mb-24 mt-10 mx-auto h-fit ">
           <div className="bg-white border-2 border-gray-300 shadow-md rounded p-4 text-center">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+              <Spin spinning={loading} tip="Logging You In.... Please Wait." />;
               <Form
                 form={form}
                 name="loginForm"
@@ -107,7 +99,7 @@ const AdminLogin = ({ setUserState }) => {
                 onValuesChange={changeHandler}
               >
                 <h1 className="text-xl font-bold mb-4  leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                  Login As admin
+                  Login As Admin
                 </h1>
                 <Form.Item
                   name="username"
@@ -131,14 +123,16 @@ const AdminLogin = ({ setUserState }) => {
                 </Form.Item>
                 <Form.Item
                   name="role"
+                  label="Select Admin Type"
                   rules={[{ required: true, message: "User type is required" }]}
                 >
                   <Select
                     className="w-96"
-                    placeholder="Select User Type"
-                    onSelect={changeHandler}
+                    placeholder="Please Select Admin Type"
+                    onChange={(value) => form.setFieldsValue({ role: value })}
+                    // onSelect={changeHandler}
                   >
-                    <Option value="admin">Admin</Option>
+                    <Option value="headDepartment">Head Department</Option>
                     <Option value="fieldStaff">Field Staff</Option>
                     <Option value="commissioner">Commissioner</Option>
                   </Select>

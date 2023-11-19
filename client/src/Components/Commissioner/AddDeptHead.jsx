@@ -9,9 +9,8 @@ import basestyle from "../Base.module.css";
 import loginstyle from "../Login/Login.module.css";
 import { useAuth } from "../../AuthProvider";
 
-const { Option } = Select;
-
-const AddFieldStaffForm = ({ setUserState }) => {
+export const AddDeptHead = ({ setUserState }) => {
+  const { Option } = Select;
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [formErrors, setFormErrors] = useState({});
@@ -52,21 +51,20 @@ const AddFieldStaffForm = ({ setUserState }) => {
       setIsSubmit(true);
 
       if (Object.keys(errors).length === 0) {
-        const token = localStorage.getItem("token");
         const response = axios
           .post(
             `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/addfieldstaff`,
-            { user, token },
+            user,
             {
               withCredentials: true,
             }
           )
           .then((res) => {
-            toast("FieldStaff Added successfully");
+            toast("DeptHead Added successfully");
             setAuth(true);
             localStorage.setItem("token", res.data.token);
             setUserState(res.data.User);
-            navigate("/addFieldStaff", { replace: true });
+            navigate("/AddDeptHead", { replace: true });
             console.log("done");
           })
           .catch((err) => {
@@ -90,7 +88,7 @@ const AddFieldStaffForm = ({ setUserState }) => {
       <div className=" bg-white border-2 border-gray-300 shadow-md rounded-md p-4 mt-20 max-w-md ">
         {/* <div className="p-6 space-y-4 md:space-y-6 sm:p-8"> */}
         <Form
-          name="addFieldStaffForm"
+          name="addDeptHead"
           onFinish={onFinish}
           onValuesChange={changeHandler}
           className="mb-0"
@@ -98,8 +96,8 @@ const AddFieldStaffForm = ({ setUserState }) => {
             remember: true,
           }}
         >
-          <h1 className="text-3xl font-bold mb-2 text-black mb-4 md:ml-16 sm:text-2xl ml-9 ">
-            Add FieldStaff
+          <h1 className="text-3xl font-bold mb-2 text-black mb-4 text-center ">
+            Add DepartMent Head
           </h1>
           <Form.Item
             label="Name"
@@ -218,5 +216,3 @@ const AddFieldStaffForm = ({ setUserState }) => {
     // </section>
   );
 };
-
-export default AddFieldStaffForm;

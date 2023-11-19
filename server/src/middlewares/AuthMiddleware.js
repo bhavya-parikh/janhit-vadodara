@@ -6,7 +6,7 @@ const authorize = (role, userModel) =>
     let token;
 
     // Extract the JWT token from the cookie
-    token = req.cookies.token;
+    token = req.body.token;
 
     if (token) {
       try {
