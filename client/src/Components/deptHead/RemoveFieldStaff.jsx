@@ -24,6 +24,7 @@ export const RemoveFieldStaff = () => {
         );
       }
     } catch (error) {
+      setLoading(false);
       toast(error.response.data.message);
     }
   };
