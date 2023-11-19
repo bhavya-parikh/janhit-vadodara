@@ -13,10 +13,11 @@ export const MyComplaints = () => {
   // The empty dependency array ensures that this effect runs once when the component mounts
   useEffect(() => {
     setLoading(true);
+    const token = localStorage.getItem("token");
     axios
       .post(
         `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/fetchComplaintsUser`,
-        {},
+        { token: token },
         {
           withCredentials: true,
         }

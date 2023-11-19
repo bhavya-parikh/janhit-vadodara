@@ -176,10 +176,11 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
     axios
       .post(
         `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/fetchComplaintsAdmin`,
-        {},
+        { token: token },
         {
           withCredentials: true,
         }

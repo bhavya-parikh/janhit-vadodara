@@ -52,10 +52,11 @@ const AddFieldStaffForm = ({ setUserState }) => {
       setIsSubmit(true);
 
       if (Object.keys(errors).length === 0) {
+        const token = localStorage.getItem("token");
         const response = axios
           .post(
             `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/addfieldstaff`,
-            user,
+            { user, token },
             {
               withCredentials: true,
             }

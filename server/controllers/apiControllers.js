@@ -37,7 +37,7 @@ const registerUser = asyncHandler(async (req, res, next) => {
         res.status(201).json({
           message: "User signed in successfully",
           success: true,
-          cookie: token,
+          token,
           user,
         });
         next();
@@ -77,7 +77,6 @@ const loginUser = asyncHandler(async (req, res, next) => {
       message: "User logged in successfully",
       token,
       user,
-      cookie: token,
     });
     next();
   } catch (error) {}

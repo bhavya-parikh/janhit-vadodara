@@ -41,7 +41,6 @@ const dashboard = asyncHandler(async (req, res, next) => {
     message: "User logged in successfully",
     token,
     User,
-    cookie: token,
   });
   next();
 });

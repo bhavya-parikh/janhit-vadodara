@@ -40,7 +40,7 @@ const registerUser = asyncHandler(async (req, res, next) => {
           message: "User signed in successfully",
           success: true,
           user,
-          cookie: token,
+          token,
         });
         next();
       } else {
@@ -79,7 +79,6 @@ const loginUser = asyncHandler(async (req, res, next) => {
       message: "User logged in successfully",
       token,
       user,
-      cookie: token,
     });
     next();
   } catch (error) {}

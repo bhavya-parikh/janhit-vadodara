@@ -171,6 +171,8 @@ const Complaint = () => {
   const handleUpload = () => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       const formData = new FormData();
+      const token = localStorage.getItem("token");
+      formData.append("token", token);
       for (let key in complaint) {
         formData.append(key, complaint[key]);
       }
