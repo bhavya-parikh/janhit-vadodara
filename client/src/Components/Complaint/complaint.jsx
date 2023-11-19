@@ -392,6 +392,7 @@ const[responseData,setResponseData] = useState([]);
               value={complaint.issueCategory}
               rules={[{ required: true, message: "Please select a category" }]}
             >
+              <Select>
               <Option value="water logging">Water Logged</Option>
               <Option value="Pothholes">Street Light</Option>
             </Select>
@@ -401,7 +402,7 @@ const[responseData,setResponseData] = useState([]);
         <div className="col-span-2">
           <Form.Item
             label="Subcategory"
-            name="issueSubcategory"
+          name="issueSubcategory"
             value={complaint.issueSubcategory}
             rules={[{ required: true, message: "Please select a subcategory" }]}
           >
