@@ -35,6 +35,7 @@ const dashboard = asyncHandler(async (req, res, next) => {
     httpOnly: false,
     sameSite: "none",
     domain: process.env.ORIGIN,
+    secure,
   });
   res.status(201).json({ message: "User logged in successfully", token, User });
   next();
