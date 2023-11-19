@@ -10,7 +10,7 @@ export const RemoveFieldStaff = () => {
   const onFinish = async (values) => {
     try {
       const response = await axios.post(
-        `${REACT_APP_VERCEL_ENV_BASEURL}/api/removeFieldStaff`,
+        `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/removeFieldStaff`,
         values,
         {
           withCredentials: true,
