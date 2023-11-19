@@ -1,25 +1,31 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Select } from "antd";
+import { Form, Input, Button, Select, Spin } from "antd";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
 export const RemoveFieldStaff = () => {
   const [form] = Form.useForm();
   const [formErrors, setFormErrors] = useState({});
+  const [Loading, setLoading] = useState(false);
 
   const onFinish = async (values) => {
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/removeFieldStaff`,
-        values,
-        {
-          withCredentials: true,
-        }
-      );
-      console.log("FieldStaff removed successfully:", response.data);
-      toast("FieldStaff Removed successfully");
+      const token = localStorage.getItem("token");
+      if (!token) {
+        toast("Login First To Remove A Field Staff");
+      } else {
+        setLoading(true);
+        const response = await axios.post(
+          `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/removeFieldStaff`,
+          { values, token },
+          {
+            withCredentials: true,
+          }
+        );
+      }
     } catch (error) {
-      console.error("Error removing FieldStaff:", error.message);
+      setLoading(false);
+      toast(error.response.data.message);
     }
   };
 
@@ -35,6 +41,12 @@ export const RemoveFieldStaff = () => {
 
   return (
     <div className="bg-white border-2 border-gray-300 shadow-md rounded-md p-4 mt-4 md:mt-24 max-w-md mx-auto">
+      <Spin
+        spinning={Loading}
+        fullscreen="true"
+        tip="Removing Field Staff, Please Wait!"
+      />
+      ;
       <Form
         form={form}
         name="RemoveFieldStaff"

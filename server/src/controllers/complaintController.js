@@ -36,13 +36,13 @@ module.exports.complaint = asyncHandler(async (req, res) => {
   ) {
     res.status(400).send({ message: "Please add all fields" });
   }
-  if (!req.cookies.token) {
+  if (!req.body.token) {
     res.status(400).send({ message: "Login First To Do Complaint" });
   }
 
   //Creating Complain
 
-  const token = req.cookies.token;
+  const token = req.body.token;
   var username = "";
   if (token) {
     try {
@@ -102,9 +102,9 @@ module.exports.complaint = asyncHandler(async (req, res) => {
 });
 
 module.exports.fetchComplaintsAdmin = asyncHandler(async (req, res) => {
-  console.log(req.cookies.token);
+  console.log(req.body.token);
   try {
-    const token = req.cookies.token;
+    const token = req.body.token;
     if (token) {
       try {
         // Verify and decode the JWT token
@@ -128,7 +128,7 @@ module.exports.fetchComplaintsAdmin = asyncHandler(async (req, res) => {
 });
 
 module.exports.fetchComplaintsUser = asyncHandler(async (req, res) => {
-  const token = req.cookies.token;
+  const token = req.body.token;
   if (token) {
     try {
       // Verify and decode the JWT token
@@ -182,5 +182,18 @@ module.exports.addimage = asyncHandler(async (req, res) => {
     res.status(200).send(complaint);
   } catch (err) {
     res.status(404).send("Unable To Update Right Now!");
+  }
+});
+
+module.exports.trackComplaint = asyncHandler(async (req, res) => {
+  try {
+    const complaint = await Complaint.findById(req.body.id);
+    if (complaint) {
+      res.status(200).send({ complaintStatus });
+    } else {
+      res.status(404).send({ message: "Complaint Not found!" });
+    }
+  } catch (err) {
+    res.status(404).send({ message: "Complaint Not Found!" });
   }
 });

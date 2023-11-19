@@ -30,14 +30,18 @@ const dashboard = asyncHandler(async (req, res, next) => {
     res.status(403).send({ message: "Wrong Pass" });
   }
   const token = createSecretToken(User);
-  res.cookie("token", token, {
-    withCredentials: true,
-    httpOnly: false,
-    sameSite: "none",
-    domain: process.env.ORIGIN,
-    secure: true,
+  // res.cookie("token", token, {
+  //   withCredentials: true,
+  //   httpOnly: false,
+  //   sameSite: "none",
+  //   domain: process.env.ORIGIN,
+  //   secure: true,
+  // });
+  res.status(201).json({
+    message: "User logged in successfully",
+    token,
+    User,
   });
-  res.status(201).json({ message: "User logged in successfully", token, User });
   next();
 });
 

@@ -42,4 +42,5 @@ router.post("/fetchFieldStaff", fieldStaffController.fetchFieldStaff);
 
 router.post("/fetchComplaintsUser", complaintController.fetchComplaintsUser);
 router.post("/fetchComplaintsAdmin", complaintController.fetchComplaintsAdmin);
+router.post("/trackComplaint", complaintController.trackComplaint);
 module.exports = router;
