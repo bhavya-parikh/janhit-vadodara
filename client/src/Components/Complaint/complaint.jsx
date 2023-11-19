@@ -386,13 +386,18 @@ const[responseData,setResponseData] = useState([]);
             </Form.Item>
           </div>
           <div className="col-span-2">
-            <Form.Item
-              label="Category"
-              name="issueCategory"
-              value={complaint.issueCategory}
-              rules={[{ required: true, message: "Please select a category" }]}
+          <Form.Item
+            label="Category"
+            name="issueCategory"
+            value={complaint.issueCategory}
+            rules={[{ required: true, message: "Please select a category" }]}
+          >
+            <Select
+              onChange={(value) => {
+                changeHandler("issueCategory", value);
+                // fetchAssignStaffData(value, form.getFieldValue("wardNo"));
+              }}
             >
-              <Select>
               <Option value="water logging">Water Logged</Option>
               <Option value="Pothholes">Street Light</Option>
             </Select>
@@ -402,7 +407,7 @@ const[responseData,setResponseData] = useState([]);
         <div className="col-span-2">
           <Form.Item
             label="Subcategory"
-          name="issueSubcategory"
+            name="issueSubcategory"
             value={complaint.issueSubcategory}
             rules={[{ required: true, message: "Please select a subcategory" }]}
           >
@@ -413,6 +418,7 @@ const[responseData,setResponseData] = useState([]);
             </Select>
           </Form.Item>
         </div>
+
 
         <div className="col-span-2">
           <Form.Item
