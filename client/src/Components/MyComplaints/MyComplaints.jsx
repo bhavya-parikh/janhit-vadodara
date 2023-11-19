@@ -14,7 +14,7 @@ export const MyComplaints = () => {
   useEffect(() => {
     axios
       .post(
-        "http://localhost:5000/api/fetchComplaintsUser",
+        `${REACT_APP_VERCEL_ENV_BASEURL}/api/fetchComplaintsUser`,
         {},
         {
           withCredentials: true,
