@@ -8,8 +8,10 @@ import vmc from "../Assets/Vmc.jpg"; // Update the path to your image
 import basestyle from "../Base.module.css";
 import { useAuth } from "../../AuthProvider";
 import loginstyle from "../Login/Login.module.css";
-
+import { Spin } from "antd";
 const Login = ({ setUserState }) => {
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [formErrors, setFormErrors] = useState({});
@@ -43,7 +45,7 @@ const Login = ({ setUserState }) => {
       const errors = validateForm(user);
       setFormErrors(errors);
       setIsSubmit(true);
-
+      setLoading(true);
       if (Object.keys(errors).length === 0) {
         const response = axios
           .post(
@@ -54,6 +56,7 @@ const Login = ({ setUserState }) => {
             }
           )
           .then((res) => {
+            setLoading(false);
             toast("Logged in success");
             setAuth(true);
             localStorage.setItem("token", res.data.token);
@@ -61,6 +64,8 @@ const Login = ({ setUserState }) => {
             navigate("/", { replace: true });
           })
           .catch((err) => {
+            setLoading(false);
+
             toast.error(err.response.data.message);
           });
       }
@@ -84,6 +89,7 @@ const Login = ({ setUserState }) => {
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Sign in to your account
               </h1>
+              <Spin spinning={loading} tip="Logging You In.... Please Wait." />
               <Form
                 form={form}
                 name="loginForm"

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Select } from "antd";
+import { Form, Input, Button, Select, Spin } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -13,6 +13,8 @@ const { Option } = Select;
 
 const FieldStaffLogin = ({ setUserState }) => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
   const [form] = Form.useForm();
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -62,8 +64,8 @@ const FieldStaffLogin = ({ setUserState }) => {
     try {
       const errors = validateForm(user);
       setFormErrors(errors);
+      setLoading(true);
       setIsSubmit(true);
-
       if (Object.keys(errors).length === 0) {
         const response = axios
           .post(
@@ -74,6 +76,7 @@ const FieldStaffLogin = ({ setUserState }) => {
             }
           )
           .then((res) => {
+            setLoading(false);
             toast("Logged in success");
             setAuth(true);
             localStorage.setItem("token", res.data.token);
@@ -82,6 +85,8 @@ const FieldStaffLogin = ({ setUserState }) => {
             console.log("done");
           })
           .catch((err) => {
+            setLoading(false);
+
             // toast.error(err.response.data.message);
             console.log(err.message);
           });
@@ -105,6 +110,7 @@ const FieldStaffLogin = ({ setUserState }) => {
         <div className="flex flex-col items-center justify-center w-full  sm:w-auto ml-0  md:w-auto mb-24 mt-10 mx-auto h-fit ">
           <div className="bg-white border-2 border-gray-300 shadow-md rounded p-4 text-center">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+              <Spin spinning={loading} tip="Logging You In.... Please Wait." />
               <Form
                 form={form}
                 name="loginForm"
