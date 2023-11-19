@@ -234,7 +234,11 @@ const Complaint = () => {
       <h1 className="text-2xl md:text-4xl font-bold mb-8 text-center text-blue-800 ">
         Vadodara Municipal Corporation Complaint Form
       </h1>
-      <Spin spinning={loading} tip="Submitting Your Complaint, Please Wait!">
+      <Spin
+        spinning={loading}
+        fullscreen="true"
+        tip="Submitting Your Complaint, Please Wait!"
+      >
         <Form
           form={form}
           className="grid grid-cols-4 w-auto gap-7"

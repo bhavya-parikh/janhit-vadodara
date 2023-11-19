@@ -99,7 +99,11 @@ export const MyComplaints = () => {
     //     console.error(err);
     //   });
     <>
-      <Spin spinning={loading} tip="Loading Your Complaints......" />
+      <Spin
+        spinning={loading}
+        fullscreen="true"
+        tip="Loading Your Complaints......"
+      />
       <div className="container mx-auto p-8">
         <h1 className="text-4xl font-bold mb-6 text-black text-decoration-line: underline text-center">
           Complaints Details
