@@ -184,3 +184,16 @@ module.exports.addimage = asyncHandler(async (req, res) => {
     res.status(404).send("Unable To Update Right Now!");
   }
 });
+
+module.exports.trackComplaint = asyncHandler(async (req, res) => {
+  try {
+    const complaint = await Complaint.findById(req.body.id);
+    if (complaint) {
+      res.status(200).send({ complaintStatus });
+    } else {
+      res.status(404).send({ message: "Complaint Not found!" });
+    }
+  } catch (err) {
+    res.status(404).send({ message: "Complaint Not Found!" });
+  }
+});
