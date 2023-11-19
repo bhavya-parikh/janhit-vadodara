@@ -1,74 +1,162 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { Steps } from 'antd';
+import { SmileOutlined } from '@ant-design/icons';
 
 export const MyComplaints = () => {
   const { complaintId, issueDescription } = useParams();
+  const [complaints, setComplaints] = useState([]);
+
+
+  // The empty dependency array ensures that this effect runs once when the component mounts
+  useEffect(() => {
+    axios
+      .post(
+        "http://localhost:5000/api/fetchComplaintsUser",
+        {},
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        console.log(response);
+        setComplaints(response.data);
+      })
+      .catch((error) => {
+        toast(error.response.data.message);
+      });
+  }, []);
+
+  const getStatusDescription = (status) => {
+    switch (status) {
+      case 'Complaint registered':
+        return 'Complaint registered.';
+      case 'Pending':
+        return 'Application Is Pending.';
+      case 'Progress':
+        return 'Working Under Progress.';
+      case 'Completed':
+        return 'Complaint solved.';
+      case 'Disposed':
+        return 'Your Application Is Disposed.';
+      default:
+        return '';
+    }
+  };
+  const items1 = [
+    {
+      title: 'Complaint registered'
+    },
+    {
+      title: 'Pending',
+      // description: 'Application Is Pending',
+    },
+    {
+      title: 'Progress',
+      // description: 'Working Under Progress',
+    },
+    {
+      title: 'Disposed',
+      // description: 'Your Application Is Disposed.',
+      // icon: <SmileOutlined />,
+    },
+  ];
+  const items = [
+    {
+      title: 'Complaint registered'
+    },
+    {
+      title: 'Pending',
+      // description: 'Application Is Pending',
+    },
+    {
+      title: 'Progress',
+      // description: 'Working Under Progress',
+    },
+    {
+      title: 'Completed',
+      description: 'Complaint solved.',
+      icon: <SmileOutlined />,
+    },
+  ];
+  
+
   return (
     <div className="container mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-6 ">My Complaints</h1>
+      <h1 className="text-4xl font-bold mb-6 text-black text-decoration-line: underline text-center">Complaints Details</h1>
 
-      {/* Complaint Status Card */}
-      <div className="bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-xl font-semibold mb-4">Complaint Details</h2>
+      {complaints.length === 0 ? (
+        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <p className="text-6xl font-bold text-gray-600">
+            No complaints found.
+          </p>
+        </div>
+      ) : (
+        complaints.map((complaint, index) => (
+          <div
+            key={complaint._id}
+            className="bg-white p-6 rounded-lg shadow-md mb-4"
+          >
+            <div className="grid grid-cols-2 gap-4">
+              <div className="mb-4">
+                <label
+                  className="block text-gray-600 text-lg font-semibold mb-2"
+                  htmlFor="complaintID"
+                >
+                  Complaint ID:
+                </label>
+                <span className="text-gray-800">{complaint._id}</span>
+              </div>
+            </div>
 
-        {/* Complaint Information */}
-        <div className="grid grid-cols-2 gap-4">
-          <div className="mb-4">
+            <div className="grid grid-cols-1 gap-4">
+              <div className="mb-4">
+                <label
+                  className="block text-gray-600 text-lg font-semibold mb-2"
+                  htmlFor="issueDescription"
+                >
+                  Issue Description:
+                </label>
+                <p className="text-gray-800 w-full">
+                  {complaint.complaintDescription}
+                </p>
+              </div>
+            </div>
+
             <label
-              className="block text-gray-600 text-sm font-bold mb-2"
-              htmlFor="complaintID"
-            >
-              Complaint ID:
-            </label>
-            <span className="text-gray-800">123456</span>
-          </div>
-
-          <div className="mb-4">
-            <label
-              className="block text-gray-600 text-sm font-bold mb-2"
+              className="block text-gray-600 text-lg font-semibold mb-2"
               htmlFor="status"
             >
               Status:
             </label>
-            <span className="text-green-600 font-semibold">Resolved</span>
-          </div>
-        </div>
+            <>
+            {complaint.complaintStatus === "Disposed" ? (
+              <>
+              <Steps current={3} status="error" labelPlacement="vertical" items={items1} />
+              <p className="text-gray-600 text-xl font-bold mb-2 mt-5 text-center">
+               {getStatusDescription(complaint.complaintStatus)}
+                </p>
+                </>
+              
+            ) : (
+              <>
+                <Steps
+                  current={items.findIndex((item) => item.title === complaint.complaintStatus)}
+                  labelPlacement="vertical"
+                  items={items}
+                />
+                <p className="text-gray-600 text-xl font-bold mb-2 mt-5 text-center">
+               {getStatusDescription(complaint.complaintStatus)}
+                </p>
 
-        {/* Additional Complaint Details */}
-        <div className="grid grid-cols-1 gap-4">
-          <div className="mb-4">
-            <label
-              className="block text-gray-600 text-sm font-bold mb-2"
-              htmlFor="issueDescription"
-            >
-              Issue Description:
-            </label>
-            <p className="text-gray-800 w-full">
-              {issueDescription}Lorem ipsum dolor sit amet, consectetur
-              adipiscing elit. Fusce dignissim auctor nibh eget fermentum. Fusce
-              gravida gravida neque, eu mattis arcu vestibulum tincidunt.
-              Maecenas consectetur leo lectus, non feugiat velit venenatis eget.
-              Morbi nunc felis, consectetur ut ante sed, semper sollicitudin
-              velit. Praesent eros diam, scelerisque at pretium vitae, aliquet
-              sed arcu. Suspendisse in risus placerat, facilisis neque nec,
-              dignissim massa. Orci varius natoque penatibus et magnis dis
-              parturient montes, nascetur ridiculus mus. Donec ac ipsum laoreet,
-              tincidunt felis vitae, dignissim ex. Cras at aliquet eros, ac
-              dapibus elit. Nulla aliquet aliquam fermentum. Vestibulum lobortis
-              lobortis augue, id malesuada urna malesuada ac. Etiam nisl nibh,
-              sodales et urna eu, sollicitudin cursus purus. Integer et dolor
-              odio. Sed rhoncus erat et efficitur viverra. Quisque nec tempus
-              augue.
-            </p>
+              </>
+            )}
+          </>
           </div>
-        </div>
-        {/* Action Buttons */}
-        <div className="flex items-center space-x-4">
-          <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
-            View Status
-          </button>
-        </div>
-      </div>
+        ))
+      )}
     </div>
   );
 };

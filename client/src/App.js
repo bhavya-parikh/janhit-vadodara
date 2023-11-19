@@ -19,6 +19,7 @@ import Home from "./Components/Dashboard/dashboad1";
 import Main from "./Components/Layout/Main";
 import "./assets/styles/main.css";
 import "./assets/styles/responsive.css";
+import AboutUs from "./Components/AboutUs/AboutUs.jsx"
 
 import Complaint from "./Components/Complaint/complaint.jsx";
 import { ComplaintTracking } from "./Components/ComplaintTracking/complainttracking.jsx";
@@ -30,6 +31,8 @@ import AddFieldStaff from "./Components/deptHead/addFieldStaff.jsx";
 import { RemoveFieldStaff } from "./Components/deptHead/RemoveFieldStaff.jsx";
 import Review from "./Components/Review/Review.jsx";
 import { MyComplaints } from "./Components/MyComplaints/MyComplaints.jsx";
+
+
 const cardData = [
   {
     name: "John Doe",
@@ -142,6 +145,7 @@ function App() {
             element={<Login setUserState={setUserState} />}
           ></Route>
           <Route path="/signup" element={<Register />}></Route>
+          <Route path="/aboutus" element={<AboutUs />}></Route>
           <Route element={<ProtectedRouteUser />}>
             <Route path="/complaint" element={<Complaint />}></Route>
           </Route>
@@ -186,7 +190,7 @@ function App() {
             element={
               <>
                 <h1 className="contact_us">Contact Us</h1>
-                <div className="card-grid">
+                <div className="card-container">
                   {cardData.map((data, index) => (
                     <Card
                       key={index}

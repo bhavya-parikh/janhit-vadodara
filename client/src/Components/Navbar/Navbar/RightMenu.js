@@ -35,7 +35,7 @@ const RightMenu = ({ mode }) => {
         title={
           <>
             <Avatar icon={<UserOutlined />} />
-            <span className="username">John Doe</span>
+            <span className="username"></span>
           </>
         }
       >
@@ -47,6 +47,15 @@ const RightMenu = ({ mode }) => {
           }}
         >
           <LoginOutlined /> login
+        </Menu.Item>
+        <Menu.Item
+          key="adminlogin"
+          onClick={() => {
+            setMenu("adminlogin");
+            navigate("/AdminLogin");
+          }}
+        >
+          <LoginOutlined /> Admin login
         </Menu.Item>
       </Menu.SubMenu>
     </Menu>
