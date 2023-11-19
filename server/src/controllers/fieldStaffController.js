@@ -1,8 +1,9 @@
 const FieldStaff = require("../models/fieldStaff");
 const asyncHandler = require("express-async-handler");
+const bcrypt = require("bcryptjs");
 
 module.exports.addFieldStaff = asyncHandler(async (req, res) => {
-  const { name, username, password, wardNo, category } = req.body;
+  const { name, username, password, wardNo, category } = req.body.user;
   if (!name || !username || !password || !wardNo || !category) {
     res.status(400).send({ message: "Please Add All Fields" });
   } else {
@@ -12,20 +13,21 @@ module.exports.addFieldStaff = asyncHandler(async (req, res) => {
     } else {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
+      const fieldStaff = await FieldStaff.create({
+        name,
+        username,
+        password: hashedPassword,
+        category,
+        wardNo,
+      });
+      if (fieldStaff) {
+        res.status(200).send({ message: "Data added Successfully" });
+      } else {
+        res.status(400).send({ message: "Invalid Data" });
+      }
     }
   }
-  const fieldStaff = await FieldStaff.create({
-    name,
-    username,
-    password: hashedPassword,
-    category,
-    wardNo,
-  });
-  if (fieldStaff) {
-    res.status(200).send({ message: "Data added Successfully" });
-  } else {
-    res.status(400).send({ message: "Invalid Data" });
-  }
+  
 });
 
 module.exports.removeFieldStaff = asyncHandler(async (req, res) => {

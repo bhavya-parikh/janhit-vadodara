@@ -21,6 +21,21 @@ const AddFieldStaffForm = ({ setUserState }) => {
     username: "",
     password: "",
   });
+  const [categories, setCategories] = useState([]); // State to store categories
+
+  // Function to fetch categories
+  useEffect(() => {
+    if (categories.length === 0) {
+      axios.get("http://localhost:5000/api/getCategories")
+        .then(response => {
+          const uniqueCategories = Array.from(new Set(response.data.categoriesData.map(category => category.category)));
+          setCategories(uniqueCategories.map(category => ({ category })));
+        })
+        .catch(error => {
+          console.error("Error fetching categories:", error);
+        });
+    }
+  }, [categories]);
   const changeHandler = (value, changedValues) => {
     setUserDetails({
       ...user,
@@ -149,23 +164,16 @@ const AddFieldStaffForm = ({ setUserState }) => {
             />
           </Form.Item>
 
-          <Form.Item
-            label="Category"
-            name="category"
-            onSelect={changeHandler}
-            rules={[
-              {
-                required: true,
-                message: "Please select a category!",
-              },
-            ]}
-          >
-            <Select placeholder="Select Category" className="rounded-lg">
-              <Option value="category1">Category 1</Option>
-              <Option value="category2">Category 2</Option>
-              {/* Add more options as needed */}
-            </Select>
-          </Form.Item>
+          <Form.Item label="Category" name="category">
+      <Select placeholder="Select Category" className="rounded-lg">
+        {categories.map(category => (
+          <Option key={category.category} value={category.category}>
+            {category.category}
+          </Option>
+        ))}
+      </Select>
+    </Form.Item>
+
 
           <Form.Item
             label="Ward No"
