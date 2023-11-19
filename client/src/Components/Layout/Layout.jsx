@@ -42,12 +42,12 @@ const Layout = () => {
             </div>
 
             <button className="text-white font-semibold py-2 px-6 ml-4 hover:border-transparent rounded-full">
-              <a href="/request-certificate" className="hover:text-white">
+              <a href="/complaintTracking" className="hover:text-white">
                 Track Complaint
               </a>
             </button>
             <button className="text-white font-semibold py-2 px-6 ml-4 mt-8 hover:border-transparent rounded-full">
-              <a href="/complain-form" className="hover:text-white">
+              <a href="/Complaint" className="hover:text-white">
                 Register Complaint
               </a>
             </button>
