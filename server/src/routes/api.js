@@ -40,6 +40,6 @@ router.post("/addFieldStaff", fieldStaffController.addFieldStaff);
 router.post("/removeFieldStaff", fieldStaffController.removeFieldStaff);
 router.post("/fetchFieldStaff", fieldStaffController.fetchFieldStaff);
 
-router.post("fetchComplaintsUser", complaintController.fetchComplaintsUser);
+router.post("/fetchComplaintsUser", complaintController.fetchComplaintsUser);
 router.post("/fetchComplaintsAdmin", complaintController.fetchComplaintsAdmin);
 module.exports = router;
