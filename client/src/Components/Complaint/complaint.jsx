@@ -2,18 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  Spin,
-  Form,
-  Input,
-  Button,
-  Select,
-  Radio,
-  Upload,
-  message,
-  Typography,
-} from "antd";
-// import "antd/dist/antd.css";
+import {Spin,Form,Input,Button,Select, Radio,Upload,message,Typography,AutoComplete} from "antd";
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -23,6 +12,9 @@ const Complaint = () => {
   const [form] = Form.useForm();
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const [wardDatas, setWardDatas] = useState([]);
+  const [wardAreas, setWardAreas] = useState([]);
+const[responseData,setResponseData] = useState([]);
   const [complaint, setComplaintDetails] = useState({
     complaintType: "",
     firstname: "",
@@ -32,7 +24,7 @@ const Complaint = () => {
     issueCategory: "Select Category",
     issueSubcategory: "Select SubCategory",
     area: "Select Area",
-    wardNo: "Select", // Add a default ward selection
+    wardNo: "Select",
     complaintDescription: "",
     assignedStaffUsername: "",
     assignedStaff: "",
@@ -44,10 +36,36 @@ const Complaint = () => {
   const [fileList, setFileList] = useState([]);
   const [uploading, setUploading] = useState(false);
   const validateForm = (values) => {
-    // You can add your form validation logic here.
-    // For now, let's return an empty object.
     return {};
   };
+  useEffect(() => {
+    // Function to fetch ward areas when the component mounts
+    const fetchWardAreas = async () => {
+      try {
+        const response = await axios.post(
+          `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/fetchAllWardAreas`
+        )
+          const responseData = response.data.wardDatas;
+          const wardNos = responseData.map(item => item.wardNo);
+          const wardAreas = responseData.map(item => item.area);
+          const uniqueWardNos = [...new Set(wardNos)];
+          const uniqueWardAreas = [...new Set(wardAreas)];
+          const sortedWardNos = uniqueWardNos.sort((a, b) => a - b);
+          // const sortedWardAreas = uniqueWardNos.sort((a, b) => a - b);
+          setResponseData(responseData);
+          setWardDatas(sortedWardNos);
+          setWardAreas(uniqueWardAreas);
+
+      } catch (error) {
+        // Handle errors
+        console.error("Error fetching ward areas:", error);
+        toast.error("Error fetching ward areas");
+      }
+    };
+    
+
+    fetchWardAreas();
+  }, []); 
 
   useEffect(() => {
     if (isSubmit) {
@@ -96,25 +114,25 @@ const Complaint = () => {
   };
 
   const fetchWardData = (selectedArea) => {
-    axios
-      .post(`${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/fetchWardData`, {
-        area: selectedArea,
-      })
-      .then((res) => {
-        const wardNo = res.data.wardNo;
-        form.setFieldsValue({ wardNo: wardNo });
-        setComplaintDetails((prevComplaint) => ({
-          ...prevComplaint,
-          area: selectedArea,
-          wardNo: wardNo,
-        }));
-      })
-      .catch((error) => {
-        setLoading(false);
-        toast(error.response.data.message);
-      });
-  };
+    // Fetch ward number based on the selected area
+    const filteredWardData = responseData.find(
+      (wardData) => wardData.area === selectedArea
+    );
 
+    if (filteredWardData) {
+      // If a matching ward is found, set the ward number in the form
+      setComplaintDetails((prevComplaint) => ({
+        ...prevComplaint,
+        wardNo: filteredWardData.wardNo,
+      }));
+
+      // Set the ward number in the form
+      form.setFieldsValue({
+        wardNo: filteredWardData.wardNo,
+      });
+    }
+  };
+  
   const fetchAssignStaffData = (selectedCategory, selectedWard) => {
     axios
       .post(`${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/fetchFieldStaff`, {
@@ -218,7 +236,7 @@ const Complaint = () => {
     },
     fileList,
   };
-  const getFile = (e) => {
+    const getFile = (e) => {
     console.log("Upload event:", e);
 
     if (Array.isArray(e)) {
@@ -306,50 +324,61 @@ const Complaint = () => {
           </div>
 
           <div className="col-span-2">
-            <Form.Item label="Ward" name="wardNo" rules={[{ required: true }]}>
+            <Form.Item
+              label="Ward"
+              name="wardNo"
+              rules={[{ required: true }]}
+            >
               <Select onChange={(value) => changeHandler("wardNo", value)}>
                 <Option value="Select">Select</Option>
-                <Option value="1">Ward 1</Option>
-                <Option value="2">Ward 2</Option>
-                <Option value="3">Ward 3</Option>
-                <Option value="4">Ward 4</Option>
-                <Option value="5">Ward 5</Option>
-                <Option value="6">Ward 6</Option>
-                <Option value="7">Ward 7</Option>
-                <Option value="8">Ward 8</Option>
-                <Option value="9">Ward 9</Option>
-                <Option value="10">Ward 10</Option>
-                <Option value="11">Ward 11</Option>
-                <Option value="12">Ward 12</Option>
-                <Option value="13">Ward 13</Option>
-                <Option value="14">Ward 14</Option>
-                <Option value="15">Ward 15</Option>
-                <Option value="16">Ward 16</Option>
-                <Option value="17">Ward 17</Option>
-                <Option value="18">Ward 18</Option>
-                <Option value="19">Ward 19</Option>
+                {wardDatas.map((wardData) => (
+                  <Option key={wardData} value={wardData}>
+                    Ward {wardData}
+                  </Option>
+                ))}
               </Select>
             </Form.Item>
           </div>
-
+          
           <div className="col-span-2">
             <Form.Item
-              onChange={(value) => changeHandler("area", value)}
               label="Area"
               name="area"
               value={complaint.area}
               rules={[{ required: true }]}
             >
-              <Select onChange={(value) => fetchWardData(value)}>
-                <Option value="Select">Select</Option>
-                <Option value="7 seas Mall">7 seas Mall</Option>
-                <Option value="AADARSH NAGAR">AADARSH NAGAR</Option>
-                <Option value="Atapi">Atapi</Option>
-                <Option value="Aarav Building">Aarav Building</Option>
+              <Select
+                onChange={(value) => {
+                  changeHandler("area", value);
+                  fetchWardData(value); // Call fetchWardData when "area" changes
+                }}
+              >
+                {complaint.wardNo === "Select" ? (
+                  wardAreas.map((wardArea) => (
+                    <Option key={wardArea} value={wardArea}>
+                      {wardArea}
+                    </Option>
+                  ))
+                ) : (
+                  responseData
+                    .filter(
+                      (wardData) => wardData.wardNo === complaint.wardNo
+                    )
+                    .map((filteredWardData) => {
+                      console.log("Filtered Data:", filteredWardData);
+                      return (
+                        <Option
+                          key={filteredWardData.area}
+                          value={filteredWardData.area}
+                        >
+                          {filteredWardData.area}
+                        </Option>
+                      );
+                    })
+                )}
               </Select>
             </Form.Item>
           </div>
-
           <div className="col-span-2">
             <Form.Item
               label="Category"

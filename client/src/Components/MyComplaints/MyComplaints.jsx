@@ -1,17 +1,50 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Steps } from 'antd';
+import { Steps ,message} from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
 
 export const MyComplaints = () => {
+  const [loading, setLoading] = useState(true);
   const { complaintId, issueDescription } = useParams();
   const [complaints, setComplaints] = useState([]);
+  const navigate = useNavigate();
+
+  const updateComplaintStatus = (complaintId, newStatus) => {
+    axios
+      .post(
+        `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/updateComplaintStatus`,
+        {
+          complaintId,
+          newStatus,
+        }
+      )
+      .then((response) => {
+        console.log("Status Updated Successfully!");
+        message.success("Status Updated Successfully!");
+  
+        // Update local state to trigger re-render
+        setComplaints((prevComplaints) =>
+          prevComplaints.map((complaint) =>
+            complaint._id === complaintId
+              ? { ...complaint, complaintStatus: newStatus }
+              : complaint
+          )
+        );
+  
+        setLoading(false);
+      })
+      .catch((err) => {
+        message.error("Failed to update status!");
+        setLoading(false);
+      });
+  };
+  
 
 
-  // The empty dependency array ensures that this effect runs once when the component mounts
-  useEffect(() => {
+  useEffect(() => { 
     axios
       .post(
         `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/fetchComplaintsUser`,
@@ -31,69 +64,70 @@ export const MyComplaints = () => {
 
   const getStatusDescription = (status) => {
     switch (status) {
-      case 'Complaint registered':
-        return 'Complaint registered.';
+      case 'Complaint Registered':
+        return 'Complaint Registered.';
       case 'Pending':
-        return 'Application Is Pending.';
+        return 'Your Application Is Pending. We Are Working On It.';
       case 'Progress':
         return 'Working Under Progress.';
       case 'Completed':
-        return 'Complaint solved.';
+        return <p className="text-gray-600 text-xl font-bold mb-2 mt-5 text-center"style={{ color: 'green' }}>Your Complaint Has Been Solved. Thank You!</p>;
       case 'Disposed':
-        return 'Your Application Is Disposed.';
+        return 'Your Application Has Been Disposed. If You Have Any Questions, Please Contact Us.';
+      case 'Escalated':
+        return 'Your Complain Is Escalated.'
       default:
         return '';
     }
   };
-  const items1 = [
+  const items2 = [
     {
-      title: 'Complaint registered'
+      title: 'Complaint Registered'
     },
     {
-      title: 'Pending',
-      // description: 'Application Is Pending',
+      title: 'Complaint Escalated',
     },
     {
       title: 'Progress',
-      // description: 'Working Under Progress',
+    },
+    {
+      title: 'Completed',
+      icon: <SmileOutlined />,
+    },
+  ];
+  
+  const items1 = [
+    {
+      title: 'Complaint Registered'
+    },
+    {
+      title: 'Pending',
+    },
+    {
+      title: 'Progress',
     },
     {
       title: 'Disposed',
-      // description: 'Your Application Is Disposed.',
-      // icon: <SmileOutlined />,
     },
   ];
   const items = [
     {
-      title: 'Complaint registered'
+      title: 'Complaint Registered'
     },
     {
       title: 'Pending',
-      // description: 'Application Is Pending',
     },
     {
       title: 'Progress',
-      // description: 'Working Under Progress',
     },
     {
       title: 'Completed',
-      description: 'Complaint solved.',
       icon: <SmileOutlined />,
     },
   ];
   
 
   return (
-    // axios
-    //   .post("fecth",{}, trackingInfo)
-    //   .then((res) => {
-    //     // Handle the response, you can set it in state for display
-    //     setResponse(res.data);
-    //   })
-    //   .catch((err) => {
-    //     // Handle errors, you can set it in state for display
-    //     console.error(err);
-    //   });
     <div className="container mx-auto p-8">
       <h1 className="text-4xl font-bold mb-6 text-black text-decoration-line: underline text-center">Complaints Details</h1>
 
@@ -124,12 +158,12 @@ export const MyComplaints = () => {
             <div className="grid grid-cols-1 gap-4">
               <div className="mb-4">
                 <label
-                  className="block text-gray-600 text-lg font-semibold mb-2"
+                  className="block text-gray-600 text-lg font-semibold mb-2 "
                   htmlFor="issueDescription"
                 >
                   Issue Description:
                 </label>
-                <p className="text-gray-800 w-full">
+                <p className="text-gray-800 w-full break-all">
                   {complaint.complaintDescription}
                 </p>
               </div>
@@ -141,16 +175,27 @@ export const MyComplaints = () => {
             >
               Status:
             </label>
+
             <>
-            {complaint.complaintStatus === "Disposed" ? (
+            {complaint.complaintStatus === "Disposed" && (
               <>
-              <Steps current={3} status="error" labelPlacement="vertical" items={items1} />
-              <p className="text-gray-600 text-xl font-bold mb-2 mt-5 text-center">
-               {getStatusDescription(complaint.complaintStatus)}
+                <Steps current={3} status="error" labelPlacement="vertical" items={items1} />
+                <p className="text-gray-600 text-xl font-bold mb-2 mt-5 text-center" style={{ color: 'red' }}>
+                  {getStatusDescription(complaint.complaintStatus)}
                 </p>
-                </>
-              
-            ) : (
+              </>
+            )}
+            
+            {complaint.complaintStatus === "Escalated" && (
+              <>
+                <Steps current={1} labelPlacement="vertical" items={items2} />
+                <p className="text-gray-600 text-xl font-bold mb-2 mt-5 text-center">
+                  {getStatusDescription(complaint.complaintStatus)}
+                </p>
+              </>
+            )}
+
+            {complaint.complaintStatus !== "Disposed" && complaint.complaintStatus !== "Escalated" && (
               <>
                 <Steps
                   current={items.findIndex((item) => item.title === complaint.complaintStatus)}
@@ -158,12 +203,45 @@ export const MyComplaints = () => {
                   items={items}
                 />
                 <p className="text-gray-600 text-xl font-bold mb-2 mt-5 text-center">
-               {getStatusDescription(complaint.complaintStatus)}
+                  {getStatusDescription(complaint.complaintStatus)}
                 </p>
-
               </>
             )}
           </>
+          {(complaint.complaintStatus === "Completed" || complaint.complaintStatus === "Disposed") && (
+                           <button
+                           className="bg-blue-500 text-white py-2 px-4 rounded"
+                           onClick={() => {
+                             updateComplaintStatus(complaint._id, "Escalated");
+                             axios
+                               .post(
+                                 `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/fetchComplaintsUser`,
+                                 {},
+                                 {
+                                   withCredentials: true,
+                                 }
+                               )
+                               .then((response) => {
+                                 setComplaints(response.data);
+                               })
+                               .catch((error) => {
+                                 toast(error.response.data.message);
+                               });
+                           }}
+                         >
+                    Reopen
+                  </button>
+                )}
+                 {complaint.complaintStatus === "Completed" && (
+            <button
+              className="bg-green-500 text-white py-2 px-4 rounded"
+              onClick={() => {
+                navigate("/Review");
+              }}
+            >
+              Write Review
+            </button>
+          )}
           </div>
         ))
       )}

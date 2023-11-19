@@ -8,9 +8,16 @@ const fieldStaffController = require("../controllers/fieldStaffController");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 
+
+
+router.post("/guest/trackComplaintStatus",complaintController.trackComplaintStatus);
+
+
 router.post("/user/register", authController.registerUser);
 router.post("/user/login", authController.loginUser);
 router.post("/user/logout", authController.logoutUser);
+router.post("/user/updateComplaintStatus",complaintController.updateComplaintStatusUser);
+
 
 router.post(
   "/services/complaint",
@@ -34,7 +41,8 @@ router.get("/admin/fetchData", adminController.fetchData);
 //wardData Routes
 router.post("/addWardData", wardDataController.addWardData);
 router.post("/fetchWardData", wardDataController.fetchWardData);
-//router.get("/getallwards", wardDataController.getAllWards);
+router.post("/fetchWardAreas",wardDataController.fetchWardAreas);
+router.post("/fetchAllWardAreas", wardDataController.fetchAllWardAreas);
 
 router.post("/addFieldStaff", fieldStaffController.addFieldStaff);
 router.post("/removeFieldStaff", fieldStaffController.removeFieldStaff);
@@ -42,4 +50,5 @@ router.post("/fetchFieldStaff", fieldStaffController.fetchFieldStaff);
 
 router.post("/fetchComplaintsUser", complaintController.fetchComplaintsUser);
 router.post("/fetchComplaintsAdmin", complaintController.fetchComplaintsAdmin);
+
 module.exports = router;

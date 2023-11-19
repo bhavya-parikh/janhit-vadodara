@@ -41,13 +41,18 @@ const Layout = () => {
               </p>
             </div>
 
-            <button className="text-white font-semibold py-2 px-6 ml-4 hover:border-transparent rounded-full">
-              <a href="/request-certificate" className="hover:text-white">
+            <button className="text-white font-semibold py-2 px-6 ml-4 hover:border-transparent rounded-full"onClick={() => {
+          navigate("/complaintTracking");
+        }}>
+              <a className="hover:text-white">
                 Track Complaint
               </a>
             </button>
-            <button className="text-white font-semibold py-2 px-6 ml-4 mt-8 hover:border-transparent rounded-full">
-              <a href="/complain-form" className="hover:text-white">
+            <button className="text-white font-semibold py-2 px-6 ml-4 mt-8 hover:border-transparent rounded-full"
+            onClick={() => {
+              navigate("/complaint");
+            }}>
+              <a className="hover:text-white">
                 Register Complaint
               </a>
             </button>
