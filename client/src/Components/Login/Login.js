@@ -82,6 +82,7 @@ const Login = ({ setUserState }) => {
 
   return (
     <>
+      <Spin spinning={loading} tip="Logging You In.... Please Wait." />
       <section className="bg-gray-50 dark:bg-gray-900">
         <div className="flex flex-col items-center justify-center w-full  sm:w-auto ml-0  md:w-auto mb-24 mt-10 mx-auto h-fit ">
           <div className="bg-white border-2 border-gray-300 shadow-md rounded p-4 text-center">
@@ -89,7 +90,6 @@ const Login = ({ setUserState }) => {
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Sign in to your account
               </h1>
-              <Spin spinning={loading} tip="Logging You In.... Please Wait." />
               <Form
                 form={form}
                 name="loginForm"
