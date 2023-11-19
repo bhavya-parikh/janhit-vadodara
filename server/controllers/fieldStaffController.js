@@ -3,7 +3,7 @@ const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcryptjs");
 
 module.exports.addFieldStaff = asyncHandler(async (req, res) => {
-  const { name, username, password, wardNo, category } = req.body;
+  const { name, username, password, wardNo, category } = req.body.user;
   if (!name || !username || !password || !wardNo || !category) {
     return res.status(400).send({ message: "Please Add All Fields" });
   }
