@@ -28,19 +28,6 @@ const AdminLogin = ({ setUserState }) => {
       ...user,
       ...changedValues,
     });
-    switch (value) {
-      case "fieldStaff":
-        navigate("/FieldStaffLogin");
-        break;
-      case "admin":
-        navigate("/AdminLogin");
-        break;
-      case "commissioner":
-        navigate("/CommissionerLogin");
-        break;
-      default:
-        break;
-    }
   };
   const onFinish = async () => {
     // Handle the form submission logic here if needed
@@ -93,7 +80,7 @@ const AdminLogin = ({ setUserState }) => {
     form.setFieldsValue({
       username: "",
       password: "",
-      role: "admin",
+      role: "",
     });
   }, [formErrors]);
 
@@ -112,7 +99,7 @@ const AdminLogin = ({ setUserState }) => {
                 onValuesChange={changeHandler}
               >
                 <h1 className="text-xl font-bold mb-4  leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                  Login As admin
+                  Login As Admin
                 </h1>
                 <Form.Item
                   name="username"
@@ -136,14 +123,16 @@ const AdminLogin = ({ setUserState }) => {
                 </Form.Item>
                 <Form.Item
                   name="role"
+                  label="Select Admin Type"
                   rules={[{ required: true, message: "User type is required" }]}
                 >
                   <Select
                     className="w-96"
-                    placeholder="Select User Type"
-                    onSelect={changeHandler}
+                    placeholder="Please Select Admin Type"
+                    onChange={(value) => form.setFieldsValue({ role: value })}
+                    // onSelect={changeHandler}
                   >
-                    <Option value="admin">Admin</Option>
+                    <Option value="headDepartment">Head Department</Option>
                     <Option value="fieldStaff">Field Staff</Option>
                     <Option value="commissioner">Commissioner</Option>
                   </Select>

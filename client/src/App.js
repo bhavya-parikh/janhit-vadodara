@@ -19,31 +19,33 @@ import Home from "./Components/Dashboard/dashboad1";
 import Main from "./Components/Layout/Main";
 import "./assets/styles/main.css";
 import "./assets/styles/responsive.css";
-import AboutUs from "./Components/AboutUs/AboutUs.jsx"
+import AboutUs from "./Components/AboutUs/AboutUs.jsx";
 
 import Complaint from "./Components/Complaint/complaint.jsx";
 import { ComplaintTracking } from "./Components/ComplaintTracking/complainttracking.jsx";
 
 import AdminLogin from "./Components/AdminLogin/AdminLogin.js";
-import FieldStaffLogin from "./Components/FieldStaffLogin/FieldStaffLogin.js";
-import CommissionerLogin from "./Components/CommissionerLogin/CommissionerLogin.js";
 import AddFieldStaff from "./Components/deptHead/addFieldStaff.jsx";
 import { RemoveFieldStaff } from "./Components/deptHead/RemoveFieldStaff.jsx";
 import Review from "./Components/Review/Review.jsx";
 import { MyComplaints } from "./Components/MyComplaints/MyComplaints.jsx";
-import Progressbar  from "../src/Components/Progressbar/Progress.js"
+import Progressbar from "../src/Components/Progressbar/Progress.js";
+import { AddDeptHead } from "./Components/Commissioner/AddDeptHead.jsx";
+import { RemoveDeptHead } from "./Components/Commissioner/RemoveDeptHead.jsx";
 const cardData = [
   {
     name: "John Doe",
     mobileNumber: "123-456-7890",
     email: "temp-mail@gmail.com",
     wardNo: "Ward 1",
-  },{
+  },
+  {
     name: "Jane Smith",
     mobileNumber: "987-654-3210",
     email: "temp-mail@gmail.com",
     wardNo: "Ward 2",
-  },{
+  },
+  {
     name: "Bob Johnson",
     mobileNumber: "555-123-4567",
     email: "temp-mail@gmail.com",
@@ -160,17 +162,10 @@ function App() {
             path="/complaintTracking"
             element={<ComplaintTracking />}
           ></Route>
-          <Route
-            path="/progress"
-            element={< Progressbar />}
-          ></Route>
+          <Route path="/progress" element={<Progressbar />}></Route>
           <Route
             path="/AdminLogin"
             element={<AdminLogin setUserState={setUserState} />}
-          ></Route>
-          <Route
-            path="/FieldStaffLogin"
-            element={<FieldStaffLogin setUserState={setUserState} />}
           ></Route>
           <Route
             path="/AddFieldStaff"
@@ -181,9 +176,10 @@ function App() {
             element={<RemoveFieldStaff />}
           ></Route>
           <Route
-            path="/CommissionerLogin"
-            element={<CommissionerLogin />}
+            path="/AddDeptHead"
+            element={<AddDeptHead setUserState={setUserState} />}
           ></Route>
+          <Route path="/RemoveDeptHead" element={<RemoveDeptHead />}></Route>
           <Route path="/mycomplaints" element={<MyComplaints />}></Route>
 
           <Route

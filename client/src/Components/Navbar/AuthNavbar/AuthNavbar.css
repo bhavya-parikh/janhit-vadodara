@@ -70,7 +70,9 @@
 .ant-drawer-body {
   padding: 0;
 }
-
+.ant-drawer-content-wrapper {
+  height: 100% !important;
+}
 .ant-drawer-body .ant-menu-horizontal > .ant-menu-item,
 .ant-drawer-body .ant-menu-horizontal > .ant-menu-submenu {
   display: inline-block;
@@ -88,6 +90,31 @@
 .username {
   display: none;
   margin-left: 8px;
+}
+@media (max-width: 431px) {
+  .ant-drawer-content {
+    /* margin-left: 55%; */
+    height: 100%;
+  }
+  .ant-drawer-close {
+    position: absolute;
+    top: 0px;
+    right: 0;
+    margin-top: 0px;
+    left: 85px;
+    margin-bottom: 11px;
+    padding-top: 11px;
+  }
+
+  .ant-drawer-body {
+    padding-right: 0px !important;
+    padding-top: 0px !important;
+    padding-left: 1px !important;
+  }
+
+  .ant-menu-inline {
+    border-right-width: 0px !important;
+  }
 }
 
 @media (max-width: 767px) {
