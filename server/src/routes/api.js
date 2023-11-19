@@ -35,7 +35,7 @@ router.get("/admin/fetchData", adminController.fetchData);
 router.post("/addWardData", wardDataController.addWardData);
 router.post("/fetchWardData", wardDataController.fetchWardData);
 //router.get("/getallwards", wardDataController.getAllWards);
-
+router.post("/addCategories", wardDataController.addCategories);
 router.post("/addFieldStaff", fieldStaffController.addFieldStaff);
 router.post("/removeFieldStaff", fieldStaffController.removeFieldStaff);
 router.post("/fetchFieldStaff", fieldStaffController.fetchFieldStaff);
