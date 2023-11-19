@@ -32,7 +32,7 @@ const registerUser = asyncHandler(async (req, res, next) => {
           httpOnly: false,
           sameSite: "none",
           domain: process.env.ORIGIN,
-          secure,
+          secure: true,
         });
 
         console.log(token);
@@ -87,7 +87,7 @@ const logoutUser = asyncHandler(async (req, res, next) => {
     expires: new Date(0),
     sameSite: "none",
     domain: process.env.ORIGIN,
-    secure,
+    secure: true,
   });
   res.status(200).json({ message: "Logged out successfully" });
 });
