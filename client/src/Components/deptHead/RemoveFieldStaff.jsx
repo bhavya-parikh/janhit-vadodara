@@ -9,9 +9,10 @@ export const RemoveFieldStaff = () => {
 
   const onFinish = async (values) => {
     try {
+      const token = localStorage.getItem("token");
       const response = await axios.post(
         `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/removeFieldStaff`,
-        values,
+        { values, token },
         {
           withCredentials: true,
         }

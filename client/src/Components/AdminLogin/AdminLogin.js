@@ -71,8 +71,6 @@ const AdminLogin = ({ setUserState }) => {
             withCredentials: true,
           })
           .then((res) => {
-            const token = res.data.token;
-            document.cookie = `token=${token}; path=/; domain=https://janhit-vadodara-bhavya-parikhs-projects.vercel.app; secure; samesite=None;`;
             setLoading(false);
             toast("Logged in success");
             setAuth(true);
