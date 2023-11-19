@@ -44,7 +44,7 @@ const [subcategories, setSubcategories] = useState([]);
   useEffect(() => {
     const fetchSubcategories = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/getCategorySubCategories");
+        const response = await axios.get(`${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/getCategorySubCategories`);
         const categoriesData = response.data.categoriesData;
         const uniqueCategories = [...new Set(categoriesData.map(item => item.category))];
         setCategories(uniqueCategories);

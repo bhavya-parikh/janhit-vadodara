@@ -26,7 +26,7 @@ const AddFieldStaffForm = ({ setUserState }) => {
   // Function to fetch categories
   useEffect(() => {
     if (categories.length === 0) {
-      axios.get("http://localhost:5000/api/getCategories")
+      axios.get(`${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/getCategories`)
         .then(response => {
           const uniqueCategories = Array.from(new Set(response.data.categoriesData.map(category => category.category)));
           setCategories(uniqueCategories.map(category => ({ category })));
