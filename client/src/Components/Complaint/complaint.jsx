@@ -441,8 +441,7 @@ const Complaint = () => {
           <div className="col-span-2 flex justify-center h-96 md:h-fit md:col-start-2 md:col-span-1 md:mr-4 flex justify-center md:justify-end md:ml-2">
             <Form.Item>
               <Button
-                type="primary"
-                className="bg-blue-700 w-fit md:w-56 w-full h-16 text-white font-bold rounded-full text-xl transition-all duration-300 transform hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+                className="bg-blue-700 w-fit md:w-56 w-fit h-16 text-white font-bold rounded-full text-xl transition-all duration-300 transform hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
                 onClick={complaintHandler}
               >
                 Submit
@@ -452,8 +451,7 @@ const Complaint = () => {
           <div className="col-span-2">
             <Form.Item>
               <Button
-                type="primary"
-                className="bg-blue-700 w-fit md:w-56 w-full h-16 text-white font-bold rounded-full text-xl transition-all duration-300 transform hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+                className="bg-blue-700 w-fit md:w-56 w-fit h-16 text-white font-bold rounded-full text-xl transition-all duration-300 transform hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
                 onClick={() => form.resetFields()}
               >
                 Reset
