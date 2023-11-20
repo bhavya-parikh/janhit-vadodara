@@ -167,7 +167,7 @@ const Testimonial = () => {
                     />
                     <div className="ml-4">
                       <p className="text-base font-bold text-gray-900 font-pj">
-                        Priyanka Joshi
+                        Rajesh Kumar
                       </p>
                       <p className="mt-0.5 text-sm font-pj text-gray-600">
                         Resident of Ward 10
@@ -243,7 +243,7 @@ const Testimonial = () => {
                     />
                     <div className="ml-4">
                       <p className="text-base font-bold text-gray-900 font-pj">
-                        Rajesh Kumar
+                        Priyanaka Joshi
                       </p>
                       <p className="mt-0.5 text-sm font-pj text-gray-600">
                         Resident of Ward 17
