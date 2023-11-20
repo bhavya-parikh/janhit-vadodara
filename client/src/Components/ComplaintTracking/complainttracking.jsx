@@ -1,19 +1,23 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Steps } from 'antd';
-import { LoadingOutlined, SmileOutlined, SolutionOutlined, UserOutlined } from '@ant-design/icons';
+import { Steps } from "antd";
+import {
+  LoadingOutlined,
+  SmileOutlined,
+  SolutionOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { Form, Input, Button } from "antd";
 import { useNavigate } from "react-router-dom";
 // import Progressbar from "../Progressbar/Progress";
 
-
-export const ComplaintTracking = () => {
+export default function ComplaintTracking() {
   const navigate = useNavigate();
   const [response, setResponse] = useState(null);
   const [trackingInfo, setTrackingInfo] = useState({
     complaintId: "",
   });
-  
+
   const items2 = [
     {
       title: "Complaint Registered",
@@ -70,28 +74,26 @@ export const ComplaintTracking = () => {
       title: "Disposed",
     },
   ];
-const items = [
-  {
-    title: "Complaint Registered",
-  },
-  {
-    title: "Pending",
-  },
-  {
-    title: "Progress",
-  },
-  {
-    title: "Completed",
-    icon: <SmileOutlined />,
-  },
-];  
-const Progressbar = () => (
-  <div id='kik'>
-    <Steps current={1} labelPlacement="vertical" items={items}/>
-  </div>
-  
-);
-  
+  const items = [
+    {
+      title: "Complaint Registered",
+    },
+    {
+      title: "Pending",
+    },
+    {
+      title: "Progress",
+    },
+    {
+      title: "Completed",
+      icon: <SmileOutlined />,
+    },
+  ];
+  const Progressbar = () => (
+    <div id="kik">
+      <Steps current={1} labelPlacement="vertical" items={items} />
+    </div>
+  );
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
@@ -107,7 +109,7 @@ const Progressbar = () => (
       console.error("Complaint ID is required");
       return;
     }
-  
+
     axios
       .post(
         `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/guest/trackComplaintStatus`,
@@ -121,7 +123,7 @@ const Progressbar = () => (
         console.error("Error:", err);
       });
   };
-  
+
   return (
     <div className="container mx-auto p-8">
       <h1 className="text-2xl mb-8">Complaint Tracking</h1>
@@ -153,49 +155,50 @@ const Progressbar = () => (
           </Button>
         </div>
         <>
-              {response && (response.complaintStatus === "Disposed") && (
-                <>
-                  <Steps
-                    current={3}
-                    status="error"
-                    labelPlacement="vertical"
-                    items={items1}
-                  />
-                  <p
-                    className="text-gray-600 text-xl font-bold mb-2 mt-5 text-center"
-                    style={{ color: "red" }}
-                  >
-                    {getStatusDescription(response.complaintStatus)}
-                  </p>
-                </>
-              )}
-
-              {response && response.complaintStatus === "Escalated" && (
-                <>
-                  <Steps current={1} labelPlacement="vertical" items={items2} />
-                  <p className="text-gray-600 text-xl font-bold mb-2 mt-5 text-center">
-                    {getStatusDescription(response.complaintStatus)}
-                  </p>
-                </>
-              )}
-
-              {response && (response.complaintStatus !== "Disposed" &&
-                response.complaintStatus !== "Escalated" )&& (
-                  <>
-                    <Steps
-                      current={items.findIndex(
-                        (item) => item.title === response.complaintStatus
-                      )}
-                      labelPlacement="vertical"
-                      items={items}
-                    />
-                    <p className="text-gray-600 text-xl font-bold mb-2 mt-5 text-center">
-                      {getStatusDescription(response.complaintStatus)}
-                    </p>
-                  </>
-                )}
+          {response && response.complaintStatus === "Disposed" && (
+            <>
+              <Steps
+                current={3}
+                status="error"
+                labelPlacement="vertical"
+                items={items1}
+              />
+              <p
+                className="text-gray-600 text-xl font-bold mb-2 mt-5 text-center"
+                style={{ color: "red" }}
+              >
+                {getStatusDescription(response.complaintStatus)}
+              </p>
             </>
+          )}
+
+          {response && response.complaintStatus === "Escalated" && (
+            <>
+              <Steps current={1} labelPlacement="vertical" items={items2} />
+              <p className="text-gray-600 text-xl font-bold mb-2 mt-5 text-center">
+                {getStatusDescription(response.complaintStatus)}
+              </p>
+            </>
+          )}
+
+          {response &&
+            response.complaintStatus !== "Disposed" &&
+            response.complaintStatus !== "Escalated" && (
+              <>
+                <Steps
+                  current={items.findIndex(
+                    (item) => item.title === response.complaintStatus
+                  )}
+                  labelPlacement="vertical"
+                  items={items}
+                />
+                <p className="text-gray-600 text-xl font-bold mb-2 mt-5 text-center">
+                  {getStatusDescription(response.complaintStatus)}
+                </p>
+              </>
+            )}
+        </>
       </Form>
     </div>
   );
-};
+}
