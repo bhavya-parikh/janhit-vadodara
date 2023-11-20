@@ -41,13 +41,18 @@ const Layout = () => {
               </p>
             </div>
 
-            <button className="text-white font-semibold py-2 px-6 ml-4 hover:border-transparent rounded-full">
-              <a href="/complaintTracking" className="hover:text-white">
+            <button className="text-white font-semibold py-2 px-6 ml-4 hover:border-transparent rounded-full"onClick={() => {
+          navigate("/complaintTracking");
+        }}>
+              <a className="hover:text-white">
                 Track Complaint
               </a>
             </button>
-            <button className="text-white font-semibold py-2 px-6 ml-4 mt-8 hover:border-transparent rounded-full">
-              <a href="/Complaint" className="hover:text-white">
+            <button className="text-white font-semibold py-2 px-6 ml-4 mt-8 hover:border-transparent rounded-full"
+            onClick={() => {
+              navigate("/complaint");
+            }}>
+              <a className="hover:text-white">
                 Register Complaint
               </a>
             </button>
@@ -64,7 +69,7 @@ const Layout = () => {
         >
           <div className="md:w-1/2 pl-0 md:pl-32">
             <div>
-              <h1 className="text-2xl md:text-4xl lg:text-4xl lg:ml-14 text-white font-bold">
+              <h1 className="text-2xl md:text-4xl md:pl-3 lg:text-4xl lg:ml-14 text-white font-bold">
                 Complaint Registered
               </h1>
             </div>
@@ -74,7 +79,7 @@ const Layout = () => {
           </div>
           <div className="md:w-1/2 pl-0 md:pr-32">
             <div className="w-max md:w-full">
-              <h1 className="text-2xl md:text-4xl lg:text-4xl text-white font-bold">
+              <h1 className="text-2xl md:text-4xl md:pl-6 lg:text-4xl text-white font-bold">
                 Complaint Accomplished
               </h1>
             </div>

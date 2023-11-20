@@ -213,7 +213,7 @@ module.exports.trackComplaintStatus = asyncHandler(async(req,res) =>{
     const complaintId = req.body.complaintId;
     const complaint = await Complaint.findOne({ _id: complaintId });
     if(complaint){
-      res.status(200).send({complaintStatus:`Your complaint is ${complaint.complaintStatus}`});
+      res.status(200).send({complaintStatus:`${complaint.complaintStatus}`});
     }
     else{
       res.status(200).send({message:"Complaint not found!, Try again with correct complaint Id."});

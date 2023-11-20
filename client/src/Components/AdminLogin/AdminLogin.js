@@ -24,11 +24,12 @@ const AdminLogin = ({ setUserState }) => {
     role: "",
   });
   const changeHandler = (value, changedValues) => {
-    setUserDetails({
-      ...user,
+    setUserDetails((prevUser) => ({
+      ...prevUser,
       ...changedValues,
-    });
+    }));
   };
+  
   const onFinish = async () => {
     // Handle the form submission logic here if needed
   };
@@ -122,21 +123,21 @@ const AdminLogin = ({ setUserState }) => {
                   />
                 </Form.Item>
                 <Form.Item
-                  name="role"
-                  label="Select Admin Type"
-                  rules={[{ required: true, message: "User type is required" }]}
-                >
-                  <Select
-                    className="w-96"
-                    placeholder="Please Select Admin Type"
-                    onChange={(value) => form.setFieldsValue({ role: value })}
-                    // onSelect={changeHandler}
-                  >
-                    <Option value="headDepartment">Head Department</Option>
-                    <Option value="fieldStaff">Field Staff</Option>
-                    <Option value="commissioner">Commissioner</Option>
-                  </Select>
-                </Form.Item>
+  name="role"
+  label="Select Admin Type"
+  rules={[{ required: true, message: "User type is required" }]}
+>
+  <Select
+    className="w-96"
+    placeholder="Please Select Admin Type"
+    onChange={(value) => form.setFieldsValue({ role: value })}
+  >
+    <Option value="headDepartment">Head Department</Option>
+    <Option value="fieldStaff">Field Staff</Option>
+    <Option value="commissioner">Commissioner</Option>
+  </Select>
+</Form.Item>
+
                 <Button
                   type="primary"
                   htmlType="submit"
