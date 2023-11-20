@@ -11,7 +11,7 @@ import * as jwtDecode from "jwt-decode";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const ProtectedRouteFieldStaff = (props) => {
+const ProtectedRouteCommissioner = (props) => {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   function presentPage() {
@@ -19,11 +19,11 @@ const ProtectedRouteFieldStaff = (props) => {
   }
 
   useEffect(() => {
-    if (token && jwtDecode(token).id.role !== "fieldStaff") {
+    if (token && jwtDecode(token).id.role !== "commissioner") {
       toast.error("You're not authorized to access this page!");
       presentPage();
     }
-  }, [token && jwtDecode(token).id.role !== "fieldStaff"]);
+  }, [token && jwtDecode(token).id.role !== "commissioner"]);
 
   if (!token) {
     toast.error("Login First To Access This Page!");
@@ -31,12 +31,12 @@ const ProtectedRouteFieldStaff = (props) => {
   }
   const decodedData = jwtDecode(token);
 
-  if (decodedData.id.role === "fieldStaff") {
+  if (decodedData.id.role === "commissioner") {
     return <Outlet {...props} />;
-  } else if (decodedData.id.role !== "fieldStaff") {
+  } else if (decodedData.id.role !== "commissioner") {
     toast.error("You're not authorized to access this page!");
     presentPage();
   }
 };
 
-export default ProtectedRouteFieldStaff;
+export default ProtectedRouteCommissioner;

@@ -1,0 +1,8 @@
+body {
+  top: 0px !important;
+}
+
+body > .skiptranslate > iframe.skiptranslate {
+  display: none !important;
+  visibility: hidden !important;
+}
