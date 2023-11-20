@@ -40,7 +40,12 @@ const [subcategories, setSubcategories] = useState([]);
   const validateForm = (values) => {
     return {};
   };
+  const handleSubmit = (e) => {
+    console.log("Executing complaintHandler");
+    complaintHandler(e); // Pass the event object to complaintHandler
   
+   
+  };
   useEffect(() => {
     const fetchSubcategories = async () => {
       try {
@@ -98,7 +103,7 @@ const [subcategories, setSubcategories] = useState([]);
       e.preventDefault();
       setFormErrors(validateForm(complaint));
       setLoading(true);
-      setIsSubmit(true);
+      setIsSubmit(true);  
     } catch (errorInfo) {
       setLoading(false);
 
@@ -223,9 +228,10 @@ const [subcategories, setSubcategories] = useState([]);
           console.log(res.data);
           setFileList([]);
           message.success("Complaint Submitted Successfully");
-          navigate(
-            `/complainttracking/${res.data.complaintId}/${complaint.issueDescription}`
-          );
+            if (isSubmit === true) {
+              console.log("Executing navigation");
+              navigate("/mycomplaints");
+            }
         })
         .catch((error) => {
           toast(error.response.data.message);
@@ -487,12 +493,12 @@ const [subcategories, setSubcategories] = useState([]);
         <br />
         <div className="col-span-2 flex justify-center h-96 md:h-fit md:col-start-2 md:col-span-1 md:mr-4 flex justify-center md:justify-end md:ml-2">
           <Form.Item>
-            <Button
-              className="bg-blue-700 w-fit md:w-56 w-fit h-16 text-white font-bold rounded-full text-xl transition-all duration-300 transform hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
-              onClick={complaintHandler}
-            >
-              Submit
-            </Button>
+          <Button
+  className="bg-blue-700 w-fit md:w-56 w-fit h-16 text-white font-bold rounded-full text-xl transition-all duration-300 transform hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+  onClick={handleSubmit}
+>
+  Submit
+</Button>
           </Form.Item>
         </div>
         <div className="col-span-2">
