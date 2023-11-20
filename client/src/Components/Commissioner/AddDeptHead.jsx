@@ -9,7 +9,7 @@ import basestyle from "../Base.module.css";
 import loginstyle from "../Login/Login.module.css";
 import { useAuth } from "../../AuthProvider";
 
-export const AddDeptHead = ({ setUserState }) => {
+export default function AddDeptHead({ setUserState }) {
   const { Option } = Select;
   const navigate = useNavigate();
   const [form] = Form.useForm();
@@ -215,4 +215,4 @@ export const AddDeptHead = ({ setUserState }) => {
     // </div>
     // </section>
   );
-};
+}
