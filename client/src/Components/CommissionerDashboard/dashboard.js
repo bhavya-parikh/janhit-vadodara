@@ -14,7 +14,7 @@ const defaultExpandable = {
 
 const defaultTitle = () => "Complaints";
 
-const CommissionerDashboard = () => {
+const Dashboard = () => {
   const [selectedStatuses, setSelectedStatuses] = useState({});
   const [selectedFiles, setSelectedFiles] = useState({});
   const [selectedFileNames, setSelectedFileNames] = useState({});
@@ -238,4 +238,4 @@ const CommissionerDashboard = () => {
   );
 };
 
-export default CommissionerDashboard;
+export default Dashboard;

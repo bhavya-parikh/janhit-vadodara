@@ -27,7 +27,6 @@ module.exports.addFieldStaff = asyncHandler(async (req, res) => {
       }
     }
   }
-  
 });
 
 module.exports.removeFieldStaff = asyncHandler(async (req, res) => {
