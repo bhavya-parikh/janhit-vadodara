@@ -25,7 +25,7 @@ const db = require("./src/db/user");
 
 app.use(
   cors({
-    origin: ["https://janhit-vadodara.vercel.app"],
+    origin: ["http://localhost:3000"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })

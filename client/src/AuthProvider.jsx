@@ -7,12 +7,21 @@ const AuthContext = createContext({
     try {
       const token = localStorage.getItem("token");
       const decodedData = jwtDecode(token);
-      if (decodedData.id) return true;
+      if (decodedData.id) {
+        // setUser()
+        return true;
+      }
     } catch (err) {
       return {};
     }
   },
-  user: null,
+  user: () => {
+    const token = localStorage.getItem("token");
+    const decodedData = jwtDecode(token);
+    if (decodedData.id) {
+      return decodedData.id;
+    }
+  },
 });
 
 export const useAuth = () => useContext(AuthContext);

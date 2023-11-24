@@ -20,15 +20,11 @@ const dashboard = asyncHandler(async (req, res, next) => {
   if (!User) {
     res.status(404).send({ message: "User Not Found" });
   }
-  var validate = 0;
-  if (req.body.password == User.password) {
-    validate = 1;
-  } else {
-    validate = 0;
-  }
+  const validate = await bcrypt.compare(req.body.password, User.password);
   if (!validate) {
     res.status(403).send({ message: "Wrong Pass" });
   }
+
   const token = createSecretToken(User);
   // res.cookie("token", token, {
   //   withCredentials: true,

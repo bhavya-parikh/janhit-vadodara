@@ -9,7 +9,7 @@ const Profile = ({ setUserState, username }) => {
         className={basestyle.button_common}
         onClick={() => setUserState({})}
       >
-        Logout
+          
       </button>
     </div>
   );
