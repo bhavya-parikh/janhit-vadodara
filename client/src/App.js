@@ -32,6 +32,8 @@ import { MyComplaints } from "./Components/MyComplaints/MyComplaints.jsx";
 import Progressbar from "../src/Components/Progressbar/Progress.js";
 import { AddDeptHead } from "./Components/Commissioner/AddDeptHead.jsx";
 import { RemoveDeptHead } from "./Components/Commissioner/RemoveDeptHead.jsx";
+import DeptHeadDashboard from "./Components/DeptHeadDashboard/dashboard.js";
+import CommissionerDashboard from "./Components/Dashboard/dashboard";
 const cardData = [
   {
     name: "John Doe",
@@ -157,6 +159,30 @@ function App() {
               </Main>
             }
           />
+          <Route
+            path="/Deptheaddashboard"
+            element={<DeptHeadDashboard />}
+          ></Route>
+          <Route
+            path="/Deptheaddashboard1"
+            element={
+              <Main>
+                <Home />
+              </Main>
+            }
+          />
+          <Route
+            path="/CommissionerDashboard"
+            element={<CommissionerDashboard />}
+          ></Route>
+          <Route
+            path="/CommissionerDashboard1"
+            element={
+              <Main>
+                <Home />
+              </Main>
+            }
+          />
           <Route path="/Review" element={<Review />}></Route>
           <Route
             path="/complaintTracking"
@@ -181,7 +207,6 @@ function App() {
           ></Route>
           <Route path="/RemoveDeptHead" element={<RemoveDeptHead />}></Route>
           <Route path="/mycomplaints" element={<MyComplaints />}></Route>
-
           <Route
             path="/contact"
             element={

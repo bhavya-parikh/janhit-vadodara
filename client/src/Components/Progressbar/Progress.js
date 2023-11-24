@@ -1,40 +1,51 @@
-import React from 'react';
-import { Steps } from 'antd';
-import { LoadingOutlined, SmileOutlined, SolutionOutlined, UserOutlined } from '@ant-design/icons';
-import { Progress, Space } from 'antd';
-import "./Progress.css"
-const description = 'This is a description.';
+import React from "react";
+import { Steps } from "antd";
+import {
+  LoadingOutlined,
+  SmileOutlined,
+  SolutionOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import { Progress, Space } from "antd";
+import "./Progress.css";
+const description = "This is a description.";
 const items = [
   {
-    title: 'Complaint Registration',
+    title: "Complaint Registration",
     description,
   },
   {
-    title: 'Investigation',
+    title: "Investigation",
     description,
   },
   {
-    title: 'Approval',
+    title: "Approval",
     description,
   },
   {
-    title: 'Implementation In Process',
+    title: "Implementation In Process",
     description,
   },
   {
-    title: 'Verification and Quality Check',
+    title: "Verification and Quality Check",
     description,
   },
-  { 
-    title: 'Finish',
+  {
+    title: "Finish",
     description,
     icon: <SmileOutlined />,
   },
 ];
 
 const Progressbar = () => (
-  <div id='kik'>
-    <Steps current={3} percent={60} labelPlacement="vertical" items={items} status='process' />
+  <div id="kik">
+    <Steps
+      current={3}
+      percent={60}
+      labelPlacement="vertical"
+      items={items}
+      status="process"
+    />
   </div>
 );
 
