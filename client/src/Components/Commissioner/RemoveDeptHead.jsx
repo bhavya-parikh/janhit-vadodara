@@ -3,7 +3,7 @@ import { Form, Input, Button, Select } from "antd";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
-export const RemoveDeptHead = () => {
+export default function RemoveDeptHead() {
   const [form] = Form.useForm();
   const [formErrors, setFormErrors] = useState({});
 
@@ -78,4 +78,4 @@ export const RemoveDeptHead = () => {
       </Form>
     </div>
   );
-};
+}

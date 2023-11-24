@@ -55,6 +55,39 @@ module.exports.addCategories = asyncHandler(async (req, res) => {
   }
 });
 
+
+module.exports.getCategories = asyncHandler(async (req, res) => {
+  const categories = await Categories.find();
+  const categoriesData = categories.map((item) => ({
+    "category": item.category,
+  }));
+  if (categoriesData) {
+    res.status(201).send({
+      categoriesData
+    });
+  } else {
+    res.status(404).send({
+      message: "Categories not found,Server Error!",
+    });
+  }
+});
+
+module.exports.getCategorySubCategories = asyncHandler(async (req, res) => {
+  const categories = await Categories.find();
+  const categoriesData = categories.map((item) => ({
+    "category": item.category,
+    "subCategory": item.subCategory
+  }));
+  if (categoriesData) {
+    res.status(201).send({
+      categoriesData
+    });
+  } else {
+    res.status(404).send({
+      message: "Categories not found,Server Error!",
+    });
+  }
+});
 // module.exports.getallwards = asyncHandler(async(req, res))=> {
 
 // }

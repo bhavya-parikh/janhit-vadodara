@@ -6,8 +6,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import axios from "axios";
 import basestyle from "../Base.module.css";
-import loginstyle from "../Login/Login.module.css";
+// import loginstyle from "../Login/Login.module.css";
 import { useAuth } from "../../AuthProvider";
+// Example imports
+import { Switch, Route } from 'react-router-dom';
+
 const { Option } = Select;
 
 const AdminLogin = ({ setUserState }) => {
@@ -52,27 +55,43 @@ const AdminLogin = ({ setUserState }) => {
       setFormErrors(errors);
       setIsSubmit(true);
       setLoading(true);
-      if (Object.keys(errors).length === 0) {
-        const response = axios
-          .post(`${process.env.BASEURL}/api/admin/login`, user, {
-            withCredentials: true,
-          })
-          .then((res) => {
-            setLoading(false);
-            toast("Logged in success");
-            setAuth(true);
-            localStorage.setItem("token", res.data.token);
-            setUserState(res.data.User);
-            navigate("/", { replace: true });
-          })
-          .catch((err) => {
-            setLoading(false);
 
-            // toast.error(err.response.data.message);
-            console.log(err.message);
-          });
+      if (Object.keys(errors).length === 0) {
+        const selectedRole = user.role;
+        const response = await axios.post(
+          `${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/admin/login`,
+          user,
+          {
+            withCredentials: true,
+          }
+        );
+        // console.log("Response from server:", response.data);
+        setLoading(false);
+        toast("Logged in successfully");
+
+        setAuth(true);
+        localStorage.setItem("token", response.data.token);
+        setUserState(response.data.User);
+        
+        switch(selectedRole) {
+          case "headDepartment":
+            navigate("/DeptHeadDashboard1", { replace: true });
+            break;
+          case "fieldStaff":
+            navigate("/dashboard1", { replace: true });
+            break;
+          case "commissioner":
+            navigate("/commissionerDashboard1", { replace: true });
+            break;
+          default:
+            navigate("/", { replace: true });
+            break;
+        }
       }
-    } catch {
+    } catch (err) {
+      setLoading(false);
+      console.log(err.message);
+      // Handle error, you might want to toast the error message
       // toast.error(err.response.data.message);
     }
   };
@@ -122,21 +141,20 @@ const AdminLogin = ({ setUserState }) => {
                   />
                 </Form.Item>
                 <Form.Item
-                  name="role"
-                  label="Select Admin Type"
-                  rules={[{ required: true, message: "User type is required" }]}
-                >
-                  <Select
-                    className="w-96"
-                    placeholder="Please Select Admin Type"
-                    onChange={(value) => form.setFieldsValue({ role: value })}
-                    // onSelect={changeHandler}
-                  >
-                    <Option value="headDepartment">Head Department</Option>
-                    <Option value="fieldStaff">Field Staff</Option>
-                    <Option value="commissioner">Commissioner</Option>
-                  </Select>
-                </Form.Item>
+          name="role"
+          label="Select Admin Type"
+          rules={[{ required: true, message: "User type is required" }]}
+        >
+          <Select
+            className="w-96"
+            placeholder="Please Select Admin Type"
+            onChange={(value) => setUserDetails({ ...user, role: value })}
+          >
+            <Option value="headDepartment">Head Department</Option>
+            <Option value="fieldStaff">Field Staff</Option>
+            <Option value="commissioner">Commissioner</Option>
+          </Select>
+        </Form.Item>
                 <Button
                   type="primary"
                   htmlType="submit"
