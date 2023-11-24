@@ -203,6 +203,7 @@ module.exports.updateComplaintStatusUser = asyncHandler(async (req, res) => {
           },
         }
       );
+
       const ComplaintDetails = await Complaint.findOne({
         _id: req.body.complaintId,
       });
