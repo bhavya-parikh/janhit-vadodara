@@ -189,7 +189,9 @@ module.exports.updateComplaintStatusUser = asyncHandler(async (req, res) => {
   try {
     if (
       req.body.complaintStatus !== "Escalated" &&
-      req.body.complaintStatus !== "Escalated1"
+      req.body.complaintStatus !== "Escalated1" &&
+      req.body.complaintId &&
+      req.body.message
     ) {
       res
         .status(400)
@@ -199,12 +201,13 @@ module.exports.updateComplaintStatusUser = asyncHandler(async (req, res) => {
         { _id: req.body.complaintId },
         {
           $set: {
+            escalateMessage: req.body.message,
             complaintStatus: req.body.complaintStatus,
           },
         }
       );
-      
-const ComplaintDetails = await Complaint.findOne({
+
+      const ComplaintDetails = await Complaint.findOne({
         _id: req.body.complaintId,
       });
       res.status(200).send({

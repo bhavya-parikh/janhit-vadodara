@@ -66,6 +66,9 @@ const complaintSchema = new mongoose.Schema(
     username: {
       type: String,
     },
+    escalateMessage: {
+      type: String,
+    },
   },
   {
     timestamps: true, // Automatically adds createdAt and updatedAt fields
