@@ -3,7 +3,11 @@ require("dotenv").config();
 
 //express
 const express = require("express");
+const compression = require("compression");
 const app = express();
+
+app.use(compression());
+
 const cookieParser = require("cookie-parser");
 //bodyParser
 var bodyParser = require("body-parser");
@@ -21,7 +25,7 @@ const db = require("./src/db/user");
 
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: ["https://janhit-vadodara.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })

@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { Steps, message } from "antd";
 import { SmileOutlined } from "@ant-design/icons";
 
-export const MyComplaints = () => {
+export default function MyComplaints() {
   const [loading, setLoading] = useState(true);
   const { complaintId, issueDescription } = useParams();
   const [complaints, setComplaints] = useState([]);
@@ -266,4 +266,4 @@ export const MyComplaints = () => {
       )}
     </div>
   );
-};
+}

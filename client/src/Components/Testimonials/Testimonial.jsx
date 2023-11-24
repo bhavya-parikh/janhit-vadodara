@@ -73,9 +73,12 @@ const Testimonial = () => {
 
                     <blockquote className="flex-1 mt-8">
                       <p className="text-lg leading-relaxed text-gray-900 font-pj">
-                        “You made it so simple. My new site is so much faster
-                        and easier to work with than my old site. I just choose
-                        the page, make the change.”
+                        “JanHit Vadodara has truly transformed the way we engage
+                        with our city. Reporting civic issues is now a breeze,
+                        thanks to the intuitive interface. The prioritization
+                        system ensures that urgent matters get swift attention.
+                        Kudos to the team for fostering transparency and citizen
+                        empowerment!”
                       </p>
                     </blockquote>
                   </div>
@@ -88,10 +91,10 @@ const Testimonial = () => {
                     />
                     <div className="ml-4">
                       <p className="text-base font-bold text-gray-900 font-pj">
-                        Leslie Alexander
+                        Akash Patel
                       </p>
                       <p className="mt-0.5 text-sm font-pj text-gray-600">
-                        Freelance React Developer
+                        Resident of Ward 8
                       </p>
                     </div>
                   </div>
@@ -146,8 +149,12 @@ const Testimonial = () => {
 
                     <blockquote className="flex-1 mt-8">
                       <p className="text-lg leading-relaxed text-gray-900 font-pj">
-                        “Simply the best. Better than all the rest. I’d
-                        recommend this product to beginners and advanced users.”
+                        “Janhit Vadodara' has become an essential tool for every
+                        resident. The real-time updates on complaint status
+                        provide a sense of involvement, and the option to
+                        escalate ensures accountability. This platform
+                        exemplifies the positive impact technology can have on
+                        urban governance.”
                       </p>
                     </blockquote>
                   </div>
@@ -160,10 +167,10 @@ const Testimonial = () => {
                     />
                     <div className="ml-4">
                       <p className="text-base font-bold text-gray-900 font-pj">
-                        Jacob Jones
+                        Rajesh Kumar
                       </p>
                       <p className="mt-0.5 text-sm font-pj text-gray-600">
-                        Digital Marketer
+                        Resident of Ward 10
                       </p>
                     </div>
                   </div>
@@ -218,9 +225,12 @@ const Testimonial = () => {
 
                     <blockquote className="flex-1 mt-8">
                       <p className="text-lg leading-relaxed text-gray-900 font-pj">
-                        “I cannot believe that I have got a brand new landing
-                        page after getting Omega. It was super easy to edit and
-                        publish.”
+                        “JanHit Vadodara' goes beyond traditional complaint
+                        systems. I love the fact that I can describe issues in
+                        my own words, adding a personal touch to problem
+                        registration. The platform's commitment to innovation
+                        and collaboration is evident, making it a key player in
+                        improving our city's quality of life.”
                       </p>
                     </blockquote>
                   </div>
@@ -233,10 +243,10 @@ const Testimonial = () => {
                     />
                     <div className="ml-4">
                       <p className="text-base font-bold text-gray-900 font-pj">
-                        Jenny Wilson
+                        Priyanaka Joshi
                       </p>
                       <p className="mt-0.5 text-sm font-pj text-gray-600">
-                        Graphic Designer
+                        Resident of Ward 17
                       </p>
                     </div>
                   </div>

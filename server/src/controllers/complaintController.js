@@ -187,7 +187,10 @@ module.exports.addimage = asyncHandler(async (req, res) => {
 
 module.exports.updateComplaintStatusUser = asyncHandler(async (req, res) => {
   try {
-    if (req.body.complaintStatus !== "Escalated") {
+    if (
+      req.body.complaintStatus !== "Escalated" &&
+      req.body.complaintStatus !== "Escalated1"
+    ) {
       res
         .status(400)
         .send({ message: "You're not allowed to perform this operation" });
@@ -219,7 +222,7 @@ module.exports.trackComplaintStatus = asyncHandler(async (req, res) => {
     const complaint = await Complaint.findOne({ _id: complaintId });
     if (complaint) {
       res.status(200).send({
-        complaintStatus: `Your complaint is ${complaint.complaintStatus}`,
+        complaintStatus: `${complaint.complaintStatus}`,
       });
     } else {
       res.status(200).send({

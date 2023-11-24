@@ -52,16 +52,17 @@ export const AuthNavbar = () => {
               <div className="leftMenu">
                 <LeftMenu mode={"horizontal"} />
               </div>
-
-              <img
-                src={logo}
-                alt="logo"
-                className="w-16 h-auto md:w-24 lg:w-32 xl:w-40"
-              />
-              <h3 className="text-xl md:text-xl lg:text-2xl xl:text-3xl font-semibold text-center mt-2">
-                Vadodara Municipal <br class="md:hidden" />
-                Corporation
-              </h3>
+              <a href="/">
+                <img
+                  src={logo}
+                  alt="logo"
+                  className="w-16 h-auto md:w-24 lg:w-32 xl:w-40"
+                />
+                <h3 className="text-xl md:text-xl lg:text-2xl xl:text-3xl font-semibold text-center mt-2">
+                  Vadodara Municipal <br class="md:hidden" />
+                  Corporation
+                </h3>
+              </a>
             </div>
 
             <Drawer

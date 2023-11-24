@@ -15,6 +15,8 @@ const Complaint = () => {
   const [wardDatas, setWardDatas] = useState([]);
   const [wardAreas, setWardAreas] = useState([]);
 const[responseData,setResponseData] = useState([]);
+const [categories, setCategories] = useState([]);
+const [subcategories, setSubcategories] = useState([]);
   const [complaint, setComplaintDetails] = useState({
     complaintType: "",
     firstname: "",
@@ -38,6 +40,29 @@ const[responseData,setResponseData] = useState([]);
   const validateForm = (values) => {
     return {};
   };
+  const handleSubmit = (e) => {
+    console.log("Executing complaintHandler");
+    complaintHandler(e); // Pass the event object to complaintHandler
+  
+   
+  };
+  useEffect(() => {
+    const fetchSubcategories = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_VERCEL_ENV_BASEURL}/api/getCategorySubCategories`);
+        const categoriesData = response.data.categoriesData;
+        const uniqueCategories = [...new Set(categoriesData.map(item => item.category))];
+        setCategories(uniqueCategories);
+        setSubcategories(categoriesData);
+      } catch (error) {
+        console.error("Error fetching subcategories:", error);
+        toast.error("Error fetching subcategories");
+      }
+    };
+  
+    fetchSubcategories();
+  }, []);
+  
   useEffect(() => {
     // Function to fetch ward areas when the component mounts
     const fetchWardAreas = async () => {
@@ -78,7 +103,7 @@ const[responseData,setResponseData] = useState([]);
       e.preventDefault();
       setFormErrors(validateForm(complaint));
       setLoading(true);
-      setIsSubmit(true);
+      setIsSubmit(true);  
     } catch (errorInfo) {
       setLoading(false);
 
@@ -102,6 +127,11 @@ const[responseData,setResponseData] = useState([]);
       value !== "Select Category"
     ) {
       fetchAssignStaffData(value, complaint.wardNo);
+    }
+    if (name === "issueCategory") {
+      const selectedCategory = value;
+      const matchingSubcategories = subcategories.filter(item => item.category === selectedCategory);
+      setSubcategories(matchingSubcategories);
     }
 
     if (
@@ -163,27 +193,13 @@ const[responseData,setResponseData] = useState([]);
   };
 
   const getSubcategoryOptions = () => {
-    if (complaint.issueCategory === "water logging") {
-      return (
-        <>
-          <Option value="Select Category">Select Category</Option>
-          <Option value="Contaminated Water">Contaminated Water</Option>
-          <Option value="Direct Water Running">Direct Water Running</Option>
-        </>
-      );
-    } else if (complaint.issueCategory === "Pothholes") {
-      return (
-        <>
-          <Option value="Select Category">Select Category</Option>
-          <Option value="Street Light Not Working">
-            Street Light Not Working
-          </Option>
-          <Option value="Insufficient Light">Insufficient Light</Option>
-        </>
-      );
-    } else {
-      return <Option value="Select Category">Select Category</Option>;
+    if (complaint.issueCategory === "Select Category") {
+      return <Option value="Select SubCategory" disabled>Select SubCategory</Option>;
     }
+  
+    return subcategories
+      .filter(item => item.category === complaint.issueCategory)
+      .map(item => <Option key={item.subCategory} value={item.subCategory}>{item.subCategory}</Option>);
   };
 
   const handleUpload = () => {
@@ -212,9 +228,10 @@ const[responseData,setResponseData] = useState([]);
           console.log(res.data);
           setFileList([]);
           message.success("Complaint Submitted Successfully");
-          navigate(
-            `/complainttracking/${res.data.complaintId}/${complaint.issueDescription}`
-          );
+            if (isSubmit === true) {
+              console.log("Executing navigation");
+              navigate("/mycomplaints");
+            }
         })
         .catch((error) => {
           toast(error.response.data.message);
@@ -386,38 +403,44 @@ const[responseData,setResponseData] = useState([]);
             </Form.Item>
           </div>
           <div className="col-span-2">
-          <Form.Item
-            label="Category"
-            name="issueCategory"
-            value={complaint.issueCategory}
-            rules={[{ required: true, message: "Please select a category" }]}
-          >
-            <Select
-              onChange={(value) => {
-                changeHandler("issueCategory", value);
-                // fetchAssignStaffData(value, form.getFieldValue("wardNo"));
-              }}
-            >
-              <Option value="water logging">Water Logged</Option>
-              <Option value="Pothholes">Street Light</Option>
-            </Select>
-          </Form.Item>
-        </div>
+  <Form.Item
+    label="Category"
+    name="issueCategory"
+    value={complaint.issueCategory}
+    rules={[{ required: true, message: "Please select a category" }]}
+  >
+    <Select
+      onChange={(value) => {
+        changeHandler("issueCategory", value);
+        // Reset the subcategory when the category changes
+        form.setFieldsValue({ issueSubcategory: "Select SubCategory" });
+      }}
+    >
+      <Option value="Select Category">Select Category</Option>
+      {categories.map(category => (
+        <Option key={category} value={category}>
+          {category}
+        </Option>
+      ))}
+    </Select>
+  </Form.Item>
+</div>
 
-        <div className="col-span-2">
-          <Form.Item
-            label="Subcategory"
-            name="issueSubcategory"
-            value={complaint.issueSubcategory}
-            rules={[{ required: true, message: "Please select a subcategory" }]}
-          >
-            <Select
-              onChange={(value) => changeHandler("issueSubcategory", value)}
-            >
-              {getSubcategoryOptions()}
-            </Select>
-          </Form.Item>
-        </div>
+<div className="col-span-2">
+  <Form.Item
+    label="Subcategory"
+    name="issueSubcategory"
+    value={complaint.issueSubcategory}
+    rules={[{ required: true, message: "Please select a subcategory" }]}
+  >
+    <Select
+      onChange={(value) => changeHandler("issueSubcategory", value)}
+      disabled={complaint.issueCategory === "Select Category"} // Disable if no category selected
+    >
+      {getSubcategoryOptions()}
+    </Select>
+  </Form.Item>
+</div>
 
 
         <div className="col-span-2">
@@ -470,12 +493,12 @@ const[responseData,setResponseData] = useState([]);
         <br />
         <div className="col-span-2 flex justify-center h-96 md:h-fit md:col-start-2 md:col-span-1 md:mr-4 flex justify-center md:justify-end md:ml-2">
           <Form.Item>
-            <Button
-              className="bg-blue-700 w-fit md:w-56 w-fit h-16 text-white font-bold rounded-full text-xl transition-all duration-300 transform hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
-              onClick={complaintHandler}
-            >
-              Submit
-            </Button>
+          <Button
+  className="bg-blue-700 w-fit md:w-56 w-fit h-16 text-white font-bold rounded-full text-xl transition-all duration-300 transform hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+  onClick={handleSubmit}
+>
+  Submit
+</Button>
           </Form.Item>
         </div>
         <div className="col-span-2">

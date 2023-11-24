@@ -3,7 +3,7 @@ import { Form, Input, Button, Select, Spin } from "antd";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
-export const RemoveFieldStaff = () => {
+export default function RemoveFieldStaff() {
   const [form] = Form.useForm();
   const [formErrors, setFormErrors] = useState({});
   const [Loading, setLoading] = useState(false);
@@ -90,4 +90,4 @@ export const RemoveFieldStaff = () => {
       </Form>
     </div>
   );
-};
+}

@@ -44,6 +44,9 @@ router.post("/fetchWardData", wardDataController.fetchWardData);
 router.post("/fetchWardAreas",wardDataController.fetchWardAreas);
 router.post("/fetchAllWardAreas", wardDataController.fetchAllWardAreas);
 
+//categories
+router.get("/getCategories",wardDataController.getCategories);
+router.get("/getCategorySubCategories",wardDataController.getCategorySubCategories);
 //router.get("/getallwards", wardDataController.getAllWards);
 router.post("/addCategories", wardDataController.addCategories);
 router.post("/addFieldStaff", fieldStaffController.addFieldStaff);
