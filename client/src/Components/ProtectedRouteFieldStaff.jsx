@@ -27,7 +27,7 @@ const ProtectedRouteFieldStaff = (props) => {
 
   if (!token) {
     toast.error("Login First To Access This Page!");
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
   }
   const decodedData = jwtDecode(token);
 
