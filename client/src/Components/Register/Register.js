@@ -16,6 +16,9 @@ const Register = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   const [user, setUserDetails] = useState({
     addharid: "",
+    firstname: "",
+    lastname: "",
+    MobileNo: "",
     username: "",
     password: "",
   });
@@ -105,6 +108,59 @@ const Register = () => {
                   />
                   <p className={basestyle.error}>{formErrors.addharid}</p>
                 </Form.Item>
+                <div className="col-span-2">
+                  <Form.Item
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter your first name",
+                      },
+                    ]}
+                  >
+                    <Input
+                      label="First Name"
+                      name="firstname"
+                      type="text"
+                      id="firstname"
+                      placeholder="First Name"
+                      prefix={<UserOutlined />}
+                      onChange={changeHandler}
+                      value={user.firstname}
+                    />
+                    <p className={basestyle.error}>{formErrors.firstname}</p>
+                  </Form.Item>
+                </div>
+
+                <div className="col-span-2">
+                  <Form.Item rules={[{ required: true }]}>
+                    <Input
+                      label="Last Name"
+                      name="lastname"
+                      type="text"
+                      id="lastname"
+                      placeholder="Last Name"
+                      prefix={<UserOutlined />}
+                      onChange={changeHandler}
+                      value={user.lastname}
+                    />
+                    <p className={basestyle.error}>{formErrors.lastname}</p>
+                  </Form.Item>
+                </div>
+
+                <div className="col-span-2">
+                  <Form.Item rules={[{ required: true }]}>
+                    <Input
+                      name="MobileNo"
+                      type="number"
+                      id="MobileNo"
+                      placeholder="Mobile No"
+                      prefix={<UserOutlined />}
+                      onChange={changeHandler}
+                      value={user.MobileNo}
+                    />
+                  </Form.Item>
+                </div>
+                <p className={basestyle.error}>{formErrors.MobileNo}</p>
                 <Form.Item
                   rules={[{ required: true, message: "Username is required" }]}
                 >
