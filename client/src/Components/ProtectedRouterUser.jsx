@@ -29,7 +29,7 @@ const ProtectedRouteUser = (props) => {
 
   if (!token) {
     toast.error("Login Or Register to Register A Complaint");
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
   }
   const decodedData = jwtDecode(token);
 
