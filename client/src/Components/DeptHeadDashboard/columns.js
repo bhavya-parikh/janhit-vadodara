@@ -11,31 +11,27 @@ import { DataTableRowActions } from "./data-table-row-actions";
 // export const columns: ColumnDef<Payment>[] = [
 export const columns = [
   {
-    accessorKey: "firstname",
-    header: "Name",
+    accessorKey: "complainantName",
+    header: "Complainant Name",
   },
   {
-    accessorKey: "mobileNo",
-    header: "Mobile Number",
+    accessorKey: "issueDescription",
+    header: "Issue Description",
   },
   {
-    accessorKey: "issueSubcategory",
-    header: "Issue",
+    accessorKey: "fieldStaff",
+    header: "Field Staff",
   },
   {
-    accessorKey: "complaintDescription",
-    header: "Description",
-  },
-  {
-    accessorKey: "area",
-    header: "Area",
-  },
-  {
-    accessorKey: "imageUrl",
-    header: "Image",
+    accessorKey: "msgFieldstaff",
+    header: "Message for FieldStaff",
   },
   {
     id: "actions",
     cell: ({ row }) => <DataTableRowActions row={row} />,
+  },
+  {
+    accessorKey: "WardNo",
+    header: "Ward No",
   },
 ];

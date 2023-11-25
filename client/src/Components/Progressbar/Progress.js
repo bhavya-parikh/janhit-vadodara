@@ -1,4 +1,3 @@
-
 // import React from 'react';
 // import { Steps } from 'antd';
 // import { LoadingOutlined, SmileOutlined, SolutionOutlined, UserOutlined } from '@ant-design/icons';
@@ -20,7 +19,6 @@
 //     icon: <SmileOutlined />,
 //   },
 // ];
-
 
 // const Progressbar = () => (
 //   <div id='kik'>

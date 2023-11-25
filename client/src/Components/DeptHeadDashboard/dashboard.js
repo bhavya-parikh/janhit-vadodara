@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Space, Table, message, Select, Upload, Button } from "antd";
+import { Space, Table, message, Select, Upload, Button, Input } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -34,37 +34,54 @@ const DeptHeadDashboard = () => {
   const [yScroll, setYScroll] = useState(false);
   const [xScroll, setXScroll] = useState();
   const [complaints, setComplaints] = useState([]);
+  const [fieldStaffMessage, setFieldStaffMessage] = useState({}); //added
 
   const columns = [
     {
-      title: "Name",
-      dataIndex: "firstname",
+      title: "complainant Name",
+      dataIndex: "complainantName",
     },
     {
-      title: "Mobile Number",
-      dataIndex: "mobileNo",
+      title: "Issue Description",
+      dataIndex: "issueDescription",
     },
     {
-      title: "Area",
-      dataIndex: "area",
+      title: "Field Staff",
+      dataIndex: "fieldStaff",
     },
     {
-      title: "Issue Subcategory",
-      dataIndex: "issueSubcategory",
+      title: "Ward No",
+      dataIndex: "WardNo",
     },
     {
-      title: "Image",
-      dataIndex: "images",
-      render: (text, record) => (
-        <img
-          src={`${process.env.REACT_APP_VERCEL_ENV_BASEURL}/${record.images[0]}`}
-          style={{
-            maxHeight: "250px", // Adjust the height as needed
-          }}
-          alt=""
+      title: "Message for FieldStaff",
+      dataIndex: "msgFieldstaff",
+      render: (_, record) => (
+        <Input
+          placeholder="Enter message for FieldStaff"
+          value={fieldStaffMessage[record._id] || ""}
+          onChange={(e) =>
+            setFieldStaffMessage((prev) => ({
+              ...prev,
+              [record._id]: e.target.value,
+            }))
+          }
         />
       ),
     },
+    // {
+    //   title: "Image",
+    //   dataIndex: "images",
+    //   render: (text, record) => (
+    //     <img
+    //       src={`${process.env.REACT_APP_VERCEL_ENV_BASEURL}/${record.images[0]}`}
+    //       style={{
+    //         maxHeight: "250px", // Adjust the height as needed
+    //       }}
+    //       alt=""
+    //     />
+    //   ),
+    // },
     {
       title: "Action",
       key: "action",
@@ -122,6 +139,7 @@ const DeptHeadDashboard = () => {
 
   const handleStatusUpdate = (record) => {
     setLoading(true);
+    const messageForFieldStaff = fieldStaffMessage[record._id] || "";
     if (record._id && selectedStatuses[record._id]) {
       if (
         selectedStatuses[record._id] === "Completed" &&
@@ -148,7 +166,11 @@ const DeptHeadDashboard = () => {
           });
       } else {
         // If status is not "Completed", update the status directly
-        updateComplaintStatus(record._id, selectedStatuses[record._id]);
+        updateComplaintStatus(
+          record._id,
+          selectedStatuses[record._id],
+          messageForFieldStaff
+        );
       }
     } else {
       message.warning("Please select a status before updating.");

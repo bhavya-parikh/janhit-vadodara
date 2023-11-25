@@ -29,8 +29,8 @@ function LineChart() {
         </div>
         <div className="sales">
           <ul>
-            <li>{<MinusOutlined />} Your Ward Complaints</li>
-            <li>{<MinusOutlined />} Other Wards Avg. Complaints</li>
+            <li>{<MinusOutlined />} Registered Complaints</li>
+            <li>{<MinusOutlined />} Solved Avg. Complaints</li>
           </ul>
         </div>
       </div>

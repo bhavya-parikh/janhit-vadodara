@@ -27,12 +27,8 @@ function EChart() {
       user: "Clicks",
     },
     {
-      Title: "$772",
-      user: "Sales",
-    },
-    {
-      Title: "82",
-      user: "Items",
+      Title: "100",
+      user: "Complaints",
     },
   ];
 
