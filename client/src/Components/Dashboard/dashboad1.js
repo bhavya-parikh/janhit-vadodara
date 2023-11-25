@@ -141,28 +141,28 @@ function Home() {
   const count = [
     {
       today: "Total Complaints",
-      title: "$53,000",
+      title: "100",
       persent: "+30%",
       icon: dollor,
       bnb: "bnb2",
     },
     {
       today: "Complaint Solved",
-      title: "3,200",
+      title: "32",
       persent: "+20%",
       icon: profile,
       bnb: "bnb2",
     },
     {
       today: "Complaints Reopend",
-      title: "+1,200",
+      title: "+10",
       persent: "-20%",
       icon: heart,
       bnb: "redtext",
     },
     {
       today: "Success Rate",
-      title: "$13,200",
+      title: "75%",
       persent: "10%",
       icon: cart,
       bnb: "bnb2",

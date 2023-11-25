@@ -11,7 +11,7 @@ const Review = () => {
 
   return (
     <div className="flex items-center justify-center  bg-gray-100">
-      <div className="sm:w-96 mt-2 h-max md:w-fit bg-white border-2 border-gray-300 shadow-md rounded-md p-8">
+      <div className="w-80 sm:w-96 mt-1 h-max md:w-fit bg-white border-2 border-gray-300 shadow-md rounded-md p-8">
         <h1 className="sm:text-xl md:text-3xl font-bold mb-6 text-center ">
           Share your valuable thoughts!
         </h1>
@@ -103,7 +103,7 @@ const Review = () => {
             <Button
               type="primary"
               htmlType="submit"
-              className="bg-blue-700 w-56 h-16 ml-24 text-white font-bold rounded-full text-xl  transition-all duration-300 transform hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+              className="bg-blue-700 w-56 h-16 md:ml-40 text-white font-bold rounded-full text-xl  transition-all duration-300 transform hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
             >
               Submit Review
             </Button>
